@@ -120,11 +120,11 @@ class MainController extends BaseController
   function generate_class()
   {
 
-    $data = 'id, created_at, updated_at, garden_id, user_id, crop_activity_id, activity_name, activity_description, activity_date_to_be_done, activity_due_date, activity_date_done, farmer_has_submitted, farmer_activity_status, farmer_submission_date, farmer_comment, agent_id, agent_names, agent_has_submitted, agent_activity_status, agent_comment, agent_submission_date';
+    $data = 'id, name, metric, currency, description, summary, price_1, price_2, feature_photo, rates, date_added, date_updated, user, category, sub_category, supplier, url, status, in_stock, keywords, p_type';
 
-    $modelName = 'GardenActivity';
-    $endPoint = 'garden-activities';
-    $tableName = 'garden_activities';
+    $modelName = 'Product';
+    $endPoint = 'products';
+    $tableName = 'products';
     //$array = preg_split('/\r\n|\n\r|\r|\n/', $data);
     $array = explode(',', $data);
     $generate_vars = MainController::generate_vars($array);
@@ -134,7 +134,7 @@ class MainController extends BaseController
     $create_table = MainController::create_table($array, $modelName);
     return <<<EOT
 <pre>
-import 'package:marcci/utils/Utils.dart';
+import 'package:nudipu/utils/Utils.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'RespondModel.dart';
