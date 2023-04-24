@@ -46,10 +46,7 @@ class ProductController extends AdminController
         ->sortable();
         $grid->column('details', __('Details'))->hide();
         $grid->column('price', __('Price'))->sortable();
-        $grid->column('sales', __('sales'))
-        ->display(function(){
-            return count($this->sales); 
-        });
+ 
 /*         $grid->column('amount', __('Amount')); */
         /* 
         $grid->column('offer_type', __('Offer type'));
