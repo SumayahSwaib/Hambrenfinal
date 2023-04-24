@@ -17,6 +17,8 @@ class User_model extends Model
         parent::__construct();
     }
 
+
+
     /**
      * @throws Exception
      */
@@ -48,7 +50,7 @@ class User_model extends Model
                     "city" => 0);
                 $user = $this->db->insert("basic_info", $d);
             } else
-                return ['status' => "1", "message" => "Hello " . $data->names . ", A user with email " . $data->email . " you are trying to use already exists on Hambren"];
+                return ['status' => "1", "message" => "Hello " . $data->names . ", A user with email " . $data->email . " you are trying to use already exists on Jaslac"];
         }
         else {
             if (! $this->validate_email($data->email))
@@ -481,7 +483,7 @@ class User_model extends Model
         }
         $message = "Token not found or expired";
         if ($d)
-            $message = "Hello " . $d['names'] . ", your <b>Hambren</b> account has been confirmed. Kindly login with your email and password to continue";
+            $message = "Hello " . $d['names'] . ", your <b>Jaslac</b> account has been confirmed. Kindly login with your email and password to continue";
         return ['error' => 1, "message" => $message];
     }
 

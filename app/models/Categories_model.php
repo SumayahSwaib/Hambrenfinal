@@ -20,9 +20,9 @@ class Categories_model extends Model
     {
         if (! $user)
             return false;
-        $category = $this->xss_clean($this->input->post("category"));
-        $status = $this->xss_clean($this->input->post("status"));
-        $default_amount = $this->xss_clean(($this->input->post("amount")));
+        $category = $this->security->xss_clean($this->input->post("category"));
+        $status = $this->security->xss_clean($this->input->post("status"));
+        $default_amount = $this->security->xss_clean(($this->input->post("amount")));
 
         if (empty($category) or empty($status))
             return false;
@@ -46,8 +46,8 @@ class Categories_model extends Model
     {
         if (! $user)
             return false;
-        $category = $this->xss_clean($this->input->post("category"));
-        $status = $this->xss_clean($this->input->post("status"));
+        $category = $this->security->xss_clean($this->input->post("category"));
+        $status = $this->security->xss_clean($this->input->post("status"));
 
         if (empty($category) or empty($status))
             return false;
@@ -104,7 +104,7 @@ class Categories_model extends Model
     }
 
     function get_category_id_by_url($url, $sub_category = false) {
-        $url = $this->xss_clean($url);
+        $url = $this->security->xss_clean($url);
         $table = ! $sub_category ? "product_categories" : "product_sub_categories";
         $this->db->where("url", $url);
         return $this->db->getValue($table, "id");

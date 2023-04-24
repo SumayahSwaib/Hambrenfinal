@@ -1,36 +1,42 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Rickie
- * Date: 2020-10-04
- * Time: 17:02
- */
+
+use JetBrains\PhpStorm\Pure;
 
 class Auth extends Controller
 {
-    function __construct()
-    {
+    function __construct() {
         parent::__construct();
-        $this->model("Api_keys");
-        $this->model("Api_model");
-        $this->model("User_model");
+        $this->model("Users_model");
     }
 
     function index() {
-        $data = [
-            "email" => trim($this->input->post("email")),
-            "password" => trim($this->input->post("password"))];
-        $token = hash("md5", (time() . mt_rand(1000, 59999) . $data['email']));
-        $response = $this->model->User_model->update_user_data($data, $token, true);
 
-        if (empty($response))
-            $this->redirect("//" . $this->server->server_name . "/login?error=" . str_replace(" ", "%20", "Password or Email don't match. Try again"));
-        else if ($response['verified'])
-            $this->redirect("//" . $this->server->server_name . "/login?error=" . str_replace(" ", "%20", "Your account is not verified. A verification link must have been sent to your email."));
-        $this->cookie->set("auth", $token);
-        {
+    }
 
-            $this->redirect($this->server->http_refer . "?account_creation=success");
+    function login() {
+        $response = $this->model->Users_model->auth();
+        if ($response) {
+            $response = (object)$response;
+            if ($response->state === 1) {
+                $this->session->set_user_data("user", $response->id);
+                $this->session->set_user_data("role", $response->role);
+                $this->session->set_user_data("school", $response->school);
+                $this->redirect("/dashboard");
+            }else
+                $this->redirect("/?message=You%20restricted%20from%20accessing%20this%20account");
+        }
+        $this->redirect("/?message=Password%20mismatch");
+    }
+
+    #[Pure] function is_logged_in() {
+        if ($this->session->data("user")) {
+            //$this->model->Users_model->
         }
     }
+
+    function logout() {
+        $this->session->destroy();
+        $this->redirect("/");
+    }
+
 }

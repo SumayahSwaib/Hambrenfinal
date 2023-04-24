@@ -1,26 +1,38 @@
 <?php
-//if(!isset($_SERVER["HTTPS"]) || $_SERVER["HTTPS"] != "on") {
-//    header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"], true, 301);
-//    //Prevent the rest of the script from executing.
-//    exit;
+/**
+ * Created by PhpStorm.
+ * User: Ashiraff
+ * Company: Boosted Technologies LTD
+ * Company Email: office@boostedtechs.com
+ * Company Website:https://www.boostedtechs.com
+ * Author's website: https://www.tumusii.me
+ * Date: 7/19/21
+ * Time: 9:29 AM
+ */
+/**
+ * @throws ErrorException
+ */
+//function exceptions_error_handler($severity, $message, $filename, $lineno) {
+//    throw new ErrorException($message, 0, $severity, $filename, $lineno);
 //}
-session_set_cookie_params(33600, '/', $_SERVER['SERVER_NAME'], FALSE, TRUE);
+//set_error_handler('exceptions_error_handler', E_ALL);
+header("X-Frame-Options: SAMEORIGIN");
+/*
+ * Prevent direct script access
+ */
+const APPLICATION_LOADED = true;
 session_start();
-if (! isset($_SESSION['cart']))
-    $_SESSION['cart'] = [];
-
-if (! isset($_SESSION['watchlist']))
-    $_SESSION['watchlist'] = [];
+//date_default_timezone_set("Africa/Nairobi");
 ////Error reporting
-ini_set('max_execution_time', 0);
+//ini_set('max_execution_time', 0);
 //ini_set('display_errors', 'on');
-error_reporting(-1);
+
 const SYSTEM_PATH = "system/";
 const APP_PATH = "app/";
 
 include_once(SYSTEM_PATH."config/autoload.config.php");
 global $database;
-$routes = $route;
+
 
 $uri = $_SERVER['REQUEST_URI'];
 
@@ -36,13 +48,18 @@ for ($i = 1; $i < count($uri_exploded); $i++) {
         //For urls that end in slashes, we truncate the last space and match the uri to the perfect route
         //Eg, ./some/ and ./some are the same. There we treat both as the same
         continue;
-    array_push($args, $uri_exploded[$i]);
+    $args[] = $uri_exploded[$i];
 }
 
 $args_array = $args;
 $args = implode("/", $args);
 $args = implode("/", explode("?", $args));
-map_uri_to_method($routes, $args, $args_array);
+try {
+   map_uri_to_method($routes, $args, $args_array);
+}catch (\Throwable $e) {
+    $error = new Controller();
+    $error->report_error($e);
+}
 function map_uri_to_method($routes, $args, $args_array)
 {
     $iterator = 0;
@@ -59,11 +76,16 @@ function map_uri_to_method($routes, $args, $args_array)
             if ($route == $args) {
                 //Less build the function from the appropriate file
                 $val_route = explode("/", $val);
-                include_once(APP_PATH."controllers/" . $val_route[0] . ".php");
+                include_once(APP_PATH . "controllers/" . $val_route[0] . ".php");
                 $class_ucfirst = ucfirst($val_route[0]);
                 $class = New $class_ucfirst;
-                call_user_func(array($class, $val_route[1]));
-                //Lets deal with function arguments;
+                try {
+                    call_user_func(array($class, $val_route[1]));
+                }catch (Exception $e) {
+                    $g = new Controller();
+                    $g->report_error($e);
+                }
+                //Let's deal with function arguments;
                 return;
             } else
                 continue;
@@ -75,7 +97,7 @@ function map_uri_to_method($routes, $args, $args_array)
             //echo "<br>".$a. "-".$string;
             //Lets match array argument count in string uri and the loop supplied route
 
-            //Reverse array order to get arguments first
+            //Reverse array order getting arguments first
             $dynamic_route_reversed = array_reverse($dynamic_route, false);
             $args_array_reversed = array_reverse($args_array, false);
             $func_arguments = array(); //Arguments supplied from the url.
@@ -84,7 +106,7 @@ function map_uri_to_method($routes, $args, $args_array)
                 for ($i = 0; $i < count($dynamic_route_reversed); $i++)
                     if (strcmp($dynamic_route_reversed[$i], "(:any)") == 0) {
                         unset($dynamic_route_reversed[$i]);
-                        if (isset($args_array_reversed[$i])) { //Lets store the arguments provided by the uri
+                        if (isset($args_array_reversed[$i])) { //Let's store the arguments provided by the uri
                             $func_arguments[$i] = $args_array_reversed[$i];
                             unset($args_array_reversed[$i]);
                         } else
@@ -96,7 +118,7 @@ function map_uri_to_method($routes, $args, $args_array)
                 if (strcmp($args_array_reversed, $dynamic_route_reversed) == 0) {
                     //When the strings match, we then route the request to the called class and method
                     $val_route = explode("/", $val); //We get the routing value and break it down to get the file name and class name
-                    include_once(APP_PATH."controllers/" . $val_route[0] . ".php"); //We then import the class file
+                    include_once(APP_PATH . "controllers/" . $val_route[0] . ".php"); //We then import the class file
                     $class_ucfirst = ucfirst($val_route[0]);
                     $class = New $class_ucfirst;
                     call_user_func_array(array($class, $val_route[1]), array_reverse($func_arguments));

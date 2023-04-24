@@ -9,7 +9,7 @@
                                 <div class="slider-content-activation-one">
                                     <div class="single-slide slick-slide" data-sal="slide-up" data-sal-delay="400" data-sal-duration="800">
                                         <span class="subtitle"><i class="fas fa-fire"></i> Hot Deal In This Week</span>
-                                        <h1 class="title">Body Shapewear For Women</h1>
+                                        <h1 class="title">Roco Wireless Headphone</h1>
                                         <div class="slide-action">
                                             <div class="shop-btn">
                                                 <a href="shop.html" class="axil-btn btn-bg-white"><i class="fal fa-shopping-cart"></i>Shop Now</a>

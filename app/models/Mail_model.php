@@ -20,14 +20,14 @@ class Mail_model extends Model
         //Mail
         $this->mail->SMTPDebug = 0;                                 // Enable verbose debug output
         $this->mail->isSMTP();                                      // Set mailer to use SMTP
-        $this->mail->Host = 'i.hambren.com';  // Specify main and backup SMTP servers
+        $this->mail->Host = 'jaslac.com';  // Specify main and backup SMTP servers
         $this->mail->SMTPAuth = true;                               // Enable SMTP authentication
-        $this->mail->Username = 'no-reply@i.hambren.com';                 // SMTP username
-        $this->mail->Password = '7]Ei6Nra1X}X';                           // SMTP password
+        $this->mail->Username = 'xyz-donot-reply-to-this-email@jaslac.com';                 // SMTP username
+        $this->mail->Password = '?#dhXl=votYc';                           // SMTP password
         $this->mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
         $this->mail->Port = 465;
 
-        $this->mail->setFrom('no-reply@i.hambren.com', 'Hambren Shopping');
+        $this->mail->setFrom('xyz-donot-reply-to-this-email@jaslac.com', 'Jaslac');
         // $mail->addAddress('ashrikan@gmail.com', 'Ashan');     // Add a recipient
         if ($bcc)
             $this->mail->addBCC($bcc);

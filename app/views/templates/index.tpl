@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Hambren || One Stop Shopping Center</title>
+    <title>Hambren</title>
     <meta name="robots" content="noindex, follow" />
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,8 +15,7 @@
     ============================================ -->
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="/assets/css/vendor/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/vendor/font-awesome.css">
     <link rel="stylesheet" href="/assets/css/vendor/flaticon/flaticon.css">
     <link rel="stylesheet" href="/assets/css/vendor/slick.css">
@@ -26,8 +25,8 @@
     <link rel="stylesheet" href="/assets/css/vendor/magnific-popup.css">
     <link rel="stylesheet" href="/assets/css/vendor/base.css">
     <link rel="stylesheet" href="/assets/css/style.min.css">
-    <link rel="stylesheet" type="text/css" href="/assets/custom/style.css?d={$version}"">
-    <link rel="stylesheet" href="/assets/css/custom.css?d={$version}">
+    <link rel="stylesheet" href="/assets/css/custom.css?v=3">
+
 </head>
 
 
@@ -50,7 +49,7 @@
     <div class="axil-header-top" style="background:#333; color: #fafafa">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-sm-6 d-none d-md-block d-lg-block d-xl-block">
+                <div class="col-sm-6">
                     <div class="header-top-dropdown">
                         <div class="dropdown">
                             <button class="dropdown-toggle text-white" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -67,6 +66,7 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="/#">USD</a></li>
+
                             </ul>
                         </div>
                     </div>
@@ -75,9 +75,8 @@
                     <div class="header-top-link">
                         <ul class="quick-link">
                             <li><a href="/contact_us#" class="text-white">Help</a></li>
-                            <li class="d-none d-md-block d-lg-block d-xl-block"><a href="/profile" class="text-white">Join Us</a></li>
+                            <li><a href="/profile" class="text-white">Join Us</a></li>
                             <li><a href="/profile" class="text-white">Sign In</a></li>
-                            <li><a href="/register" class="text-white">Become Vendor</a></li>
                         </ul>
                     </div>
                 </div>
@@ -91,11 +90,11 @@
             <div class="header-navbar" style="border-radius: 0; width:100%">
                 <div class="header-brand">
 
-                    <a href="/" class="logo logo-dark">
-                        <img src="/assets/images/logo/hambren.png"  alt="Site Logo">
+                    <a href="index.html" class="logo logo-dark">
+                        <img src="/assets/images/logo/hambren.png" style="width:100px" alt="Site Logo">
                     </a>
-                    <a href="/" class="logo logo-light">
-                        <img src="/assets/images/logo/hambren.png"  alt="Site Logo">
+                    <a href="index.html" class="logo logo-light">
+                        <img src="/assets/images/logo/hambren.png" style="width:100px" alt="Site Logo">
                     </a>
                 </div>
                 <div class="header-main-nav">
@@ -104,60 +103,43 @@
                         <button class="mobile-close-btn mobile-nav-toggler"><i class="fas fa-times"></i></button>
                         <div class="mobile-nav-brand">
                             <a href="index.html" class="logo">
-                                <img src="/assets/images/logo/hambren.png" alt="Site Logo">
+                                <img src="/assets/images/logo/logo.png" alt="Site Logo">
                             </a>
                         </div>
                         <ul class="mainmenu">
                             <li class="">
-                                <a href="/featured">New Arrivals</a>
+                                <a href="/">Home</a>
                             </li>
-                            <li class="">
-                                <a href="/special_offer">Best Sellers</a>
-                            </li>
-{*                            <li class="">*}
-{*                                <a href="/">New Arrivals</a>*}
-{*                            </li>*}
-                            <li class="d-lg-none d-md-none d-sm-block">
-                                <a href="/register">Become vendor</a>
-                            </li>
-                            <li class="menu-item-has-children">
-                                <a href="#">Categories</a>
-                                <ul class="axil-submenu">
-                                    {foreach $categories as $item}
-                                        <li class="">
-                                            <a href="/{$item['url']}">{$item['category']}</a>
-                                        </li>
-                                    {/foreach}
-                                </ul>
-                            </li>
-
+                            {foreach $categories as $item}
+                                <li class="">
+                                    <a href="/{$item['url']}">{$item['category']}</a>
+                                </li>
+                            {/foreach}
                         </ul>
                     </nav>
                     <!-- End Mainmanu Nav -->
                 </div>
                 <div class="header-action">
                     <ul class="action-list">
-                        <li class="axil-search search-small-screen">
-                            <input type="search" class="placeholder product-search-input" name="search2" id="search2" value="{if isset($smarty.get.q)} {$smarty.get.q} {/if}" value="" maxlength="128" placeholder="What are you looking for?" autocomplete="off">
-                            <button type="submit" class="icon wooc-btn-search">
+                        <li class="axil-search">
+                            <a href="javascript:void(0)" class="header-search-icon" title="Search">
                                 <i class="flaticon-magnifying-glass"></i>
-                            </button>
+                            </a>
                         </li>
-                        <li class="shopping-cart">
-                            <a href="/wishlist" class="cart-dropdown-btn">
-                                <span class="cart-count watchlist">0</span>
-                                <i class="flaticon-heart text-white"></i>
+                        <li class="wishlist">
+                            <a href="wishlist.html">
+                                <i class="flaticon-heart"></i>
                             </a>
                         </li>
                         <li class="shopping-cart">
-                            <a href="#" onclick="rightCart(1)" class="cart-dropdown-btn">
-                                <span class="cart-count cart">0</span>
-                                <i class="flaticon-shopping-cart text-white"></i>
+                            <a href="/#" class="cart-dropdown-btn">
+                                <span class="cart-count">3</span>
+                                <i class="flaticon-shopping-cart"></i>
                             </a>
                         </li>
                         <li class="my-account">
                             <a href="javascript:void(0)">
-                                <i class="flaticon-person text-white"></i>
+                                <i class="flaticon-person"></i>
                             </a>
                             <div class="my-account-dropdown">
                                 <span class="title">QUICKLINKS</span>
@@ -178,12 +160,12 @@
                                 <div class="login-btn">
                                     <a href="/login" class="axil-btn btn-bg-primary">Login</a>
                                 </div>
-                                <div class="reg-footer text-center">No account yet? <a href="/profile" class="btn-link">REGISTER HERE.</a></div>
+                                <div class="reg-footer text-center">No account yet? <a href="sign-up.html" class="btn-link">REGISTER HERE.</a></div>
                             </div>
                         </li>
                         <li class="axil-mobile-toggle">
                             <button class="menu-btn mobile-nav-toggler">
-                                <i class="flaticon-menu-2 text-white"></i>
+                                <i class="flaticon-menu-2"></i>
                             </button>
                         </li>
                     </ul>
@@ -265,10 +247,9 @@
                             <p>Canada Ontario Toronto<br/>
                                 Phone: +1 (437) 980-3253
                                 <br/>
-                                Email: sales@hambren.com
-                                <br/>
-                                email: vendor@hambren.com
+                                Email: sales@hambrem.com
                             </p>
+                            
                         </div>
                     </div>
                 </div>
@@ -281,11 +262,9 @@
                             <ul>
                                 <li><a href="/profile">My Account</a></li>
                                 <li><a href="/login">Login / Register</a></li>
-                                <!--  <li><a href="/cart">Cart</a></li>
+                                <li><a href="/cart">Cart</a></li>
                                 <li><a href="/wishlist">Wishlist</a></li>
-                                <li><a href="/shop">Shop</a></li> -->
-                                <li><a href="/register">Become Vendor</a></li>
-                                <li><a href="/how-to-sell">How to sell with Hambren</a></li>
+                                <li><a href="/shop">Shop</a></li>
                             </ul>
                         </div>
                     </div>
@@ -300,9 +279,8 @@
                                 <li><a href="/about_us">About us</a></li>
                                 <li><a href="/privacy_policy">Privacy Policy</a></li>
                                 <li><a href="/terms_of_us">Terms Of Use</a></li>
-                                <li><a href="/contact_us">Contact</a></li>
                                 <li><a href="/faq#">FAQ</a></li>
-
+                                <li><a href="/contact_us">Contact</a></li>
                             </ul>
                         </div>
                     </div>
@@ -369,9 +347,7 @@
         </div>
     </div>
     <!-- End Copyright Area  -->
-
 </footer>
-
 <!-- End Footer Area  -->
 
 <!-- Product Quick View Modal Start -->
@@ -499,8 +475,8 @@
 
                                         <!-- Start Product Action  -->
                                         <ul class="product-action d-flex-center mb--0">
-                                            <li class="add-to-cart"><a href="#" class="axil-btn btn-bg-primary">Add to Cart</a></li>
-                                            <li class="wishlist"><a href="#" class="axil-btn wishlist-btn"><i class="far fa-heart"></i></a></li>
+                                            <li class="add-to-cart"><a href="cart.html" class="axil-btn btn-bg-primary">Add to Cart</a></li>
+                                            <li class="wishlist"><a href="wishlist.html" class="axil-btn wishlist-btn"><i class="far fa-heart"></i></a></li>
                                         </ul>
                                         <!-- End Product Action  -->
 
@@ -522,47 +498,75 @@
     <button class="card-close sidebar-close"><i class="fas fa-times"></i></button>
     <div class="header-search-wrap">
         <div class="card-header">
-            <form action="//{$smarty.server.SERVER_NAME}/search/products" method="get">
+            <form action="/#">
                 <div class="input-group">
-                    <input type="search" value="{if isset($smarty.get.q)}{$smarty.get.q}{/if}" class="form-control" name="q" id="prod-search" onkeyup="searchBProducts(this)" onkeydown="searchBProducts(this)" placeholder="Write Something....">
+                    <input type="search" class="form-control" name="prod-search" id="prod-search" placeholder="Write Something....">
                     <button type="submit" class="axil-btn btn-bg-primary"><i class="far fa-search"></i></button>
                 </div>
             </form>
         </div>
         <div class="card-body">
-{*            <div class="search-result-header">*}
-{*                <h6 class="title">0 Result Found</h6>*}
-{*                <a href="/shop" class="view-all">View All</a>*}
-{*            </div>*}
-            <div class="psearch-results" id="">
-{*                <div class="axil-product-list">*}
-{*                    <div class="thumbnail">*}
-{*                        <a href="single-product.html">*}
-{*                            <img src="/assets/images/product/electric/product-09.png" alt="Yantiti Leather Bags">*}
-{*                        </a>*}
-{*                    </div>*}
-{*                    <div class="product-content">*}
-{*                        <div class="product-rating">*}
-{*                                <span class="rating-icon">*}
-{*                                <i class="fas fa-star"></i>*}
-{*                                <i class="fas fa-star"></i>*}
-{*                                <i class="fas fa-star"></i>*}
-{*                                <i class="fas fa-star"></i>*}
-{*                                <i class="fal fa-star"></i>*}
-{*                            </span>*}
-{*                            <span class="rating-number"><span>100+</span> Reviews</span>*}
-{*                        </div>*}
-{*                        <h6 class="product-title"><a href="single-product.html">Media Remote</a></h6>*}
-{*                        <div class="product-price-variant">*}
-{*                            <span class="price current-price">$29.99</span>*}
-{*                            <span class="price old-price">$49.99</span>*}
-{*                        </div>*}
-{*                        <div class="product-cart">*}
-{*                            <a href="cart.html" class="cart-btn"><i class="fal fa-shopping-cart"></i></a>*}
-{*                            <a href="wishlist.html" class="cart-btn"><i class="fal fa-heart"></i></a>*}
-{*                        </div>*}
-{*                    </div>*}
-{*                </div>*}
+            <div class="search-result-header">
+                <h6 class="title">24 Result Found</h6>
+                <a href="/shop" class="view-all">View All</a>
+            </div>
+            <div class="psearch-results">
+                <div class="axil-product-list">
+                    <div class="thumbnail">
+                        <a href="single-product.html">
+                            <img src="/assets/images/product/electric/product-09.png" alt="Yantiti Leather Bags">
+                        </a>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-rating">
+                                <span class="rating-icon">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fal fa-star"></i>
+                            </span>
+                            <span class="rating-number"><span>100+</span> Reviews</span>
+                        </div>
+                        <h6 class="product-title"><a href="single-product.html">Media Remote</a></h6>
+                        <div class="product-price-variant">
+                            <span class="price current-price">$29.99</span>
+                            <span class="price old-price">$49.99</span>
+                        </div>
+                        <div class="product-cart">
+                            <a href="cart.html" class="cart-btn"><i class="fal fa-shopping-cart"></i></a>
+                            <a href="wishlist.html" class="cart-btn"><i class="fal fa-heart"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="axil-product-list">
+                    <div class="thumbnail">
+                        <a href="single-product.html">
+                            <img src="/assets/images/product/electric/product-09.png" alt="Yantiti Leather Bags">
+                        </a>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-rating">
+                                <span class="rating-icon">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fal fa-star"></i>
+                            </span>
+                            <span class="rating-number"><span>100+</span> Reviews</span>
+                        </div>
+                        <h6 class="product-title"><a href="single-product.html">Media Remote</a></h6>
+                        <div class="product-price-variant">
+                            <span class="price current-price">$29.99</span>
+                            <span class="price old-price">$49.99</span>
+                        </div>
+                        <div class="product-cart">
+                            <a href="cart.html" class="cart-btn"><i class="fal fa-shopping-cart"></i></a>
+                            <a href="wishlist.html" class="cart-btn"><i class="fal fa-heart"></i></a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -576,8 +580,88 @@
             <h2 class="header-title">Cart review</h2>
             <button class="cart-close sidebar-close"><i class="fas fa-times"></i></button>
         </div>
-        <div class="cart-body-1">
-
+        <div class="cart-body">
+            <ul class="cart-item-list">
+                <li class="cart-item">
+                    <div class="item-img">
+                        <a href="/product"><img src="/assets/images/product/electric/product-01.png" alt="Commodo Blown Lamp"></a>
+                        <button class="close-btn"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="item-content">
+                        <div class="product-rating">
+                                <span class="icon">
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+							</span>
+                            <span class="rating-number">(64)</span>
+                        </div>
+                        <h3 class="item-title"><a href="/product">Wireless PS Handler</a></h3>
+                        <div class="item-price"><span class="currency-symbol">$</span>155.00</div>
+                        <div class="pro-qty item-quantity">
+                            <input type="number" class="quantity-input" value="15">
+                        </div>
+                    </div>
+                </li>
+                <li class="cart-item">
+                    <div class="item-img">
+                        <a href="/product"><img src="/assets/images/product/electric/product-02.png" alt="Commodo Blown Lamp"></a>
+                        <button class="close-btn"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="item-content">
+                        <div class="product-rating">
+                                <span class="icon">
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+							</span>
+                            <span class="rating-number">(4)</span>
+                        </div>
+                        <h3 class="item-title"><a href="/product">Gradient Light Keyboard</a></h3>
+                        <div class="item-price"><span class="currency-symbol">$</span>255.00</div>
+                        <div class="pro-qty item-quantity">
+                            <input type="number" class="quantity-input" value="5">
+                        </div>
+                    </div>
+                </li>
+                <li class="cart-item">
+                    <div class="item-img">
+                        <a href="/product"><img src="/assets/images/product/electric/product-03.png" alt="Commodo Blown Lamp"></a>
+                        <button class="close-btn"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="item-content">
+                        <div class="product-rating">
+                                <span class="icon">
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+							</span>
+                            <span class="rating-number">(6)</span>
+                        </div>
+                        <h3 class="item-title"><a href="/poduct">HD CC Camera</a></h3>
+                        <div class="item-price"><span class="currency-symbol">$</span>200.00</div>
+                        <div class="pro-qty item-quantity">
+                            <input type="number" class="quantity-input" value="100">
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="cart-footer">
+            <h3 class="cart-subtotal">
+                <span class="subtotal-title">Subtotal:</span>
+                <span class="subtotal-amount">$610.00</span>
+            </h3>
+            <div class="group-btn">
+                <a href="/cart" class="axil-btn btn-bg-primary viewcart-btn">View Cart</a>
+                <a href="/checkout" class="axil-btn btn-bg-secondary checkout-btn">Checkout</a>
+            </div>
         </div>
     </div>
 </div>
@@ -600,16 +684,6 @@
 </div>
 <div class="closeMask"></div>
 {/if}
-<div class="bottom-pop-up-overlay p-3 alert alert-warning text-center font-weight-bolder"></div>
-<div class="bottom-pop-up-overlay p-3 alert alert-warning text-center font-weight-bolder"></div>
-<div class="custom-modal">
-    <div class="card custom-modal-content">
-        <div class="col-4 col-md-3 float-end">
-            <button class="btn btn-dark rounded-0 mt-2 mb-2" style="width: 100px;" onclick="$('.custom-modal').fadeOut('slow')">Close</button>
-        </div>
-        <div class="card-body modal-content-fill"></div>
-    </div>
-</div>
 <!-- Offer Modal End -->
 <!-- JS
 ============================================ -->
@@ -634,21 +708,7 @@
 
 <!-- Main JS -->
 <script src="/assets/js/main.js"></script>
-<script src="/assets/custom/scripts.js?v={$version}"></script>
-<script>
-    //new ().init();
-    {literal}
-    $(document).ready(() =>{
-        $.post("//" + window.location.host + "/get_cart", (data) => {
-            let items = JSON.parse(data);
-            console.log(items)
-            $(".cart").html(items.cart);
-            $(".watchlist").html(items.watchlist);
-        });
-    });
-    {/literal}
 
-</script>
 </body>
 
 </html>

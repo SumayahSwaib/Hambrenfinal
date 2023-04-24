@@ -37,8 +37,8 @@ class Products_model extends Model
     {
         if (! $user)
             return false;
-        $size = $this->xss_clean($this->input->post("size"));
-        $status = $this->xss_clean($this->input->post("status"));
+        $size = $this->security->xss_clean($this->inputs->post("size"));
+        $status = $this->security->xss_clean($this->inputs->post("status"));
 
         if (empty($size) or empty($status))
             return false;
@@ -73,8 +73,8 @@ class Products_model extends Model
     {
         if (! $user)
             return false;
-        $color = $this->xss_clean($this->input->post("color"));
-        $status = $this->xss_clean($this->input->post("status"));
+        $color = $this->security->xss_clean($this->inputs->post("color"));
+        $status = $this->security->xss_clean($this->inputs->post("status"));
 
         if (empty($color) or empty($status))
             return false;
@@ -95,23 +95,23 @@ class Products_model extends Model
     {
         if (! $user)
             return false;
-        //print_r($this->input->post());
-        $product = $this->xss_clean($this->input->post("product"));
+        //print_r($this->inputs->post());
+        $product = $this->security->xss_clean($this->inputs->post("product"));
         $url = str_replace(" ", "-", $this->replace_multiple_spaces($this->remove_none_utf_char($this->remove_special_chars($product))));
         $url = $this->check_url_for_duplicates(strtolower($url), "products", "url");
-        $new_price = $this->xss_clean($this->input->post("price_one"));
-        $old_price = $this->xss_clean($this->input->post("price_two"));
-        $sizes = $this->input->post("sizes");
-        $color = $this->input->post("color");
-        $summary = $this->xss_clean($this->input->post("summary"));
-        $description = $this->input->post("description");
-        $currency = $this->xss_clean($this->input->post("currency"));
-        $supplier = $this->xss_clean($this->input->post("supplier"));
-        $measurement = $this->xss_clean($this->input->post("measurement"));
-        $category = $this->xss_clean($this->input->post("category"));
-        $keywords = $this->xss_clean($this->input->post("keywords"));
-        $sub_category = $this->xss_clean($this->input->post("sub-category"));
-        $product_type = $this->xss_clean($this->input->post("p_type"));
+        $new_price = $this->security->xss_clean($this->inputs->post("price_one"));
+        $old_price = $this->security->xss_clean($this->inputs->post("price_two"));
+        $sizes = $this->inputs->post("sizes");
+        $color = $this->inputs->post("color");
+        $summary = $this->security->xss_clean($this->inputs->post("summary"));
+        $description = $this->inputs->post("description");
+        $currency = $this->security->xss_clean($this->inputs->post("currency"));
+        $supplier = $this->security->xss_clean($this->inputs->post("supplier"));
+        $measurement = $this->security->xss_clean($this->inputs->post("measurement"));
+        $category = $this->security->xss_clean($this->inputs->post("category"));
+        $keywords = $this->security->xss_clean($this->inputs->post("keywords"));
+        $sub_category = $this->security->xss_clean($this->inputs->post("sub-category"));
+        $product_type = $this->security->xss_clean($this->inputs->post("p_type"));
         $id = $this->db->insert("products", array("name" => $product,  "p_type" => $product_type, "metric" => $measurement, "currency" => $currency,
             "description" => $description,"keywords" => $keywords, "summary" => $summary, "price_1" => $new_price, "price_2" => $old_price, "date_added" => date("Y-m-d"),
             "user" => $user, "category" => $category, "sub_category" => $sub_category, "supplier" => $supplier, "url" => $url));
@@ -129,7 +129,7 @@ class Products_model extends Model
      */
     function get_product_info($product, $status = false, $record_country = false, $user = false): bool|array
     {
-        $product = $this->get_product_id_by_url($this->xss_clean($product));
+        $product = $this->get_product_id_by_url($this->security->xss_clean($product));
         if ($this->session->data("preference"))
             $this->db->where("p_type",$this->session->data("preference") );
 
@@ -204,10 +204,10 @@ class Products_model extends Model
         if ($sub_category)
             $this->db->where("sub_category", $sub_category);
 
-        if ($this->session->data("preference"))
-            $this->db->where("p_type",$this->session->data("preference") );
+//        if ($this->session->data("preference"))
+//            $this->db->where("p_type",$this->session->data("preference") );
 
-        $page = $this->input->get("page") ?: 1;
+        $page = $this->inputs->get("page") ?: 1;
         $page = (int)$page;
         $this->db->pageLimit = is_null($limit) ? 200 : 12;
 
@@ -274,7 +274,7 @@ class Products_model extends Model
             $this->db->where("status", 1);
             //$this->db->orderBy("RAND()", "desc");
         }
-        $this->db->pageLimit = 12;
+        $this->db->pageLimit = 20;
         if ($category and ! $special_category and ! $sub_category)
             $this->db->where("products.category", $category);
         if ($special_category)
@@ -325,19 +325,19 @@ class Products_model extends Model
     function update_product($user) {
         if (! $user)
             return false;
-        //print_r($this->input->post());
-        $id = $this->input->post("id");
-        $product = $this->xss_clean($this->input->post("product"));
-        $new_price = $this->xss_clean($this->input->post("price_one"));
-        $old_price = $this->xss_clean($this->input->post("price_two"));
-        $summary = $this->xss_clean($this->input->post("summary"));
-        $description = $this->input->post("description");
-        $currency = $this->xss_clean($this->input->post("currency"));
-        $supplier = $this->xss_clean($this->input->post("supplier"));
-        $measurement = $this->xss_clean($this->input->post("measurement"));
-        $category = $this->xss_clean($this->input->post("category"));
-        $sub_category = $this->xss_clean($this->input->post("sub-category"));
-        $keywords = $this->xss_clean($this->input->post("keywords"));
+        //print_r($this->inputs->post());
+        $id = $this->inputs->post("id");
+        $product = $this->security->xss_clean($this->inputs->post("product"));
+        $new_price = $this->security->xss_clean($this->inputs->post("price_one"));
+        $old_price = $this->security->xss_clean($this->inputs->post("price_two"));
+        $summary = $this->security->xss_clean($this->inputs->post("summary"));
+        $description = $this->inputs->post("description");
+        $currency = $this->security->xss_clean($this->inputs->post("currency"));
+        $supplier = $this->security->xss_clean($this->inputs->post("supplier"));
+        $measurement = $this->security->xss_clean($this->inputs->post("measurement"));
+        $category = $this->security->xss_clean($this->inputs->post("category"));
+        $sub_category = $this->security->xss_clean($this->inputs->post("sub-category"));
+        $keywords = $this->security->xss_clean($this->inputs->post("keywords"));
         $this->db->where("id", $id);
         $this->db->update("products", array("name" => $product, "keywords" => $keywords, "metric" => $measurement, "currency" => $currency,
             "description" => $description, "summary" => $summary, "price_1" => $new_price, "price_2" => $old_price, "date_added" => date("Y-m-d"),
@@ -347,9 +347,9 @@ class Products_model extends Model
     function update_product_size($user, $table, $column) {
         if (! $user)
             return false;
-        $action = $this->input->post("action");
-        $value = $this->input->post("value");
-        $product = $this->input->post("product");
+        $action = $this->inputs->post("action");
+        $value = $this->inputs->post("value");
+        $product = $this->inputs->post("product");
         if ($action) {
             $this->db->insert($table, array($column => $value,
                 "date_created" => date("Y-m-d"),
@@ -392,7 +392,7 @@ class Products_model extends Model
         if (empty($user))
             return false;
 
-        $action = $this->input->get("i");
+        $action = $this->inputs->get("i");
         if (! is_numeric($action))
             return false;
         $action = $action == 2 ? 1 : 0;
@@ -415,13 +415,13 @@ class Products_model extends Model
     function activate_product_attributes($user) {
         if (empty($user))
             return false;
-        //print_r($this->input->post());
+        //print_r($this->inputs->post());
         /*
          * This is a general method that changes status to all product attributes to there different tables
          */
-        $column_data = $this->input->post("data");
-        $table = $this->xss_clean($this->input->post("page"));
-        $action = $this->xss_clean($this->input->post("action"));
+        $column_data = $this->inputs->post("data");
+        $table = $this->security->xss_clean($this->inputs->post("page"));
+        $action = $this->security->xss_clean($this->inputs->post("action"));
 
         $action = $action == 2 ? 0 : 1;
 
@@ -441,13 +441,13 @@ class Products_model extends Model
     function manage_special_categories($user) {
         if (empty($user))
             return false;
-        //print_r($this->input->post());
+        //print_r($this->inputs->post());
         /*
          * This is a general method that changes status to all product attributes to there different tables
          */
-        $column_data = $this->input->post("data");
-        $table = $this->xss_clean($this->input->post("page"));
-        $action = $this->xss_clean($this->input->post("action"));
+        $column_data = $this->inputs->post("data");
+        $table = $this->security->xss_clean($this->inputs->post("page"));
+        $action = $this->security->xss_clean($this->inputs->post("action"));
 
         /*
          * Action 1 is adding to special category
@@ -481,7 +481,7 @@ class Products_model extends Model
      */
     function get_special_categories($limit = 10, $table = '', $status = true): array
     {
-        $page = $this->input->get("page") ?: 1;
+        $page = $this->inputs->get("page") ?: 1;
         $page = (int)$page;
         $this->db->pageLimit = 20;
         if ($status) {
@@ -565,8 +565,8 @@ class Products_model extends Model
      */
     function search_products($user): array
     {
-        $search_query = $this->xss_clean(trim($this->input->get("q")));
-        $page = $this->input->get("page") ?: 1;
+        $search_query = $this->security->xss_clean(trim($this->inputs->get("q")));
+        $page = $this->inputs->get("page") ?: 1;
         $page = (int)$page;
         if(empty($search_query))
             return array();
@@ -678,7 +678,7 @@ class Products_model extends Model
         echo 1;
         if (empty($comment) or empty($product) or ! is_numeric($product))
             return false;
-        $comment = $this->xss_clean($comment);
+        $comment = $this->security->xss_clean($comment);
         $this->db->insert("product_views", array("product" => $product, "user" => $user, "comment" => $comment));
         return true;
     }
@@ -687,7 +687,7 @@ class Products_model extends Model
      * @throws Exception
      */
     function delete_photo() {
-        $image_name = $this->input->get("i");
+        $image_name = $this->inputs->get("i");
         if (! $image_name)
             return false;
         $image_path = "media/products_thumbnails/" . $image_name;
@@ -725,8 +725,8 @@ class Products_model extends Model
     function add_thumbnail_url($user) {
         if (! $user)
             return false;
-        $id = $this->xss_clean($this->input->post("product"));
-        $url = $this->xss_clean($this->input->post("url"));
+        $id = $this->security->xss_clean($this->inputs->post("product"));
+        $url = $this->security->xss_clean($this->inputs->post("url"));
 
         $this->db->where("product", $id);
         $this->db->where("photo", $url);

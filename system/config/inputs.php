@@ -1,10 +1,4 @@
 <?php
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-require  APP_PATH . 'helpers/mailer/src/Exception.php';
-require APP_PATH . 'helpers/mailer/src/PHPMailer.php';
-require APP_PATH . 'helpers/mailer/src/SMTP.php';
-
 class Input {
     function __construct()
     {
@@ -32,42 +26,25 @@ class Input {
     }
 }
 
-class Mail extends PHPMailer {
-    public $mail;
+class Mail {
+    public $to;
+    public $subject;
+    public $from;
+    public $message;
     function __construct()
     {
-        parent::__construct();
     }
-    function mail() {
-//        $mail = 0;
-//        $mail->SMTPDebug = 0;                                 // Enable verbose debug output
-//    $mail->isSMTP();                                      // Set mailer to use SMTP
-//    $mail->Host = 'ashlandtaxi.com';  // Specify main and backup SMTP servers
-//    $mail->SMTPAuth = true;                               // Enable SMTP authentication
-//    $mail->Username = 'admin@ashlandtaxi.com';                 // SMTP username
-//    $mail->Password = 'ashan123.';                           // SMTP password
-//    $mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
-//    $mail->Port = 465;                                    // TCP port to connect to
-        //Recipients
-//        $mail->setFrom('reservations@ashlandtaxi.com', 'Ashland Taxi');
-//        // $mail->addAddress('ashrikan@gmail.com', 'Ashan');     // Add a recipient
-//        $mail->addAddress($address);               // Name is optional
-//        // $mail->addReplyTo($reply, 'Reply too');
-//        // $mail->addCC('cc@example.com');
-//        // $mail->addBCC('bcc@example.com');
-//
-//        //Attachments
-//        //$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-//        //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-//
-//        //Content
-//        $mail->isHTML(true);                                  // Set email format to HTML
-//        $mail->Subject = $subject;
-//        $mail->Body    = $message;
-//        //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-//
-//        $mail->send();
-        // echo 'Message has been sent';
+
+    function send() {
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        $headers .= "From:". $this->from . "\r\n";
+        try {
+            mail($this->to, $this->subject, $this->message, $headers);
+        }
+        catch(Exception $e){
+
+        };
     }
 }
 

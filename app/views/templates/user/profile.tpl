@@ -2,19 +2,43 @@
 {block name="body"}
     <main class="main-wrapper">
         <!-- Start Breadcrumb Area  -->
+        <div class="axil-breadcrumb-area">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-8">
+                        <div class="inner">
+                            <ul class="axil-breadcrumb">
+                                <li class="axil-breadcrumb-item"><a href="index.html">Home</a></li>
+                                <li class="separator"></li>
+                                <li class="axil-breadcrumb-item active" aria-current="page">My Account</li>
+                            </ul>
+                            <h1 class="title">Explore All Products</h1>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-4">
+                        <div class="inner">
+                            <div class="bradcrumb-thumb">
+                                <img src="/assets/images/product/product-45.png" alt="Image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Breadcrumb Area  -->
 
         <!-- Start My Account Area  -->
-
         <div class="axil-dashboard-area axil-section-gap">
             <div class="container">
                 <div class="axil-dashboard-warp">
                     <div class="axil-dashboard-author">
                         <div class="media">
                             <div class="thumbnail">
-                                <img src="/media/products_thumbnails/blank.jpg" style="width:100px;" alt="Hello Annie">
+                                <img src="/assets/images/product/author1.png" alt="Hello Annie">
                             </div>
                             <div class="media-body">
-                                <h5 class="title mb-0">{$user_info.0.names}</h5>
+                                <h5 class="title mb-0">Hello Annie</h5>
+                                <span class="joining-date">eTrade Member Since Sep 2020</span>
                             </div>
                         </div>
                     </div>
@@ -37,70 +61,9 @@
                             <div class="tab-content">
                                 <div class="tab-pane fade show active" id="nav-dashboard" role="tabpanel">
                                     <div class="axil-dashboard-overview">
-                                        <div class="welcome-text">Hello {$user_info.0.names} (not <span>{$user_info.0.names}?</span> <a href="/logout">Log Out</a>)</div>
+                                        <div class="welcome-text">Hello Annie (not <span>Annie?</span> <a href="sign-in.html">Log Out</a>)</div>
                                         <p>From your account dashboard you can view your recent orders, manage your shipping and billing addresses, and edit your password and account details.</p>
-                                        {if $user_info[0].supplier == 0}
-                                            <div class="mt-2 mb-2 border border-success p-4">
-                                                <p class="font-weight-bolder pl-3 pr-3 mt-2">You are just a click away to start selling with Hambren.</p>
-                                                <p class="pl-3 pr-3 mt-2">Fill in the supplier's application form and we shall contact you as soon as it is submited</p>
-                                                <a href="javascript:supplierApplication()" class="pl-3 pr-3">
-                                                    <button class="btn btn-danger rounded-0" >Apply now</button>
-                                                </a>
-                                            </div>
-                                        {/if}
-                                        {if $user_info[0].supplier == 1}
-                                            <a href="https://vendor.hambren.com" class="btn btn-outline-primary mr-1 mb-1 p-3" style="font-size:18px">Vendor Dashboard</a>
-                                        {/if}
                                     </div>
-                                    {if isset($order_details)}
-                                        <h4 class="text-center text-danger p-3">Items on order list</h4>
-                                        <table class="table w-100">
-                                            <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th></th>
-                                                <th>Product</th>
-                                                <th>Description</th>
-                                                <th>Amount</th>
-                                                <th>Attributes</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            {foreach $ordered_items item=list name=ordered_item}
-                                                <tr>
-                                                    <td>{$smarty.foreach.ordered_item.index + 1}</td>
-                                                    <td>
-                                                        <a href="//{$smarty.server.SERVER_NAME}/product/{$list.url}">
-                                                            <img src="{$list.feature_photo}">
-                                                        </a>
-                                                        <br/>
-                                                        <div class="text-center">
-                                                            <small class="badge badge-danger p-2 rounded-circle">{$list.total_rates} / 5</small>
-                                                        </div>
-                                                        {for $counter=1 to 5}
-                                                            <span onclick='rateProduct({$list.id}, {$counter}, "{$list.name}")' class="cursor star_{$list.id}_{$counter} star_{$list.id} {if $counter <= $list.user_rates}text-danger{/if}">
-                                                                <i class="fa fa-star"></i>
-                                                            </span>
-                                                        {/for}
-                                                    </td>
-                                                    <td><a href="//{$smarty.server.SERVER_NAME}/product/{$list.url}">{$list.name}</a>
-                                                    </td>
-                                                    <td>{$list.description|nl2br}</td>
-                                                    <td>USD {($list.amount * $list.qty)|number_format}</td>
-                                                    <td>
-                                                        {if ! empty($list.color)}<b>Color</b> <br/>{$list.color}{/if}
-                                                        {if ! empty($list.size)}<br/><b>Size</b> <br/>{$list.size}{/if}
-                                                    </td>
-                                                </tr>
-                                            {/foreach}
-                                            <tr>
-                                                <td colspan="4" class="align-content-end">Total</td>
-                                                <td>USD {$order_details.0.amount|number_format}</td>
-                                                <td></td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    {/if}
                                 </div>
                                 <div class="tab-pane fade" id="nav-orders" role="tabpanel">
                                     <div class="axil-dashboard-order">
@@ -108,7 +71,6 @@
                                             <table class="table">
                                                 <thead>
                                                 <tr>
-                                                    <th></th>
                                                     <th scope="col">Order</th>
                                                     <th scope="col">Date</th>
                                                     <th scope="col">Status</th>
@@ -117,17 +79,41 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                {foreach $orders item=list name=order}
-                                                    <tr>
-                                                        <td>{$smarty.foreach.order.index + 1}</td>
-                                                        <td><a href="//{$smarty.server.SERVER_NAME}/profile/order/{$list.id}">#ORDER{$list.id}</a></td>
-                                                        <td>{$list.date_created}</td>
-                                                        <td>{if $list.order_state == 0}Pending{elseif $list.order_state == 1}Submitted{elseif $list.order_state == 2}Delivered{elseif $list.order_state == 3}Returned{/if}</td>
-                                                        <td>USD {$list.amount|number_format}</td>
-                                                        <td><a href="#" class="axil-btn view-btn">View</a></td>
-
-                                                    </tr>
-                                                {/foreach}
+                                                <tr>
+                                                    <th scope="row">#6523</th>
+                                                    <td>September 10, 2020</td>
+                                                    <td>Processing</td>
+                                                    <td>$326.63 for 3 items</td>
+                                                    <td><a href="#" class="axil-btn view-btn">View</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">#6523</th>
+                                                    <td>September 10, 2020</td>
+                                                    <td>On Hold</td>
+                                                    <td>$326.63 for 3 items</td>
+                                                    <td><a href="#" class="axil-btn view-btn">View</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">#6523</th>
+                                                    <td>September 10, 2020</td>
+                                                    <td>Processing</td>
+                                                    <td>$326.63 for 3 items</td>
+                                                    <td><a href="#" class="axil-btn view-btn">View</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">#6523</th>
+                                                    <td>September 10, 2020</td>
+                                                    <td>Processing</td>
+                                                    <td>$326.63 for 3 items</td>
+                                                    <td><a href="#" class="axil-btn view-btn">View</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">#6523</th>
+                                                    <td>September 10, 2020</td>
+                                                    <td>Processing</td>
+                                                    <td>$326.63 for 3 items</td>
+                                                    <td><a href="#" class="axil-btn view-btn">View</a></td>
+                                                </tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -149,10 +135,11 @@
                                                         <a href="#" class="address-edit"><i class="far fa-edit"></i></a>
                                                     </div>
                                                     <ul class="address-details">
-                                                        <li>Name: {$user_info.0.names}</li>
-                                                        <li>Email: {$user_info.0.email}</li>
-
-                                                        <li class="mt--30">{$user_info.0.country}</li>
+                                                        <li>Name: Annie Mario</li>
+                                                        <li>Email: annie@example.com</li>
+                                                        <li>Phone: 1234 567890</li>
+                                                        <li class="mt--30">7398 Smoke Ranch Road <br>
+                                                            Las Vegas, Nevada 89128</li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -163,12 +150,11 @@
                                                         <a href="#" class="address-edit"><i class="far fa-edit"></i></a>
                                                     </div>
                                                     <ul class="address-details">
-                                                        <li>Name: {$addresses.company}</li>
-                                                        <li>Email: {$addresses.email}</li>
-                                                        <li>Phone: {$addresses.phone_no}</li>
-                                                        <li class="mt--30">
-                                                            {$addresses.street} <br/>{$addresses.country} -{$addresses.district}
-                                                           </li>
+                                                        <li>Name: Annie Mario</li>
+                                                        <li>Email: annie@example.com</li>
+                                                        <li>Phone: 1234 567890</li>
+                                                        <li class="mt--30">7398 Smoke Ranch Road <br>
+                                                            Las Vegas, Nevada 89128</li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -180,20 +166,44 @@
                                         <div class="axil-dashboard-account">
                                             <form class="account-details-form">
                                                 <div class="row">
-                                                    <div class="col-lg-12">
+                                                    <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <label>Names</label>
-                                                            <input type="text" class="form-control" value="{$user_info[0]['names']}">
+                                                            <label>First Name</label>
+                                                            <input type="text" class="form-control" value="Annie">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Last Name</label>
+                                                            <input type="text" class="form-control" value="Mario">
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="form-group mb--40">
                                                             <label>Country/ Region</label>
-                                                            <input type="text" class="form-control" value="{$user_info[0]['country']}">
+                                                            <select class="select2">
+                                                                <option value="1">United Kindom (UK)</option>
+                                                                <option value="1">United States (USA)</option>
+                                                                <option value="1">United Arab Emirates (UAE)</option>
+                                                                <option value="1">Australia</option>
+                                                            </select>
                                                             <p class="b3 mt--10">This will be how your name will be displayed in the account section and in reviews</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
+                                                        <h5 class="title">Password Change</h5>
+                                                        <div class="form-group">
+                                                            <label>Password</label>
+                                                            <input type="password" class="form-control" value="123456789101112131415">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>New Password</label>
+                                                            <input type="password" class="form-control">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Confirm New Password</label>
+                                                            <input type="password" class="form-control">
+                                                        </div>
                                                         <div class="form-group mb--0">
                                                             <input type="submit" class="axil-btn" value="Save Changes">
                                                         </div>

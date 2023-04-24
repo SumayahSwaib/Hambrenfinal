@@ -38,7 +38,6 @@ class Suppliers_model extends Model
             status,
             url, 
             supplier_id,
-            (select photo from product_supplier_images where product_supplier_images.supplier = product_suppliers.id and feature_photo = 1) as photo,
             (select id from supplier_requests where user = supplier_id order by supplier_requests.id desc limit 1) as application,
             (select names from basic_info where user = product_suppliers.user) as names,
             (select names from basic_info where user = product_suppliers.supplier_id) as suppler_name");

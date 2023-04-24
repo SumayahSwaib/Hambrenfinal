@@ -42,14 +42,14 @@ class Payments_model extends Model
              */
             $final_cart_products = $this->model->Products_model->get_cart_items($cart_data);
             $total_cost = 0;
-//            $this->db->where("id", $district);
-//            $delivery_cost = $this->db->getValue("districts", "delivery_amount");
+            $this->db->where("id", $district);
+            $delivery_cost = $this->db->getValue("districts", "delivery_amount");
             $coupon_cost = 0;
 
             foreach ($final_cart_products as $item)
                 $total_cost = $total_cost + $final_cart[$item['id']]['qty'] * $item['price_1'];
 
-            $invoice_amount = ($total_cost + 0) - $coupon_cost;
+            $invoice_amount = ($total_cost + $delivery_cost) - $coupon_cost;
 
 //            if ($invoice_amount < 1000)
 //                return false;
