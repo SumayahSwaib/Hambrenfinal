@@ -22,6 +22,7 @@ Route::get("crops", [ApiResurceController::class, "crops"]);
 Route::POST("gardens", [ApiResurceController::class, "garden_create"]); 
 
 
+Route::post("orders", [ApiResurceController::class, "orders_submit"]); 
 
 Route::get("people", [ApiResurceController::class, "people"]);
 Route::POST("users/login", [ApiAuthController::class, "login"]);
