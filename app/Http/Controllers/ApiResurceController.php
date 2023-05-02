@@ -34,8 +34,8 @@ class ApiResurceController extends Controller
 
     public function orders_submit(Request $r)
     {
-        $u = auth('api')->user();
 
+        $u = $r->user;
         if ($u == null) {
             return $this->error('User not found.');
         }
@@ -84,7 +84,7 @@ class ApiResurceController extends Controller
             $oi->size = '';
             $oi->save();
         }
-        return $this->success(null, $message = "Submitted order successfully!", 200);
+        return $this->success(null, $message = "Submitted successfully!", 200);
     }
 
 

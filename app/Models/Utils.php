@@ -12,6 +12,25 @@ class Utils extends Model
 {
     use HasFactory;
 
+    public static function success($data = [], $message = "")
+    {
+        return (response()->json([
+            'code' => 1,
+            'message' => $message,
+            'data' => $data
+        ]));
+    }
+
+    public static function error($message = "")
+    {
+        return response()->json([
+            'code' => 0,
+            'message' => $message,
+            'data' => ""
+        ]);
+    }
+
+
     /* 
 /* 
 
