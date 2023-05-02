@@ -84,7 +84,7 @@ class ApiResurceController extends Controller
             $oi->size = '';
             $oi->save();
         }
-        return $this->success(null, $message = "Sussesfully submitted successfully!", 200);
+        return $this->success(null, $message = "Submitted order successfully!", 200);
     }
 
 
