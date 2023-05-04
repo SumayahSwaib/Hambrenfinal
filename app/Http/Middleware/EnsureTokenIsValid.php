@@ -24,8 +24,8 @@ class EnsureTokenIsValid
 
         $user_id = 0;
         if($headers !=null){
-            if(isset($headers['user_id'])){
-                $user_id = ((int)($headers['user_id']));
+            if(isset($headers['User-Id'])){
+                $user_id = ((int)($headers['User-Id']));
             }
         }
 
