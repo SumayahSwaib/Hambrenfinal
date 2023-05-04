@@ -26,6 +26,7 @@ Route::POST("gardens", [ApiResurceController::class, "garden_create"]);
 
 Route::middleware([EnsureTokenIsValid::class])->group(function () {
     Route::post("orders", [ApiResurceController::class, "orders_submit"]);
+    Route::get("orders", [ApiResurceController::class, "orders_get"]);
 });
 
  

@@ -9,4 +9,10 @@ class OrderedItem extends Model
 {
     use HasFactory;
     protected $table = 'ordered_items';
+
+
+    public function pro()
+    {
+        return $this->belongsTo(Product::class, 'product');
+    }
 }

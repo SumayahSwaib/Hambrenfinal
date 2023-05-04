@@ -32,6 +32,25 @@ class ApiResurceController extends Controller
     use ApiResponser;
 
 
+    public function orders_get(Request $r)
+    {
+
+        $u = $r->user;
+        if ($u == null) {
+            return $this->error('User not found.');
+        }
+        $orders = [];
+
+        foreach (Order::where([
+            'user' => $u->id
+        ])->get() as $order) {
+            $items = $order->get_items();
+            $order->items = json_encode($items); 
+            $orders[] = $order; 
+        }
+
+        return $orders;
+    }
     public function orders_submit(Request $r)
     {
 
