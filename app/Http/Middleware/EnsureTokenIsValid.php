@@ -20,7 +20,7 @@ class EnsureTokenIsValid
     {
         $headers = getallheaders();
 
-        return Utils::success($headers); 
+/*         return Utils::success($headers);  */
 
         $user_id = 0;
         if($headers !=null){
