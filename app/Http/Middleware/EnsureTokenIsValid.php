@@ -20,7 +20,7 @@ class EnsureTokenIsValid
     {
         $u = Administrator::find($request->header('user_id')); 
         if ($u == null) {
-            return Utils::success('User not found.'); 
+            return Utils::success('User not found. MIDDLEWARE'); 
         } 
         $request->user = $u;
         return $next($request);
