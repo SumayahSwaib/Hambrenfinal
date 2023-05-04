@@ -19,6 +19,9 @@ class EnsureTokenIsValid
     public function handle(Request $request, Closure $next)
     {
         $headers = getallheaders();
+
+        return Utils::success($headers); 
+
         $user_id = 0;
         if($headers !=null){
             if(isset($headers['user_id'])){
