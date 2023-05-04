@@ -18,7 +18,15 @@ class EnsureTokenIsValid
      */
     public function handle(Request $request, Closure $next)
     {
-        $user_id = ((int)($request->header('user_id')));
+        $headers = getallheaders();
+        $user_id = 0;
+        if($headers !=null){
+            if(isset($headers['user_id'])){
+                $user_id = ((int)($headers['user_id']));
+            }
+        }
+
+
         if($user_id < 1){
             return Utils::success('Token not found.');             
         }
