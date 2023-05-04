@@ -18,9 +18,13 @@ class EnsureTokenIsValid
      */
     public function handle(Request $request, Closure $next)
     {
-        $u = Administrator::find($request->header('user_id')); 
+        $user_id = ((int)($request->header('user_id')));
+        if($user_id < 1){
+            return Utils::success('Token not found.');             
+        }
+        $u = Administrator::find($user_id); 
         if ($u == null) {
-            return Utils::success('User not found. MIDDLEWARE'); 
+            return Utils::success('User not found.'); 
         } 
         $request->user = $u;
         return $next($request);
