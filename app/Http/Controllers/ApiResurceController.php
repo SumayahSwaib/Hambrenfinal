@@ -48,7 +48,7 @@ class ApiResurceController extends Controller
             $order->items = json_encode($items); 
             $orders[] = $order; 
         }
-        return $this->success($orders, $message = "Success", 200);
+        return $this->success($orders, $message = "Success!", 200);
     }
     public function orders_submit(Request $r)
     {
@@ -92,7 +92,7 @@ class ApiResurceController extends Controller
         } catch (\Throwable $th) {
             $items = [];
         }
-        foreach ($items as $item) {
+        foreach ($items as $key => $item) {
             $oi = new OrderedItem();
             $oi->order = $order->id;
             $oi->product = $item->product_id;
