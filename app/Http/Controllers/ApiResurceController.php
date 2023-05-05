@@ -77,12 +77,12 @@ class ApiResurceController extends Controller
         $order->date_created = Carbon::now();
         $order->date_updated = Carbon::now();
         if ($delivery != null) {
-          /*   $order->customer_phone_number_1 = $delivery->phone_number_1;
+            $order->customer_phone_number_1 = $delivery->phone_number_1;
             $order->customer_phone_number_2 = $delivery->phone_number_2;
             $order->customer_name = $delivery->first_name . " " . $delivery->last_name;
             $order->customer_address = $delivery->current_address;
             $order->delivery_district = $delivery->current_address;
-            $order->order_details = json_encode($delivery); */
+            $order->order_details = json_encode($delivery);
         }
         $order->save();
 
@@ -92,7 +92,7 @@ class ApiResurceController extends Controller
         } catch (\Throwable $th) {
             $items = [];
         }
-        foreach ($items as $key => $item) {
+        foreach ($items as $item) {
             $oi = new OrderedItem();
             $oi->order = $order->id;
             $oi->product = $item->product_id;
