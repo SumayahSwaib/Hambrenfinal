@@ -1,4 +1,4 @@
-ALTER TABLE `ordered_items`  
+ALTER TABLE `product_categories`  
 ADD `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP AFTER `id`,
 ADD `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP AFTER `created_at`;  
 
@@ -80,6 +80,7 @@ php artisan admin:make FormSr4Controller --model=App\FormSr4
 php artisan admin:make FormSr4Controller --model=App\invoices
 
  
+php artisan admin:make ProductCategoryController --model=App\Models\ProductCategory
 php artisan admin:make CourseController --model=App\\Models\\Course
 php artisan admin:make ParticipantController --model=App\\Models\\Participant
 php artisan admin:make MembersController --model=App\Models\User
@@ -112,6 +113,7 @@ php artisan admin:make QuotationItemController --model=App\Models\QuotationItem
 php artisan make:factory TeacherFactory
 
 
+php artisan make:model ProductCategory
 php artisan make:model InvoiceItem
 php artisan make:model Invoice
 php artisan make:model CropProtocol

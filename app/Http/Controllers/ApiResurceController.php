@@ -340,6 +340,12 @@ class ApiResurceController extends Controller
     {
         return $this->success(Product::where([])->orderby('id', 'desc')->get(), 'Success');
     }
+
+    public function categories()
+    {
+        return $this->success(ProductCategory::where([])->orderby('id', 'desc')->get(), 'Success');
+    }
+
     public function events()
     {
         return $this->success(Event::where([])->orderby('id', 'desc')->get(), 'Success');

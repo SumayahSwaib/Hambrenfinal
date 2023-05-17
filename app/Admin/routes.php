@@ -37,6 +37,7 @@ Route::group([
     $router->resource('crop-protocols', CropProtocolController::class);
     $router->resource('gardens', GardenController::class);
     $router->resource('garden-activities', GardenActivityController::class);
+    $router->resource('product-categories', ProductCategoryController::class); 
 
     /* ========================END OF NEW THINGS=============================*/
 
