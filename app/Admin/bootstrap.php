@@ -56,7 +56,7 @@ Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
 
 
 Form::init(function (Form $form) {
-    $form->disableEditingCheck();
+   // $form->disableEditingCheck();
     // $form->disableCreatingCheck();
     // $form->disableViewCheck();
     // $form->disableReset();
