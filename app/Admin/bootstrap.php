@@ -58,9 +58,9 @@ Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
 Form::init(function (Form $form) {
     $form->disableEditingCheck();
     // $form->disableCreatingCheck();
-    $form->disableViewCheck();
-    $form->disableReset();
-    $form->disableCreatingCheck();
+    // $form->disableViewCheck();
+    // $form->disableReset();
+    // $form->disableCreatingCheck();
 
     $form->tools(function (Form\Tools $tools) {
         $tools->disableDelete();
