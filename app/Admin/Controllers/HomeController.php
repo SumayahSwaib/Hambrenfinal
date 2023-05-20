@@ -179,7 +179,7 @@ class HomeController extends Controller
 
         $u = Auth::user();
         $content
-            ->title('SEN LOGISTICS AND MEDICAL SUPPLIES LTD - Dashboard')
+            ->title('HAMBREN - Dashboard')
             ->description('Hello ' . $u->name . "!");
 
 
@@ -221,6 +221,8 @@ class HomeController extends Controller
                 ]));
             });
         });
+
+        return $content;
 
         /*        $content->row(function (Row $row) {
 
