@@ -25,7 +25,8 @@ Route::post("post-media-upload", [ApiResurceController::class, 'upload_media']);
 
 
 Route::middleware([EnsureTokenIsValid::class])->group(function () {
-    Route::post("orders", [ApiResurceController::class, "orders_submit"]);
+    Route::post("orders", [ApiResurceController::class, "orders_submit"]); 
+    Route::post("product-create", [ApiResurceController::class, "product_create"]);
     Route::get("orders", [ApiResurceController::class, "orders_get"]);
 });
 
