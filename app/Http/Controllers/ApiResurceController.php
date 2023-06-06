@@ -10,6 +10,7 @@ use App\Models\Event;
 use App\Models\Garden;
 use App\Models\GardenActivity;
 use App\Models\Group;
+use App\Models\Image;
 use App\Models\Institution;
 use App\Models\Job;
 use App\Models\NewsPost;
@@ -32,6 +33,74 @@ class ApiResurceController extends Controller
     use ApiResponser;
 
 
+    public function upload_media(Request $request)
+    {
+        $administrator_id = $request->user;
+
+        $u = Administrator::find($administrator_id);
+        if ($u == null) {
+            return $this->error('User not found.');
+        }
+
+        if (
+            !isset($request->parent_id) ||
+            $request->parent_id == null ||
+            ((int)($request->parent_id)) < 1
+        ) {
+            return $this->error('Local parent ID is missing.');
+        }
+
+
+        if (
+            empty($_FILES)
+        ) {
+            return $this->error('No files found.');
+        }
+
+
+
+        $images = Utils::upload_images_2($_FILES, false);
+        $_images = [];
+
+
+        if (empty($images)) {
+            return $this->error('Failed to upload files.');
+        }
+
+        $msg = "";
+        foreach ($images as $src) {
+
+            $img = new Image();
+            $img->administrator_id =  $administrator_id;
+            $img->src =  $src;
+            $img->thumbnail =  null;
+            $img->parent_endpoint =  $request->parent_endpoint;
+            $img->type =  $request->type;
+            $img->parent_id =  (int)($request->parent_id);
+            $pro = Product::where(['local_id' => $img->parent_id])->first();
+            $img->product_id =  null;
+            if ($pro != null) {
+                $img->product_id =  $pro->id;
+            }
+            $img->size = 0;
+            $img->note = '';
+            if (
+                isset($request->note)
+            ) {
+                $img->note =  $request->note;
+            }
+            $img->save();
+            $_images[] = $img;
+        }
+
+        return $this->success(
+            null,
+            count($_images) . " Files uploaded successfully."
+        );
+    }
+
+
+
     public function orders_get(Request $r)
     {
 
@@ -45,8 +114,8 @@ class ApiResurceController extends Controller
             'user' => $u->id
         ])->get() as $order) {
             $items = $order->get_items();
-            $order->items = json_encode($items); 
-            $orders[] = $order; 
+            $order->items = json_encode($items);
+            $orders[] = $order;
         }
         return $this->success($orders, $message = "Success!", 200);
     }
