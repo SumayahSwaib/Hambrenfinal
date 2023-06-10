@@ -20,17 +20,17 @@ use Illuminate\Support\Facades\Route;
 Route::get("gardens", [ApiResurceController::class, "gardens"]);
 Route::get("garden-activities", [ApiResurceController::class, "garden_activities"]);
 Route::get("crops", [ApiResurceController::class, "crops"]);
-Route::POST("gardens", [ApiResurceController::class, "garden_create"]); 
+Route::POST("gardens", [ApiResurceController::class, "garden_create"]);
 Route::post("post-media-upload", [ApiResurceController::class, 'upload_media']);
 
 
 Route::middleware([EnsureTokenIsValid::class])->group(function () {
-    Route::post("orders", [ApiResurceController::class, "orders_submit"]); 
+    Route::post("orders", [ApiResurceController::class, "orders_submit"]);
     Route::post("product-create", [ApiResurceController::class, "product_create"]);
     Route::get("orders", [ApiResurceController::class, "orders_get"]);
 });
 
- 
+
 
 
 
