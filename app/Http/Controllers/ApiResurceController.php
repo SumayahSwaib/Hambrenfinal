@@ -202,9 +202,9 @@ class ApiResurceController extends Controller
         $pro->price_1 = $r->price_1;
         $pro->price_2 = $r->price_2;
         $pro->local_id = $r->id;
-        $pro->summary = $r->summary;
-        $pro->category = $r->category;
-        $pro->sub_category = $r->sub_category;
+        $pro->summary = $r->data;
+        $pro->category = $r->category_id;
+        $pro->sub_category = $r->category_id;
         $pro->p_type = $r->p_type;
         $pro->keywords = $r->keywords;
         $pro->metric = 1;
@@ -223,18 +223,15 @@ class ApiResurceController extends Controller
         if ($imgs->count() > 0) {
             $pro->feature_photo = $imgs[0]->src;
         }
-        if($pro->save()){
+        if ($pro->save()) {
             foreach ($imgs as $key => $img) {
                 $img->product_id = $pro->id;
                 $img->save();
             }
             return $this->success(null, $message = "Submitted successfully!", 200);
-        }else{
+        } else {
             return $this->error('Failed to upload product.');
         }
-
-
-
     }
 
 
