@@ -32,8 +32,6 @@ Route::middleware([EnsureTokenIsValid::class])->group(function () {
 
 
 
-
-
 Route::get("people", [ApiResurceController::class, "people"]);
 Route::POST("users/login", [ApiAuthController::class, "login"]);
 Route::POST("users/register", [ApiAuthController::class, "register"]);

@@ -27,9 +27,14 @@ class ProductCategoryController extends AdminController
         $grid = new Grid(new ProductCategory());
         $grid->disableBatchActions();
 
-        $grid->column('category', __('Category'));
-        $grid->column('show_in_banner', __('Show in Banner'))->sortable();
-        $grid->column('show_in_categories', __('Show in Categories'))->sortable();
+        $grid->column('id', __('#ID'))->sortable();
+        $grid->column('category', __('Category'))->sortable();
+        $grid->column('show_in_banner', __('Show in Banner'))
+            ->editable('select', ['Yes' => 'Yes', 'No' => 'No'])
+            ->sortable();
+        $grid->column('show_in_categories', __('Show in Categories'))
+            ->editable('select', ['Yes' => 'Yes', 'No' => 'No'])
+            ->sortable();
 
         return $grid;
     }
@@ -72,19 +77,14 @@ class ProductCategoryController extends AdminController
     {
         $form = new Form(new ProductCategory());
 
-        $form->hidden('status', __('Status'))->default(1);
-        $form->hidden('user', __('user'))->default(1);
-        $form->hidden('date_created', __('Date created'))->default(date('Y-m-d'));
-        $form->hidden('date_updated', __('Date updated'))->default(date('Y-m-d H:i:s'));
-        $form->hidden('url', __('Url'))->default('https://');
-        $form->hidden('default_amount', __('Default amount'))->default(6000);
-        $form->hidden('image_origin', __('Image origin'))->default(1);
 
-        $form->text('category', __('Category'))->required();
+
+        $form->text('category', __('Category Name'))->required();
+        $form->list('attributes', __('Category Attributes'))->required();
         $form->image('image', __('Main Photo'))->required();
         $form->image('banner_image', __('Banner image'));
 
-
+ 
         $form->radio('show_in_banner', __('Show in banner'))->options(['Yes' => 'Yes', 'No' => 'No'])->required();
         $form->radio('show_in_categories', __('Show in categories'))->options(['Yes' => 'Yes', 'No' => 'No'])->required();
 

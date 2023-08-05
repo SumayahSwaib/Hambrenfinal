@@ -2,9 +2,7 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\Location;
 use App\Models\Product;
-use Encore\Admin\Auth\Database\Administrator;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -29,31 +27,31 @@ class ProductController extends AdminController
     {
         $grid = new Grid(new Product());
 
-        $grid->disableBatchActions();
-        $grid->model()->orderBy('id', 'desc');
-        $grid->column('id', __('ID'))->sortable();
-        $grid->column('created_at', __('Created at'))->hide();
-  /*       $grid->column('photo', __('Photo'))
-            ->display(function ($avatar) {
-                $img = url("storage/" . $avatar);
-                $link = admin_url('members/' . $this->id);
-                $link = 'javascript:;';
-                return '<a href=' . $link . ' title="View profile"><img class="img-fluid " style="border-radius: 10px;"  src="' . $img . '" ></a>';
-            })
-            ->width(80)
-            ->sortable();  */
-        $grid->column('name', __('Product Name'))
-        ->sortable();
-        $grid->column('details', __('Details'))->hide();
-        $grid->column('price', __('Price'))->sortable();
- 
-/*         $grid->column('amount', __('Amount')); */
-        /* 
-        $grid->column('offer_type', __('Offer type'));
-        $grid->column('state', __('State'));
+        $grid->column('id', __('Id'));
+        $grid->column('name', __('Name'));
+        $grid->column('metric', __('Metric'));
+        $grid->column('currency', __('Currency'));
+        $grid->column('description', __('Description'));
+        $grid->column('summary', __('Summary'));
+        $grid->column('price_1', __('Price 1'));
+        $grid->column('price_2', __('Price 2'));
+        $grid->column('feature_photo', __('Feature photo'));
+        $grid->column('rates', __('Rates'));
+        $grid->column('date_added', __('Date added'));
+        $grid->column('date_updated', __('Date updated'));
+        $grid->column('user', __('User'));
         $grid->column('category', __('Category'));
-        $grid->column('subcounty_id', __('Subcounty id'));
-        $grid->column('district_id', __('District id')); */
+        $grid->column('sub_category', __('Sub category'));
+        $grid->column('supplier', __('Supplier'));
+        $grid->column('url', __('Url'));
+        $grid->column('status', __('Status'));
+        $grid->column('in_stock', __('In stock'));
+        $grid->column('keywords', __('Keywords'));
+        $grid->column('p_type', __('P type'));
+        $grid->column('local_id', __('Local id'));
+        $grid->column('updated_at', __('Updated at'));
+        $grid->column('created_at', __('Created at'));
+        $grid->column('data', __('Data'));
 
         return $grid;
     }
@@ -69,19 +67,30 @@ class ProductController extends AdminController
         $show = new Show(Product::findOrFail($id));
 
         $show->field('id', __('Id'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
-        $show->field('administrator_id', __('Administrator id'));
         $show->field('name', __('Name'));
-        $show->field('type', __('Type'));
-        $show->field('photo', __('Photo'));
-        $show->field('details', __('Details'));
-        $show->field('price', __('Price'));
-        $show->field('offer_type', __('Offer type'));
-        $show->field('state', __('State'));
+        $show->field('metric', __('Metric'));
+        $show->field('currency', __('Currency'));
+        $show->field('description', __('Description'));
+        $show->field('summary', __('Summary'));
+        $show->field('price_1', __('Price 1'));
+        $show->field('price_2', __('Price 2'));
+        $show->field('feature_photo', __('Feature photo'));
+        $show->field('rates', __('Rates'));
+        $show->field('date_added', __('Date added'));
+        $show->field('date_updated', __('Date updated'));
+        $show->field('user', __('User'));
         $show->field('category', __('Category'));
-        $show->field('subcounty_id', __('Subcounty id'));
-        $show->field('district_id', __('District id'));
+        $show->field('sub_category', __('Sub category'));
+        $show->field('supplier', __('Supplier'));
+        $show->field('url', __('Url'));
+        $show->field('status', __('Status'));
+        $show->field('in_stock', __('In stock'));
+        $show->field('keywords', __('Keywords'));
+        $show->field('p_type', __('P type'));
+        $show->field('local_id', __('Local id'));
+        $show->field('updated_at', __('Updated at'));
+        $show->field('created_at', __('Created at'));
+        $show->field('data', __('Data'));
 
         return $show;
     }
@@ -96,37 +105,33 @@ class ProductController extends AdminController
         $form = new Form(new Product());
 
 
+        if ($form->isCreating()) {
+            $form->hidden('user', __('Product provider'))->default(Auth::user()->id)->readOnly()->rules('required');
+        }
 
-        $form->hidden('administrator_id', __('Product provider'))->default(Auth::user()->id)->readOnly()->rules('required');
+        $form->text('name', __('Name'));
+        $form->number('metric', __('Metric'));
+        $form->number('currency', __('Currency'));
+        $form->textarea('description', __('Description'));
+        $form->textarea('summary', __('Summary'));
+        $form->number('price_1', __('Price 1'));
+        $form->number('price_2', __('Price 2'));
+        $form->text('feature_photo', __('Feature photo'));
+        $form->decimal('rates', __('Rates'));
+        $form->date('date_added', __('Date added'))->default(date('Y-m-d'));
+        $form->datetime('date_updated', __('Date updated'))->default(date('Y-m-d H:i:s'));
+        $form->number('category', __('Category'));
+        $form->number('sub_category', __('Sub category'));
+        $form->number('supplier', __('Supplier'));
+        /* $form->url('url', __('Url')); */
+        $form->switch('status', __('Status'));
+        $form->switch('in_stock', __('In stock'));
+        $form->textarea('keywords', __('Keywords'));
+        $form->number('p_type', __('P type'));
+        $form->number('local_id', __('Local id'));
+        $form->keyValue('data', __('Data'));
 
-        /*         $form->radio('type', __('Item type'))->options([
-            'Product' => 'Product',
-            'Service' => 'Service',
-        ])->rules('required'); */
-
-        $form->text('name', __('Product name'))->rules('required');
-        $form->image('photo', __('Photo'))->rules('required');
-        /* 
-        $form->radio('state', __('Item State'))->options([
-            'New' => 'New',
-            'Used but like new' => 'Used but like new',
-            'Used' => 'Used',
-        ])->rules('required'); 
-
-        $form->radio('offer_type', __('Offer type'))->options([
-            'For sale' => 'For sale',
-            'For hire' => 'For hire/Rent',
-        ])->rules('required');
-                $form->select('subcounty_id', __('Item location'))
-            ->rules('required')
-            ->options(Location::get_sub_counties_array());
-*/
-        $form->decimal('price', __('Price (in UGX)'))->rules('required');
-
-
-
-
-        $form->quill('details', __('Details'))->rules('required');
+        
 
         return $form;
     }
