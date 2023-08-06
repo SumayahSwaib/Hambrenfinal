@@ -25,7 +25,7 @@ class ApiAuthController extends Controller
     public function __construct()
     {
 
-        /* $token = auth()->attempt([
+        /* $token = auth('api')->attempt([
             'username' => 'admin',
             'password' => 'admin',
         ]);
@@ -41,7 +41,7 @@ class ApiAuthController extends Controller
      */
     public function me()
     {
-        $query = auth()->user();
+        $query = auth('api')->user();
         return $this->success($query, $message = "Profile details", 200);
     }
 
@@ -184,7 +184,7 @@ class ApiAuthController extends Controller
         }
         Config::set('jwt.ttl', 60 * 24 * 30 * 365);
 
-        $token = auth()->attempt([
+        $token = auth('api')->attempt([
             'username' => $phone_number,
             'password' => trim($r->password),
         ]);
