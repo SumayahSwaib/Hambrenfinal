@@ -90,7 +90,7 @@ class ApiAuthController extends Controller
 
         JWTAuth::factory()->setTTL(60 * 24 * 30 * 365);
 
-        $token = auth()->attempt([
+        $token = auth('api')->attempt([
             'id' => $u->id,
             'password' => trim($r->password),
         ]);
