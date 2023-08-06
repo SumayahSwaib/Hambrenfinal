@@ -50,6 +50,9 @@ Route::get('events', [ApiResurceController::class, 'events']);
 Route::get('news-posts', [ApiResurceController::class, 'news_posts']);
 
 
+Route::post('chat-send', [ApiResurceController::class, 'chat_send']);
+
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
