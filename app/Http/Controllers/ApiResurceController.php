@@ -512,6 +512,13 @@ class ApiResurceController extends Controller
         if ($u == null) {
             return $this->error('User not found.');
         }
+
+        if (isset($r->chat_head_id) && $r->chat_head_id != null) {
+            $messages = ChatMessage::where([
+                'chat_head_id' => $r->chat_head_id
+            ])->get();
+            return $this->success($messages, 'Success');
+        }
         $messages = ChatMessage::where([
             'sender_id' => $u->id
         ])->orWhere([
