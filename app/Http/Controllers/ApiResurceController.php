@@ -504,7 +504,7 @@ class ApiResurceController extends Controller
 
     public function chat_send(Request $r)
     {
-        $query = auth()->user();
+        $sender = auth()->user();
         $receiver = User::find($r->receiver_id);
         if ($sender == null) {
             return $this->error('User not found.');
