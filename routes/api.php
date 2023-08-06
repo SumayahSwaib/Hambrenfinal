@@ -51,6 +51,8 @@ Route::get('news-posts', [ApiResurceController::class, 'news_posts']);
 
 
 Route::post('chat-send', [ApiResurceController::class, 'chat_send']);
+Route::get('chat-heads', [ApiResurceController::class, 'chat_heads']);
+Route::get('chat-messages', [ApiResurceController::class, 'chat_messages']);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

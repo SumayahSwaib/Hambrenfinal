@@ -38,6 +38,7 @@ Route::group([
     $router->resource('gardens', GardenController::class);
     $router->resource('garden-activities', GardenActivityController::class);
     $router->resource('product-categories', ProductCategoryController::class); 
+    $router->resource('gens', GenController::class);
 
     /* ========================END OF NEW THINGS=============================*/
 

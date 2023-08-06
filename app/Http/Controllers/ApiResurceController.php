@@ -502,6 +502,42 @@ class ApiResurceController extends Controller
     }
 
 
+    public function chat_messages(Request $r)
+    {
+        $u = auth('api')->user();
+        if ($u == null) {
+            $administrator_id = Utils::get_user_id($r);
+            $u = Administrator::find($administrator_id);
+        }
+        if ($u == null) {
+            return $this->error('User not found.');
+        }
+        $messages = ChatMessage::where([
+            'sender_id' => $u->id
+        ])->orWhere([
+            'receiver_id' => $u->id
+        ])->get();
+        return $this->success($messages, 'Success');
+    }
+
+
+    public function chat_heads(Request $r)
+    {
+        $u = auth('api')->user();
+        if ($u == null) {
+            $administrator_id = Utils::get_user_id($r);
+            $u = Administrator::find($administrator_id);
+        }
+        if ($u == null) {
+            return $this->error('User not found.');
+        }
+        $chat_heads = ChatHead::where([
+            'product_owner_id' => $u->id
+        ])->orWhere([
+            'customer_id' => $u->id
+        ])->get();
+        return $this->success($chat_heads, 'Success');
+    }
     public function chat_send(Request $r)
     {
         $sender = auth('api')->user();
