@@ -583,6 +583,14 @@ class ApiResurceController extends Controller
             'customer_id' => $customer->id
         ])->first();
         if ($chat_head == null) {
+            $chat_head = ChatHead::where([
+                'product_id' => $pro->id,
+                'customer_id' => $product_owner->id,
+                'product_owner_id' => $customer->id
+            ])->first();
+        }
+
+        if ($chat_head == null) {
             $chat_head = new ChatHead();
             $chat_head->product_id = $pro->id;
             $chat_head->product_owner_id = $product_owner->id;
