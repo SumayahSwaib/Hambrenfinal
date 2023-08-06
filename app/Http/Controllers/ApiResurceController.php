@@ -386,6 +386,19 @@ class ApiResurceController extends Controller
         return $this->success(null, $message = "Sussesfully created!", 200);
     }
 
+    public function products_delete(Request $r)
+    {
+        $pro = Product::find($r->id);
+        if ($pro == null) {
+            return $this->error('Product not found.');
+        }
+        try {
+            $pro->delete();
+            return $this->success(null, $message = "Sussesfully deleted!", 200);
+        } catch (\Throwable $th) {
+            return $this->error('Failed to delete product.');
+        }
+    }
     public function person_create(Request $r)
     {
         $u = auth('api')->user();

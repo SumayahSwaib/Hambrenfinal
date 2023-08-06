@@ -45,6 +45,7 @@ Route::get('institutions', [ApiResurceController::class, 'institutions']);
 Route::get('service-providers', [ApiResurceController::class, 'service_providers']);
 Route::get('counselling-centres', [ApiResurceController::class, 'counselling_centres']);
 Route::get('products', [ApiResurceController::class, 'products']);
+Route::post('products-delete', [ApiResurceController::class, 'products_delete']);
 Route::get('events', [ApiResurceController::class, 'events']);
 Route::get('news-posts', [ApiResurceController::class, 'news_posts']);
 

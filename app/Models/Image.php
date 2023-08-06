@@ -29,6 +29,7 @@ class Image extends Model
 
         self::deleting(function ($m) {
 
+           try {
             $src = Utils::docs_root() . "/storage/images/" . $m->src;
 
             if ($m->thumbnail != null) {
@@ -46,6 +47,9 @@ class Image extends Model
             if (file_exists($thumb)) {
                 unlink($thumb);
             }
+           } catch (\Throwable $th) {
+            //throw $th;
+           }
         });
 
         self::created(function ($m) {
