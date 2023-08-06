@@ -536,6 +536,8 @@ class ApiResurceController extends Controller
         ])->orWhere([
             'customer_id' => $u->id
         ])->get();
+        $chat_heads->append('customer_unread_messages_count');
+        $chat_heads->append('product_owner_unread_messages_count');
         return $this->success($chat_heads, 'Success');
     }
     public function chat_send(Request $r)
