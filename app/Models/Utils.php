@@ -12,6 +12,18 @@ class Utils extends Model
 {
     use HasFactory;
 
+    public static function get_user_id()
+    {
+        if (isset($_SERVER['HTTP_USER_ID'])) {
+            return $_SERVER['HTTP_USER_ID'];
+        }
+        if (isset($_GET['user_id'])) {
+            return $_GET['user_id'];
+        }
+        if (isset($_POST['user_id'])) {
+            return $_POST['user_id'];
+        }
+    }
     public static function success($data = [], $message = "")
     {
         return (response()->json([
@@ -1061,5 +1073,4 @@ administrator_id
 
         return $qt;
     }
- 
 }

@@ -508,7 +508,7 @@ class ApiResurceController extends Controller
 
         if ($sender == null) {
             $administrator_id = Utils::get_user_id($r);
-            $u = Administrator::find($administrator_id);
+            $sender = Administrator::find($administrator_id);
         }
         if ($sender == null) {
             return $this->error('User not found.');
