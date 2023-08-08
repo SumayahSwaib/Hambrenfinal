@@ -184,7 +184,8 @@ class ApiResurceController extends Controller
     public function product_create(Request $r)
     {
 
-        $u = $r->user;
+        $user_id = $r->user;
+        $u = User::find($user_id);
         if ($u == null) {
             return $this->error('User not found.');
         }
