@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Berkayk\OneSignal\OneSignalClient;
 use Carbon\Carbon;
 use Encore\Admin\Facades\Admin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,7 +26,12 @@ class Utils extends Model
 
 
         try {
-            \OneSignal::addParams(
+            $client = new OneSignalClient(
+                env('ONESIGNAL_APP_ID'),
+                env('ONESIGNAL_REST_API_KEY'),
+                env('USER_AUTH_KEY')
+            );  
+            $client->addParams(
                 [
                     'android_channel_id' => 'a79a1fa6-8991-4c23-97b9-2cf23d697b48',
                     'large_icon' => env('APP_URL') . '/assets/logo.png',
