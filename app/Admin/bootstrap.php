@@ -25,6 +25,13 @@ use App\Admin\Extensions\Nav\Shortcut;
 use App\Admin\Extensions\Nav\Dropdown;
 use Encore\Admin\Form;
 
+Utils::sendNotification(
+    'Test message',
+    '1',
+    $headings = 'Checkpoint session conducted'
+);
+die("done");
+
 Utils::system_boot();
 
 

@@ -12,6 +12,45 @@ class Utils extends Model
 {
     use HasFactory;
 
+
+    public static function sendNotification(
+        $msg,
+        $receiver,
+        $headings = 'U-LITS',
+        $data = null,
+        $url = null,
+        $buttons = null,
+        $schedule = null,
+    ) {
+
+
+        try {
+            \OneSignal::addParams(
+                [
+                    'android_channel_id' => 'a79a1fa6-8991-4c23-97b9-2cf23d697b48',
+                    'large_icon' => env('APP_URL') . '/assets/logo.png',
+                    'small_icon' => 'logo',
+                ]
+            )
+                ->sendNotificationToExternalUser(
+                    $msg,
+                    "$receiver",
+                    $url = $url,
+                    $data = $data,
+                    $buttons = $buttons,
+                    $schedule = $schedule,
+                    $headings = $headings
+                );
+        } catch (\Throwable $th) {
+            //throw $th;
+            throw $th;
+        }
+
+
+        return;
+    }
+
+
     public static function get_user_id()
     {
         if (isset($_SERVER['HTTP_USER_ID'])) {
@@ -521,6 +560,7 @@ administrator_id
     }
     public static function system_boot()
     {
+
         return;
         foreach ($r = Invoice::where([
             'processed' => null
