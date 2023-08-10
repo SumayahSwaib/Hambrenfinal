@@ -23,6 +23,7 @@ Route::post("product-create", [ApiResurceController::class, "product_create"]);
 Route::get("orders", [ApiResurceController::class, "orders_get"]);
 Route::get('products', [ApiResurceController::class, 'products']);
 Route::post('products-delete', [ApiResurceController::class, 'products_delete']);
+Route::post('chat-start', [ApiResurceController::class, 'chat_start']);
 Route::post('chat-send', [ApiResurceController::class, 'chat_send']);
 Route::post('chat-mark-as-read', [ApiResurceController::class, 'chat_mark_as_read']);
 Route::get('chat-heads', [ApiResurceController::class, 'chat_heads']);
