@@ -701,7 +701,7 @@ class ApiResurceController extends Controller
             $chat_head->product_owner_photo = $product_owner->photo;
             $chat_head->customer_name = $customer->name;
             $chat_head->customer_photo = $customer->photo;
-            $chat_head->last_message_body = $r->body;
+            $chat_head->last_message_body = '';
             $chat_head->last_message_time = Carbon::now();
             $chat_head->last_message_status = 'sent';
             $chat_head->save();
