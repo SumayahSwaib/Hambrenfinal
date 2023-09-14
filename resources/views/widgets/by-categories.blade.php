@@ -1,17 +1,19 @@
 <?php
 use App\Models\Utils;
 ?>
-<div class="card  mb-0 mb-md-0  border-0">
+<div class="card  mb-4 mb-md-5 border-1 border-primary" style="border-radius: 0px;">
     <!--begin::Header-->
-    <div class="d-flex justify-content-between px-3 pt-2 px-md-4 border-bottom">
-        <h4 style="line-height: 1; margrin: 0; " class="fs-22 fw-800">
-            Products in stock
-        </h4>
+    <div class="d-flex justify-content-between pt-2 pb-3 px-md-4 border-bottom border-secondary border-2">
+        <h3>
+            <b>Events by categories</b>
+        </h3>
     </div>
-    <div class="card-body py-0 py-md-4">
+    <div class="card-body py-2 py-md-3">
         <canvas id="graph_animals" style="width: 100%;"></canvas>
     </div>
 </div>
+
+
 
 
 <script>
@@ -20,7 +22,7 @@ use App\Models\Utils;
             type: 'pie',
             data: {
                 datasets: [{
-                    data: [370, 57, 101, 210, 259, 712, 100, 259, 210, 100, 70],
+                    data: [370, 57, 101, 210, 259, 712, 100],
                     backgroundColor: [
                         '#8EFCDF',
                         '#F43DE3',
@@ -36,19 +38,13 @@ use App\Models\Utils;
                     label: 'Dataset 1'
                 }],
                 labels: [
-                    'Stethoscopes',
-                    'Tongue depressors',
-                    'Suture kits',
-                    'Scalpels',
-                    'Surgical masks',
-                    'Face shields',
-                    'Surgical blades',
-                    'Sterile syringes',
-                    'Eye shields',
-                    'Protective gowns',
-                    'Isolation gowns',
-                    'Surgical sponges',
-                    'Surgical towels',
+                    'Treament',
+                    'Temperature check',
+                    'Stolen',
+                    'Death',
+                    'Borth',
+                    'Movement',
+                    'Milk'
                 ],
             },
             options: {

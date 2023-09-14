@@ -1,6 +1,5 @@
 <?php
-use App\Models\Utils;
-$ent = Utils::ent();
+$primt_color = '#6B3B00';
 ?><style>
     .sidebar {
         background-color: #FFFFFF;
@@ -11,8 +10,8 @@ $ent = Utils::ent();
     }
 
     .sidebar-menu .active {
-        border-left: solid 5px {{ $ent->color }} !important;
-        color: {{ $ent->color }} !important;
+        border-left: solid 6px {{ $primt_color }} !important;
+        color: {{ $primt_color }} !important;
     }
 
 
@@ -25,7 +24,7 @@ $ent = Utils::ent();
     .btn-instagram,
     .btn-primary,
     .navbar-static-top {
-        background-color: {{ $ent->color }} !important;
+        background-color: {{ $primt_color }} !important;
     }
 
     .dropdown-menu {
@@ -33,10 +32,34 @@ $ent = Utils::ent();
     }
 
     .box-success {
-        border-top: {{ $ent->color }} .5rem solid !important;
+        border-top: {{ $primt_color }} .5rem solid !important;
     }
 
     :root {
-        --primary: {{ $ent->color }};
+        --primary: {{ $primt_color }};
     }
+
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    label,
+    input,
+    .form-control,
+    .control-label,
+    .sidebar-menu,
+    .sidebar-menu,
+    .main-sidebar .user-panel,
+    .sidebar-menu>li.header,
+    div,
+    .row,
+    .col,
+    body,
+    * {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: 1.8rem;
+     }
 </style>

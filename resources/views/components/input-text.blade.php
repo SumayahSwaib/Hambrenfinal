@@ -6,8 +6,17 @@ $classes = isset($classes) ? $classes : '';
 $attributes = isset($attributes) ? $attributes : [];
 
 $_attributes = '';
-foreach ($attributes as $key => $value) {
-    $_attributes .= ' ' . ($key = '"' . $value . '" ');
+$value = '';
+$isRequired = false;
+foreach ($attributes as $key => $val) {
+    if ($key == 'value') {
+        $value = $val;
+        continue;
+    }
+    if ($key == 'required') {
+        $isRequired = true;
+    }
+    $_attributes .= ' ' . ($key = '"' . $val . '" ');
 }
 
 $is_password = false;
@@ -15,7 +24,10 @@ if ($type == 'password') {
     $is_password = true;
 }
 
-$value = old($name);
+if (old($name) != null && !empty(old($name))) {
+    $value = old($name);
+}
+
 if (isset($_SESSION['form'])) {
     if (isset($_SESSION['form']->$name)) {
         if ($_SESSION['form']->$name != null) {
@@ -25,7 +37,11 @@ if (isset($_SESSION['form'])) {
 }
 
 ?><div class="form-group ">
-    <label for="{{ $name ?? '' }}" class="form-label fs-base">{!! $label ?? '' !!}</label>
+    <label for="{{ $name ?? '' }}" class="form-label fs-base">{!! $label ?? '' !!}
+        @if ($isRequired)
+            <span class="text-danger">*</span>
+        @endif
+    </label>
 
     @if ($is_password)
         <div class="password-toggle">
@@ -53,7 +69,8 @@ if (isset($_SESSION['form'])) {
 
 @if ($errors->has($name))
     @foreach ($errors->get($name) as $message)
-        <div class="text-danger top-100 small">{{ $message }}</div>
+        {{--         <div class="text-danger top-100 small">{{ $message }}</div> --}}
+        <div class="invalid-feedback d-block">{{ $message }}</div>
     @endforeach
 @endif
 
