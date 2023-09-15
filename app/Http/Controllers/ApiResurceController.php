@@ -127,7 +127,12 @@ class ApiResurceController extends Controller
     public function orders_submit(Request $r)
     {
 
-        $u = $r->user;
+        $u = auth('api')->user();
+        if ($u == null) {
+            $administrator_id = Utils::get_user_id($r);
+            $u = Administrator::find($administrator_id);
+        }
+        
         if ($u == null) {
             return $this->error('User not found.');
         }
