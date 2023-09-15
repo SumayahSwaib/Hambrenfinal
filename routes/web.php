@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
 /* Route::get('/', function () {
-    die("r");
+    die("r");//new data
 })->name("gen"); */
 Route::get('/gen', function () {
     die(Gen::find($_GET['id'])->do_get());
