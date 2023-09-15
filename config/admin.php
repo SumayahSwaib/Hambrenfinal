@@ -11,7 +11,7 @@ return [
     | login page.
     |
     */
-    'name' => 'HAMBREN - Admin', 
+    'name' => 'Business Listings - Admin', 
 
     /*
     |--------------------------------------------------------------------------
@@ -22,7 +22,7 @@ return [
     | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo' => '<b>HAMBREN</b> admin',
+    'logo' => '<b>Business Listings</b> admin',
 
     /*
     |--------------------------------------------------------------------------
@@ -34,7 +34,7 @@ return [
     | '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo-mini' => '<b>HAMBREN</b>',
+    'logo-mini' => '<b>Business Listings</b>',
 
     /*
     |--------------------------------------------------------------------------
