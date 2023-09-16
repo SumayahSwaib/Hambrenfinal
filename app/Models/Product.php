@@ -12,6 +12,16 @@ class Product extends Model
     public static function boot()
     {
         parent::boot();
+        self::creating(function ($m) {
+            $district_id = 1;
+            $sub = Location::find($m->subcounty_id);
+            if ($sub != null) {
+                $district_id = $sub->parent;
+            }
+            $m->district_id = $district_id;
+            return $m;
+        });
+
         self::deleting(function ($m) {
             try {
                 $imgs = Image::where('parent_id', $m->id)->orwhere('product_id', $m->id)->get();
