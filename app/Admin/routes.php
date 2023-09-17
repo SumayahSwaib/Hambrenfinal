@@ -16,7 +16,9 @@ Route::group([
     $router->resource('quotations', QuotationController::class);
     $router->resource('invoices', InvoiceController::class);
     $router->resource('invoice-items', InvoiceItemController::class);
-    $router->resource('deliveries', DeliveryController::class); 
+    $router->resource('deliveries', DeliveryController::class);
+    $router->resource('districts', DistrictController::class);
+    $router->resource('sub-counties', SubCountyController::class);
 
 
     /* ========================START OF NEW THINGS===========================*/
@@ -37,7 +39,7 @@ Route::group([
     $router->resource('crop-protocols', CropProtocolController::class);
     $router->resource('gardens', GardenController::class);
     $router->resource('garden-activities', GardenActivityController::class);
-    $router->resource('product-categories', ProductCategoryController::class); 
+    $router->resource('product-categories', ProductCategoryController::class);
     $router->resource('gens', GenController::class);
 
     /* ========================END OF NEW THINGS=============================*/

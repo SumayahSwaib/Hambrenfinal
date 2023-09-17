@@ -78,6 +78,7 @@ php artisan admin:make ParticipantController --model=App\\Participant
 php artisan admin:controller --model=App\FormSr4
 php artisan admin:make FormSr4Controller --model=App\FormSr4
 php artisan admin:make FormSr4Controller --model=App\invoices
+php artisan admin:make DistrictController --model=App\Models\Location
 
  
 php artisan admin:make ProductCategoryController --model=App\Models\ProductCategory
