@@ -15,6 +15,7 @@ use App\Models\Group;
 use App\Models\Image;
 use App\Models\Institution;
 use App\Models\Job;
+use App\Models\Location;
 use App\Models\NewsPost;
 use App\Models\Order;
 use App\Models\OrderedItem;
@@ -229,7 +230,7 @@ class ApiResurceController extends Controller
         $pro->supplier = $u->id;
         $pro->in_stock = 1;
         $pro->rates = 1;
-        
+
         $pro->subcounty_id = $r->subcounty_id;
         $pro->category_id = $r->category_id;
         $pro->village = $r->village;
@@ -238,8 +239,8 @@ class ApiResurceController extends Controller
         $pro->phone_number_2 = $r->phone_number_2;
         $pro->email = $r->email;
         $pro->website = $r->website;
-        
-        
+
+
 
         $pro->date_added = Carbon::now();
         $pro->date_updated = Carbon::now();
@@ -261,6 +262,16 @@ class ApiResurceController extends Controller
     }
 
 
+
+    public function locations(Request $r)
+    {
+        $items = Location::all();
+        return $this->success(
+            $items,
+            $message = "Sussesfully",
+            1
+        );
+    }
 
     public function crops(Request $r)
     {
