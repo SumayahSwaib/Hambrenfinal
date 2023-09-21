@@ -29,6 +29,7 @@ class ProductCategoryController extends AdminController
 
         $grid->column('id', __('#ID'))->sortable();
         $grid->column('category', __('Category'))->sortable();
+        $grid->column('is_parent', __('Is Main Cateogry'))->sortable();
         $grid->column('show_in_banner', __('Show in Banner'))
             ->editable('select', ['Yes' => 'Yes', 'No' => 'No'])
             ->sortable();
@@ -81,11 +82,13 @@ class ProductCategoryController extends AdminController
 
         $form->text('category', __('Category Name'))->required();
 
-        $form->radio('is_parent', __('Is Parent'))
+        $form->radio('is_parent', __('Is Sub Category'))
             ->options(['Yes' => 'Yes', 'No' => 'No'])
-            ->when('Yes', function (Form $form) {
-                $parentCategories = ProductCategory::where('is_parent', 'Yes')->pluck('category', 'id');
-                $form->select('parent_id', __('Parent Category'))
+            ->when('No', function (Form $form) {
+                $parentCategories = ProductCategory::where('is_parent', 'Yes')
+                    ->get()
+                    ->pluck('category', 'id');
+                $form->select('parent_id', __('Select Parent Category'))
                     ->options($parentCategories)
                     ->rules('required');
             })->rules('required');
