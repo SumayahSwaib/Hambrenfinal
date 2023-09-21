@@ -29,7 +29,9 @@ class ProductCategoryController extends AdminController
 
         $grid->column('id', __('#ID'))->sortable();
         $grid->column('category', __('Category'))->sortable();
-        $grid->column('is_parent', __('Is Main Cateogry'))->sortable();
+        $grid->column('is_parent', __('Cateogry Type'))
+            ->filter(['Yes' => 'Main Category', 'No' => 'Sub Category'])
+            ->sortable();
         $grid->column('show_in_banner', __('Show in Banner'))
             ->editable('select', ['Yes' => 'Yes', 'No' => 'No'])
             ->sortable();
