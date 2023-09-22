@@ -84,7 +84,7 @@ class ProductCategoryController extends AdminController
 
         $form->text('category', __('Category Name'))->required();
 
-        $form->radio('is_parent', __('Is Sub Category'))
+        $form->radio('is_parent', __('Is Main Category'))
             ->options(['Yes' => 'Yes', 'No' => 'No'])
             ->when('No', function (Form $form) {
                 $parentCategories = ProductCategory::where('is_parent', 'Yes')
