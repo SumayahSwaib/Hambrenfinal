@@ -250,7 +250,7 @@ class ApiResurceController extends Controller
         }
         $pro->sub_category = $subCat->id;
         $pro->category_id = $parentCat->id;
-        $pro->category_text = $parentCat->name . ", " . $subCat->name;
+        $pro->category_text = $parentCat->category . ", " . $subCat->category;
 
         $subCounty = Location::find($r->subcounty_id);
         if ($subCounty == null) {
