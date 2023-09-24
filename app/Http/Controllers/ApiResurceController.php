@@ -220,7 +220,6 @@ class ApiResurceController extends Controller
         $pro->local_id = $r->id;
         $pro->summary = $r->data;
         $pro->category = $r->category_id;
-        $pro->sub_category = $r->category_id;
         $pro->p_type = $r->p_type;
         $pro->keywords = $r->keywords;
         $pro->metric = 1;
@@ -241,14 +240,15 @@ class ApiResurceController extends Controller
         $pro->email = $r->email;
         $pro->website = $r->website;
 
-        $subCat = ProductCategory::find($r->category_id);
+        $subCat = ProductCategory::find($r->sub_category);
         if ($subCat == null) {
-            return $this->error('Category not found.');
+            return $this->error('Sub-Category not found.');
         }
         $parentCat = ProductCategory::find($subCat->parent_id);
         if ($parentCat == null) {
             return $this->error('Parent category not found.');
         }
+        $pro->sub_category = $subCat->id;
         $pro->category_id = $parentCat->id;
         $pro->category_text = $parentCat->name . ", " . $subCat->name;
 
