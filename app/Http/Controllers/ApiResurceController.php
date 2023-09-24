@@ -21,6 +21,7 @@ use App\Models\Order;
 use App\Models\OrderedItem;
 use App\Models\Person;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Models\ServiceProvider;
 use App\Models\User;
 use App\Models\Utils;
@@ -239,6 +240,31 @@ class ApiResurceController extends Controller
         $pro->phone_number_2 = $r->phone_number_2;
         $pro->email = $r->email;
         $pro->website = $r->website;
+
+        $subCat = ProductCategory::find($r->category_id);
+        if ($subCat == null) {
+            return $this->error('Category not found.');
+        }
+        $parentCat = ProductCategory::find($subCat->parent_id);
+        if ($parentCat == null) {
+            return $this->error('Parent category not found.');
+        }
+        $pro->category_id = $parentCat->id;
+        $pro->category_text = $parentCat->name . ", " . $subCat->name;
+
+        $subCounty = Location::find($r->subcounty_id);
+        if ($subCounty == null) {
+            return $this->error('Subcounty not found.');
+        }
+        $pro->subcounty_id = $subCounty->id;
+        $pro->subcounty_text = $subCounty->name;
+        $district = Location::find($subCounty->parent);
+        if ($district == null) {
+            return $this->error('District not found.');
+        }
+        $pro->district_id = $district->id;
+        $pro->district_text = $district->name;
+
 
 
 
