@@ -12,4 +12,10 @@ class ProductCategory extends Model
     protected $casts = [
         'attributes' => 'json',
     ];
+
+    //getter for updated_at
+    public function getUpdatedAtAttribute($value)
+    {
+        return Product::where('category_id', $this->id)->count();
+    }
 }
