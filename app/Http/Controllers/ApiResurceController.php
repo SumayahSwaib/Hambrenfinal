@@ -129,6 +129,27 @@ class ApiResurceController extends Controller
     }
 
 
+    public function orders_cancel(Request $r)
+    {
+
+        $u = auth('api')->user();
+        if ($u == null) {
+            $administrator_id = Utils::get_user_id($r);
+            $u = Administrator::find($administrator_id);
+        }
+
+        if ($u == null) {
+            return $this->error('User not found.');
+        }
+
+        $order = Order::find($r->id);
+        if ($order == null) {
+            return $this->error('Order not found.');
+        }
+        $order->order_state = 2;
+        $order->save();
+        return $this->success(null, $message = "Cancelled successfully!", 200);
+    }
     public function orders_submit(Request $r)
     {
 
