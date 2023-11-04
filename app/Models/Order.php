@@ -8,6 +8,25 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
+    //boot
+    public static function boot()
+    {
+        parent::boot();
+        //created
+        self::created(function ($m) {
+            Utils::sync_orders();
+        });
+        self::deleting(function ($m) {
+            try {
+                $items = OrderedItem::where('order', $m->id)->get();
+                foreach ($items as $item) {
+                    $item->delete();
+                }
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+        });
+    }
 
     public function create_payment_link($stripe)
     {

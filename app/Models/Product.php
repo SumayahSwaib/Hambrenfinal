@@ -12,6 +12,10 @@ class Product extends Model
     public static function boot()
     {
         parent::boot();
+        //created
+        self::created(function ($m) {
+            Utils::sync_products();
+        });
         self::deleting(function ($m) {
             try {
                 $imgs = Image::where('parent_id', $m->id)->orwhere('product_id', $m->id)->get();
@@ -26,7 +30,7 @@ class Product extends Model
 
     public function sync($stripe)
     {
-        set_time_limit(-1); 
+        set_time_limit(-1);
         $original_images = json_decode($this->rates);
         $imgs = [];
         $i = 0;
@@ -38,7 +42,7 @@ class Product extends Model
                 }
                 $i++;
             }
-        
+
         $resp = $stripe->products->create([
             'name' => $this->name,
             'default_price_data' => [
