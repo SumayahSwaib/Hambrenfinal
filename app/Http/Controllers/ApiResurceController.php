@@ -146,8 +146,7 @@ class ApiResurceController extends Controller
         if ($order == null) {
             return $this->error('Order not found.');
         }
-        $order->order_state = 2;
-        $order->save();
+        $order->delete(); 
         return $this->success(null, $message = "Cancelled successfully!", 200);
     }
     public function orders_submit(Request $r)
