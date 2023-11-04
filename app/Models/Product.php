@@ -24,6 +24,34 @@ class Product extends Model
         });
     }
 
+    public function sync($stripe)
+    {
+        set_time_limit(-1); 
+        $original_images = json_decode($this->rates);
+        $imgs = [];
+        $i = 0;
+        if (is_array($original_images))
+            foreach ($original_images as $key => $v) {
+                $imgs[] = 'https://app.hambren.com/storage/images/' . $v->src;
+                if ($i > 5) {
+                    break;
+                }
+                $i++;
+            }
+        
+        $resp = $stripe->products->create([
+            'name' => $this->name,
+            'default_price_data' => [
+                'currency' => 'cad',
+                'unit_amount' => $this->price_1,
+            ],
+        ]);
+        if ($resp != null) {
+            $this->stripe_id = $resp->id;
+            $this->stripe_price = $resp->default_price;
+            $this->save();
+        }
+    }
     public function getRatesAttribute()
     {
         $imgs = Image::where('parent_id', $this->id)->orwhere('product_id', $this->id)->get();

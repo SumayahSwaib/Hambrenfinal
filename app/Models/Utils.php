@@ -14,6 +14,36 @@ class Utils extends Model
     use HasFactory;
 
 
+    public static function sync_orders()
+    {
+        $key = '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';
+        $stripe = new \Stripe\StripeClient($key);
+
+        $roders = \App\Models\Order::where([
+            'stripe_id' => null
+        ])->get();
+        foreach ($roders as $key => $order) {
+            if (($order->stripe_id != null) && (strlen($order->stripe_id) > 0)) {
+                continue;
+            }
+
+            if (count($order->get_items()) == 0) {
+                continue;
+            }
+            $order->create_payment_link($stripe);
+        }
+    }
+    public static function sync_products()
+    {
+
+        $stripe = new \Stripe\StripeClient(env('STRIPE_KEY'));
+        $products = Product::where([
+            'stripe_price' => null
+        ])->get();
+        foreach ($products as $key => $value) {
+            $value->sync($stripe);
+        }
+    }
     public static function sendNotification(
         $msg,
         $receiver,
@@ -30,7 +60,7 @@ class Utils extends Model
                 env('ONESIGNAL_APP_ID'),
                 env('ONESIGNAL_REST_API_KEY'),
                 env('USER_AUTH_KEY')
-            );  
+            );
             $client->addParams(
                 [
                     'android_channel_id' => 'a79a1fa6-8991-4c23-97b9-2cf23d697b48',
@@ -566,7 +596,7 @@ administrator_id
     }
     public static function system_boot()
     {
-
+        Utils::sync_products();
         return;
         foreach ($r = Invoice::where([
             'processed' => null
