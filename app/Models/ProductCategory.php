@@ -13,10 +13,17 @@ class ProductCategory extends Model
         'attributes' => 'json',
     ];
 
+    //getter for updated_at
+    public function getUpdatedAtAttribute($value)
+    {
+        return Product::where('category_id', $this->id)->count();
+    }
 
-    //getter for parent_text
-    public function getParentTextAttribute($value)
+    public function getCategoryTextAttribute($value)
     {
         return Product::where('category', $this->id)->count();
     }
+
+    //appends category_text
+    protected $appends = ['category_text'];
 }

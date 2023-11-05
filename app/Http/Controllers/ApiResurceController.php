@@ -548,7 +548,15 @@ class ApiResurceController extends Controller
 
     public function categories()
     {
-        return $this->success(ProductCategory::where([])->orderby('id', 'desc')->get(), 'Success');
+        $cats = [];
+        foreach (ProductCategory::where([])
+        ->orderby('id', 'desc')
+        ->get() as $key => $cat) {
+            $cat->category_text;
+            $cats[] = $cat;
+        }
+        
+        return $this->success($cats, 'Success');
     }
 
     public function events()
