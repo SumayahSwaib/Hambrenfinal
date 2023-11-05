@@ -30,7 +30,7 @@ class Utils extends Model
                 env('ONESIGNAL_APP_ID'),
                 env('ONESIGNAL_REST_API_KEY'),
                 env('USER_AUTH_KEY')
-            );  
+            );
             $client->addParams(
                 [
                     'android_channel_id' => 'a79a1fa6-8991-4c23-97b9-2cf23d697b48',
@@ -564,9 +564,33 @@ administrator_id
         Please this form to apply for your ticket now! {$btn}"
         );
     }
+    public static function sync_products_categories()
+    {
+        $products = Product::where(['category' => null])->get();
+        foreach ($products as $key => $pro) {
+            $sub_cat = ProductCategory::find($pro->sub_category);
+            if ($sub_cat == null) {
+                $pro->sub_category = 1;
+                $pro->category = 1;
+                $pro->save();
+                continue;
+            }
+            $cat = ProductCategory::find($sub_cat->parent_id);
+
+            if ($cat == null) {
+                $pro->sub_category = 1;
+                $pro->category = 1;
+                $pro->save();
+                continue;
+            }
+            $pro->sub_category = $sub_cat->id;
+            $pro->category = $cat->id;
+            $pro->save();
+        }
+    }
     public static function system_boot()
     {
-
+        Utils::sync_products_categories();
         return;
         foreach ($r = Invoice::where([
             'processed' => null
