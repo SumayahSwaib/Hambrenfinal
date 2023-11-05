@@ -550,12 +550,12 @@ class ApiResurceController extends Controller
     {
         $cats = [];
         foreach (ProductCategory::where([])
-        ->orderby('id', 'desc')
-        ->get() as $key => $cat) {
-            $cat->category_text;
+            ->orderby('id', 'desc')
+            ->get() as $key => $cat) {
+            $cat->parent_text = $cat->category_text;
             $cats[] = $cat;
         }
-        
+
         return $this->success($cats, 'Success');
     }
 
