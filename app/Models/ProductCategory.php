@@ -13,8 +13,9 @@ class ProductCategory extends Model
         'attributes' => 'json',
     ];
 
-    //getter for updated_at
-    public function getUpdatedAtAttribute($value)
+
+    //getter for parent_text
+    public function getParentTextAttribute($value)
     {
         return Product::where('category', $this->id)->count();
     }
