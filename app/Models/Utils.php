@@ -566,6 +566,7 @@ administrator_id
     }
     public static function sync_products_categories()
     {
+        
         $products = Product::where(['category' => null])->get();
         foreach ($products as $key => $pro) {
             $sub_cat = ProductCategory::find($pro->sub_category);
@@ -585,6 +586,7 @@ administrator_id
             }
             $pro->sub_category = $sub_cat->id;
             $pro->category = $cat->id;
+            $pro->category_id = $cat->id;
             $pro->save();
         }
     }

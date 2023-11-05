@@ -21,7 +21,7 @@ class ProductCategory extends Model
 
     public function getCategoryTextAttribute($value)
     {
-        return Product::where('category', $this->id)->count();
+        return Product::where('category_id', $this->id)->count();
     }
 
     //appends category_text
