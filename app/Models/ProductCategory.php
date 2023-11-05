@@ -16,6 +16,6 @@ class ProductCategory extends Model
     //getter for updated_at
     public function getUpdatedAtAttribute($value)
     {
-        return Product::where('category_id', $this->id)->count();
+        return Product::where('category', $this->id)->count();
     }
 }
