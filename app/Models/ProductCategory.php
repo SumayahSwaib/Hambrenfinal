@@ -14,10 +14,10 @@ class ProductCategory extends Model
     ];
 
     //getter for updated_at
-    public function getUpdatedAtAttribute($value)
+    /* public function getUpdatedAtAttribute($value)
     {
         return Product::where('category_id', $this->id)->count();
-    }
+    } */
 
     public function getCategoryTextAttribute($value)
     {
