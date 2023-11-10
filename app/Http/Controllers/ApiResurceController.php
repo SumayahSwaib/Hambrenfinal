@@ -70,7 +70,7 @@ class ApiResurceController extends Controller
         $u->business_cover_photo = $request->business_cover_photo;
         $u->business_cover_details = $request->business_cover_details;
         $u->status = 'Pending';
-    
+
         $code = 1;
         try {
             $u->save();
@@ -209,7 +209,8 @@ class ApiResurceController extends Controller
         if ($u == null) {
             return $this->error('User not found.');
         }
-        return $this->success([$u], $message = "Success!", 200);
+        $data[] = $u;
+        return $this->success($data, $message = "Success!", 200);
     }
     public function orders_submit(Request $r)
     {
