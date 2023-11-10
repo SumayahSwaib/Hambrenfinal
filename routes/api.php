@@ -17,11 +17,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post(" ", [ApiResurceController::class, 'become_vendor']);
 Route::post("post-media-upload", [ApiResurceController::class, 'upload_media']);
 Route::post("cancel-order", [ApiResurceController::class, "orders_cancel"]);
 Route::post("orders", [ApiResurceController::class, "orders_submit"]);
 Route::post("product-create", [ApiResurceController::class, "product_create"]);
 Route::get("orders", [ApiResurceController::class, "orders_get"]);
+Route::get("locations", [ApiResurceController::class, "locations"]);
+Route::get("categories", [ApiResurceController::class, "categories"]);
 Route::get('products', [ApiResurceController::class, 'products']);
 Route::post('products-delete', [ApiResurceController::class, 'products_delete']);
 Route::post('chat-start', [ApiResurceController::class, 'chat_start']);

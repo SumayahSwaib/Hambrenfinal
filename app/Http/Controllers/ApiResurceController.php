@@ -15,11 +15,13 @@ use App\Models\Group;
 use App\Models\Image;
 use App\Models\Institution;
 use App\Models\Job;
+use App\Models\Location;
 use App\Models\NewsPost;
 use App\Models\Order;
 use App\Models\OrderedItem;
 use App\Models\Person;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Models\ServiceProvider;
 use App\Models\User;
 use App\Models\Utils;
@@ -34,6 +36,51 @@ class ApiResurceController extends Controller
 {
 
     use ApiResponser;
+
+
+    public function become_vendor(Request $request)
+    {
+        $administrator_id = $request->user;
+
+        $u = Administrator::find($administrator_id);
+        if ($u == null) {
+            return $this->error('User not found.');
+        }
+
+        $images = [];
+        if (!empty($_FILES)) {
+            $images = Utils::upload_images_2($_FILES, false);
+        }
+        if (!empty($images)) {
+            //$u->outstanding = $images[0];
+        }
+        $msg = "";
+        $u->business_name = $request->business_name;
+        $u->business_license_number = $request->business_license_number;
+        $u->business_license_issue_authority = $request->business_license_issue_authority;
+        $u->business_license_issue_date = $request->business_license_issue_date;
+        $u->business_license_validity = $request->business_license_validity;
+        $u->business_address = $request->business_address;
+        $u->business_phone_number = $request->business_phone_number;
+        $u->business_whatsapp = $request->business_whatsapp;
+        $u->business_email = $request->business_email;
+        $u->business_logo = $request->business_logo;
+        $u->business_cover_photo = $request->business_cover_photo;
+        $u->business_cover_details = $request->business_cover_details;
+
+
+        $code = 1;
+        try {
+            $u->save();
+            $msg = "Submitted successfully.";
+            $code = 1;
+        } catch (\Throwable $th) {
+            $msg = $th->getMessage();
+            $code = 0;
+        }
+        return $this->success(null, $msg, $code);
+    }
+
 
 
     public function upload_media(Request $request)
@@ -238,7 +285,6 @@ class ApiResurceController extends Controller
         $pro->local_id = $r->id;
         $pro->summary = $r->data;
         $pro->category = $r->category_id;
-        $pro->sub_category = $r->category_id;
         $pro->p_type = $r->p_type;
         $pro->keywords = $r->keywords;
         $pro->metric = 1;
@@ -249,6 +295,44 @@ class ApiResurceController extends Controller
         $pro->supplier = $u->id;
         $pro->in_stock = 1;
         $pro->rates = 1;
+
+        $pro->subcounty_id = $r->subcounty_id;
+        $pro->category_id = $r->category_id;
+        $pro->village = $r->village;
+        $pro->address = $r->address;
+        $pro->phone_number_1 = $r->phone_number_1;
+        $pro->phone_number_2 = $r->phone_number_2;
+        $pro->email = $r->email;
+        $pro->website = $r->website;
+
+        $subCat = ProductCategory::find($r->sub_category);
+        if ($subCat == null) {
+            return $this->error('Sub-Category not found.');
+        }
+        $parentCat = ProductCategory::find($subCat->parent_id);
+        if ($parentCat == null) {
+            return $this->error('Parent category not found.');
+        }
+        $pro->sub_category = $subCat->id;
+        $pro->category_id = $parentCat->id;
+        $pro->category_text = $parentCat->category . ", " . $subCat->category;
+
+        $subCounty = Location::find($r->subcounty_id);
+        if ($subCounty == null) {
+            return $this->error('Subcounty not found.');
+        }
+        $pro->subcounty_id = $subCounty->id;
+        $pro->subcounty_text = $subCounty->name;
+        $district = Location::find($subCounty->parent);
+        if ($district == null) {
+            return $this->error('District not found.');
+        }
+        $pro->district_id = $district->id;
+        $pro->district_text = $district->name;
+
+
+
+
         $pro->date_added = Carbon::now();
         $pro->date_updated = Carbon::now();
         $imgs = Image::where([
@@ -269,6 +353,16 @@ class ApiResurceController extends Controller
     }
 
 
+
+    public function locations(Request $r)
+    {
+        $items = Location::all();
+        return $this->success(
+            $items,
+            $message = "Sussesfully",
+            1
+        );
+    }
 
     public function crops(Request $r)
     {
@@ -519,7 +613,15 @@ class ApiResurceController extends Controller
 
     public function categories()
     {
-        return $this->success(ProductCategory::where([])->orderby('id', 'desc')->get(), 'Success');
+        $cats = [];
+        foreach (ProductCategory::where([])
+            ->orderby('id', 'desc')
+            ->get() as $key => $cat) {
+            $cat->parent_text = $cat->category_text;
+            $cats[] = $cat;
+        }
+
+        return $this->success($cats, 'Success');
     }
 
     public function events()

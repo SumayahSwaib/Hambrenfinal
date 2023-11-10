@@ -179,9 +179,9 @@ class HomeController extends Controller
 
         $u = Auth::user();
         $content
-            ->title('HAMBREN - Dashboard')
+            ->title('Akatale - Dashboard')
             ->description('Hello ' . $u->name . "!");
-
+        return $content;
 
         $content->row(function (Row $row) {
             $row->column(3, function (Column $column) {
