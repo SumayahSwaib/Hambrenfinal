@@ -73,12 +73,12 @@ class ApiResurceController extends Controller
         try {
             $u->save();
             $msg = "Submitted successfully.";
-            $code = 1;
+            return $this->success(null, $msg, $code);
         } catch (\Throwable $th) {
             $msg = $th->getMessage();
             $code = 0;
+            return $this->error(null, $msg, $code);
         }
-        return $this->success(null, $msg, $code);
     }
 
 
@@ -193,7 +193,7 @@ class ApiResurceController extends Controller
         if ($order == null) {
             return $this->error('Order not found.');
         }
-        $order->delete(); 
+        $order->delete();
         return $this->success(null, $message = "Cancelled successfully!", 200);
     }
     public function orders_submit(Request $r)
