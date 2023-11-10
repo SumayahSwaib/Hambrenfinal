@@ -52,7 +52,7 @@ class ApiResurceController extends Controller
             $images = Utils::upload_images_2($_FILES, false);
         }
         if (!empty($images)) {
-            $u->business_logo = $images[0];
+            $u->business_logo = 'images/' . $images[0];
         }
         $msg = "";
         $u->business_name = $request->business_name;
