@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post("become-vendor", [ApiResurceController::class, 'become_vendor']);
 Route::post("post-media-upload", [ApiResurceController::class, 'upload_media']);
 Route::post("orders", [ApiResurceController::class, "orders_submit"]);
 Route::post("product-create", [ApiResurceController::class, "product_create"]);

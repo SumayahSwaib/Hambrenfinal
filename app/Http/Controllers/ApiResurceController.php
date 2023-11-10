@@ -38,6 +38,51 @@ class ApiResurceController extends Controller
     use ApiResponser;
 
 
+    public function become_vendor(Request $request)
+    {
+        $administrator_id = $request->user;
+
+        $u = Administrator::find($administrator_id);
+        if ($u == null) {
+            return $this->error('User not found.');
+        }
+
+        $images = [];
+        if (!empty($_FILES)) {
+            $images = Utils::upload_images_2($_FILES, false);
+        }
+        if (!empty($images)) {
+            //$u->outstanding = $images[0];
+        }
+        $msg = "";
+        $u->business_name = $request->business_name;
+        $u->business_license_number = $request->business_license_number;
+        $u->business_license_issue_authority = $request->business_license_issue_authority;
+        $u->business_license_issue_date = $request->business_license_issue_date;
+        $u->business_license_validity = $request->business_license_validity;
+        $u->business_address = $request->business_address;
+        $u->business_phone_number = $request->business_phone_number;
+        $u->business_whatsapp = $request->business_whatsapp;
+        $u->business_email = $request->business_email;
+        $u->business_logo = $request->business_logo;
+        $u->business_cover_photo = $request->business_cover_photo;
+        $u->business_cover_details = $request->business_cover_details;
+
+
+        $code = 1;
+        try {
+            $u->save();
+            $msg = "Submitted successfully.";
+            $code = 1;
+        } catch (\Throwable $th) {
+            $msg = $th->getMessage();
+            $code = 0;
+        }
+        return $this->success(null, $msg, $code);
+    }
+
+
+
     public function upload_media(Request $request)
     {
         $administrator_id = $request->user;
