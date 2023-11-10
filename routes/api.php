@@ -32,7 +32,7 @@ Route::post('chat-send', [ApiResurceController::class, 'chat_send']);
 Route::post('chat-mark-as-read', [ApiResurceController::class, 'chat_mark_as_read']);
 Route::get('chat-heads', [ApiResurceController::class, 'chat_heads']);
 Route::get('chat-messages', [ApiResurceController::class, 'chat_messages']);
-Route::get("users/me", [ApiAuthController::class, "my_profile"]);
+Route::get("users/me", [ApiResurceController::class, "my_profile"]);
 Route::POST("users/login", [ApiAuthController::class, "login"]);
 Route::POST("users/register", [ApiAuthController::class, "register"]);
 Route::get('api/{model}', [ApiResurceController::class, 'index']);
