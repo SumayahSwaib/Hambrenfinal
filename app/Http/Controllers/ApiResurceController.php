@@ -52,7 +52,7 @@ class ApiResurceController extends Controller
             $images = Utils::upload_images_2($_FILES, false);
         }
         if (!empty($images)) {
-            //$u->outstanding = $images[0];
+            $u->business_logo = $images[0];
         }
         $msg = "";
         $u->business_name = $request->business_name;
@@ -64,7 +64,6 @@ class ApiResurceController extends Controller
         $u->business_phone_number = $request->business_phone_number;
         $u->business_whatsapp = $request->business_whatsapp;
         $u->business_email = $request->business_email;
-        $u->business_logo = $request->business_logo;
         $u->business_cover_photo = $request->business_cover_photo;
         $u->business_cover_details = $request->business_cover_details;
 
@@ -72,7 +71,7 @@ class ApiResurceController extends Controller
         $code = 1;
         try {
             $u->save();
-            $msg = "Submitted successfully. => " . json_encode($images);
+            $msg = "Submitted successfully.";
             return $this->success(null, $msg, $code);
         } catch (\Throwable $th) {
             $msg = $th->getMessage();
