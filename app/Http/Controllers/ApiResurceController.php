@@ -72,7 +72,7 @@ class ApiResurceController extends Controller
         $code = 1;
         try {
             $u->save();
-            $msg = "Submitted successfully.";
+            $msg = "Submitted successfully. => " . json_encode($images);
             return $this->success(null, $msg, $code);
         } catch (\Throwable $th) {
             $msg = $th->getMessage();
