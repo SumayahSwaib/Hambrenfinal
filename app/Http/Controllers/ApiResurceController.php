@@ -209,7 +209,7 @@ class ApiResurceController extends Controller
         if ($u == null) {
             return $this->error('User not found.');
         }
-        return $this->success($u, $message = "Success!", 200);
+        return $this->success([$u], $message = "Success!", 200);
     }
     public function orders_submit(Request $r)
     {
