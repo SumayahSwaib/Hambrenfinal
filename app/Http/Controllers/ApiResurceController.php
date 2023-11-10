@@ -70,7 +70,7 @@ class ApiResurceController extends Controller
         $u->business_cover_photo = $request->business_cover_photo;
         $u->business_cover_details = $request->business_cover_details;
         $u->status = 'Pending';
-    
+
         $code = 1;
         try {
             $u->save();
@@ -197,6 +197,19 @@ class ApiResurceController extends Controller
         }
         $order->delete();
         return $this->success(null, $message = "Cancelled successfully!", 200);
+    }
+    public function my_profile(Request $r)
+    {
+        $u = auth('api')->user();
+        if ($u == null) {
+            $administrator_id = Utils::get_user_id($r);
+            $u = Administrator::find($administrator_id);
+        }
+
+        if ($u == null) {
+            return $this->error('User not found.');
+        }
+        return $this->success([$u], $message = "Success!", 200);
     }
     public function orders_submit(Request $r)
     {
