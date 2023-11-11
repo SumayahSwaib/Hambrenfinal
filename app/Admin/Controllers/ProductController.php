@@ -27,8 +27,27 @@ class ProductController extends AdminController
     {
         $grid = new Grid(new Product());
 
-        $grid->column('id', __('Id'));
-        $grid->column('name', __('Name'));
+        $grid->quickSearch('name')->placeholder('Search by name');
+
+        $grid->filter(function ($filter) {
+            $filter->disableIdFilter();
+            $filter->like('name', 'Name');
+            $cats = \App\Models\ProductCategory::all();
+            $filter->equal('category', 'Category')->select(
+                $cats->pluck('category', 'id')
+            );
+            $users = \App\Models\User::all();
+            $filter->equal('user', 'By Vendor')->select(
+                $users->pluck('name', 'id')
+            );
+            $filter->between('price_1', 'Select Price');
+            $filter->between('created_at', 'Created at')->datetime();
+        });
+
+        $grid->disableBatchActions();
+        $grid->model()->orderBy('id', 'desc');
+        $grid->column('id', __('Id'))->sortable();
+        $grid->column('name', __('Name'))->sortable();
         $grid->column('metric', __('Metric'));
         $grid->column('currency', __('Currency'));
         $grid->column('description', __('Description'));
@@ -131,7 +150,7 @@ class ProductController extends AdminController
         $form->number('local_id', __('Local id'));
         $form->keyValue('data', __('Data'));
 
-        
+
 
         return $form;
     }
