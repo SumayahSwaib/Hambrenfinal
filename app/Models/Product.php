@@ -70,6 +70,6 @@ class Product extends Model
     }
 
     protected $casts = [
-        'data' => 'json',
+        'summary' => 'json',
     ];
 }

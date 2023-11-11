@@ -390,7 +390,6 @@ class ApiResurceController extends Controller
         $pro->price_2 = $r->price_2;
         $pro->local_id = $r->id;
         $pro->summary = $r->data;
-        $pro->category = $r->category_id;
         $pro->p_type = $r->p_type;
         $pro->keywords = $r->keywords;
         $pro->metric = 1;
@@ -404,11 +403,11 @@ class ApiResurceController extends Controller
 
 
         $cat = ProductCategory::find($r->category);
-        if($cat == null){
+        if ($cat == null) {
             return $this->error('Category not found.');
-        } 
-         
-       
+        }
+        $pro->category = $cat->id;
+
         $pro->date_added = Carbon::now();
         $pro->date_updated = Carbon::now();
         $imgs = Image::where([

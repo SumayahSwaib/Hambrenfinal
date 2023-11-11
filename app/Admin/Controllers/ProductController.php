@@ -162,7 +162,7 @@ class ProductController extends AdminController
         /* $form->url('url', __('Url')); 
                 $form->decimal('rates', __('Rates'));
         */
-        $form->keyValue('data', __('Data'));
+        $form->keyValue('summary', __('Data'));
 
 
 
