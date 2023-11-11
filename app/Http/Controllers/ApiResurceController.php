@@ -305,7 +305,6 @@ class ApiResurceController extends Controller
     }
     public function orders_submit(Request $r)
     {
-
         $u = auth('api')->user();
         if ($u == null) {
             $administrator_id = Utils::get_user_id($r);
