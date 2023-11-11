@@ -235,6 +235,15 @@ class ApiResurceController extends Controller
 
 
 
+    public function vendors(Request $r)
+    {
+        $vendors = Administrator::where([
+            'user_type' => 'Vendor'
+        ])->get();
+        return $this->success($vendorss, $message = "Success!", 200);
+    }
+
+
     public function orders_get(Request $r)
     {
 
