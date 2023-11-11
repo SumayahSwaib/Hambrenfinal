@@ -334,7 +334,7 @@ class ApiResurceController extends Controller
         $order->date_created = Carbon::now();
         $order->date_updated = Carbon::now();
         if ($delivery != null) {
-            $order->customer_phone_number_1 = $delivery->phone_number_1;
+            $order->customer_phone_number_1 = $delivery->phone_number;
             $order->customer_phone_number_2 = $delivery->phone_number_2;
             $order->customer_name = $delivery->first_name . " " . $delivery->last_name;
             $order->customer_address = $delivery->current_address;
