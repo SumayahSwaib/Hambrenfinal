@@ -683,12 +683,7 @@ class ApiResurceController extends Controller
     }
     public function products()
     {
-        $items = [];
-        foreach (Product::where([])->orderby('id', 'desc')->get() as $key => $p) {
-            $p->feature_photo = str_replace('images/', '', $p->feature_photo);
-            $items[] = $p;
-        }
-        return $this->success($items, 'Success');
+        return $this->success(Product::where([])->orderby('id', 'desc')->get(), 'Success');
     }
 
     public function categories()
