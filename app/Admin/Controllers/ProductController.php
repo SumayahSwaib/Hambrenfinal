@@ -27,6 +27,12 @@ class ProductController extends AdminController
     {
         $grid = new Grid(new Product());
 
+        $grid->actions(function ($actions) {
+            $actions->disableView();
+        });
+        $grid->disableCreateButton();
+        $grid->disableExport();
+
         $grid->quickSearch('name')->placeholder('Search by name');
 
         $grid->filter(function ($filter) {
@@ -36,42 +42,49 @@ class ProductController extends AdminController
             $filter->equal('category', 'Category')->select(
                 $cats->pluck('category', 'id')
             );
-            $users = \App\Models\User::all();
-            $filter->equal('user', 'By Vendor')->select(
-                $users->pluck('name', 'id')
-            );
+
             $filter->between('price_1', 'Select Price');
             $filter->between('created_at', 'Created at')->datetime();
         });
-
         $grid->disableBatchActions();
         $grid->model()->orderBy('id', 'desc');
         $grid->column('id', __('Id'))->sortable();
-        $grid->column('name', __('Name'))->sortable();
-        $grid->column('metric', __('Metric'));
-        $grid->column('currency', __('Currency'));
-        $grid->column('description', __('Description'));
-        $grid->column('summary', __('Summary'));
-        $grid->column('price_1', __('Price 1'));
-        $grid->column('price_2', __('Price 2'));
-        $grid->column('feature_photo', __('Feature photo'));
-        $grid->column('rates', __('Rates'));
-        $grid->column('date_added', __('Date added'));
-        $grid->column('date_updated', __('Date updated'));
-        $grid->column('user', __('User'));
-        $grid->column('category', __('Category'));
-        $grid->column('sub_category', __('Sub category'));
-        $grid->column('supplier', __('Supplier'));
-        $grid->column('url', __('Url'));
-        $grid->column('status', __('Status'));
-        $grid->column('in_stock', __('In stock'));
-        $grid->column('keywords', __('Keywords'));
-        $grid->column('p_type', __('P type'));
-        $grid->column('local_id', __('Local id'));
-        $grid->column('updated_at', __('Updated at'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('data', __('Data'));
+        $grid->column('name', __('Name'))->sortable()
+            ->editable();
+        $grid->column('description', __('Description'))
+            ->hide();
 
+        $grid->column('price_2', __('Original Price'))
+            ->sortable()
+            ->editable();
+        $grid->column('price_1', __('Selling Price'))
+            ->sortable()
+            ->editable();
+        $grid->column('feature_photo', __('Photo'))->sortable();
+        $grid->column('date_updated', __('Date updated'));
+        $grid->column('user', __('User'))
+            ->display(function ($user) {
+                $u =  \App\Models\User::find($user);
+                if ($u == null) {
+                    return 'Deleted';
+                }
+                return $u->name;
+            })
+            ->sortable();
+        $grid->column('category', __('Category'))
+            ->display(function ($category) {
+                $c =  \App\Models\ProductCategory::find($category);
+                if ($c == null) {
+                    return 'Deleted';
+                }
+                return $c->category;
+            })
+            ->sortable();
+
+        $grid->column('created_at', __('Created'))
+            ->display(function ($created_at) {
+                return date('Y-m-d H:i:s', strtotime($created_at));
+            })->sortable();
         return $grid;
     }
 
@@ -128,26 +141,27 @@ class ProductController extends AdminController
             $form->hidden('user', __('Product provider'))->default(Auth::user()->id)->readOnly()->rules('required');
         }
 
-        $form->text('name', __('Name'));
-        $form->number('metric', __('Metric'));
-        $form->number('currency', __('Currency'));
-        $form->textarea('description', __('Description'));
-        $form->textarea('summary', __('Summary'));
-        $form->number('price_1', __('Price 1'));
-        $form->number('price_2', __('Price 2'));
-        $form->text('feature_photo', __('Feature photo'));
-        $form->decimal('rates', __('Rates'));
-        $form->date('date_added', __('Date added'))->default(date('Y-m-d'));
-        $form->datetime('date_updated', __('Date updated'))->default(date('Y-m-d H:i:s'));
-        $form->number('category', __('Category'));
-        $form->number('sub_category', __('Sub category'));
-        $form->number('supplier', __('Supplier'));
-        /* $form->url('url', __('Url')); */
-        $form->switch('status', __('Status'));
-        $form->switch('in_stock', __('In stock'));
-        $form->textarea('keywords', __('Keywords'));
-        $form->number('p_type', __('P type'));
-        $form->number('local_id', __('Local id'));
+        $form->text('name', __('Name'))
+            ->rules('required');
+
+        $form->decimal('price_2', __('Original Price'))
+            ->rules('required');
+        $form->decimal('price_1', __('Selling Price'))
+            ->rules('required');
+        $form->quill('description', __('Description'))
+            ->rules('required');
+
+        $form->image('feature_photo', __('Feature photo'))
+            ->rules('required');
+        $cats = \App\Models\ProductCategory::all();
+        $form->select('category', __('Category'))
+            ->options(
+                $cats->pluck('category', 'id')
+            )
+            ->rules('required');
+        /* $form->url('url', __('Url')); 
+                $form->decimal('rates', __('Rates'));
+        */
         $form->keyValue('data', __('Data'));
 
 
