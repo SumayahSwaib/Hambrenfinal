@@ -411,34 +411,12 @@ class ApiResurceController extends Controller
         $pro->email = $r->email;
         $pro->website = $r->website;
 
-        $subCat = ProductCategory::find($r->sub_category);
-        if ($subCat == null) {
-            return $this->error('Sub-Category not found.');
-        }
-        $parentCat = ProductCategory::find($subCat->parent_id);
-        if ($parentCat == null) {
-            return $this->error('Parent category not found.');
-        }
-        $pro->sub_category = $subCat->id;
-        $pro->category_id = $parentCat->id;
-        $pro->category_text = $parentCat->category . ", " . $subCat->category;
-
-        $subCounty = Location::find($r->subcounty_id);
-        if ($subCounty == null) {
-            return $this->error('Subcounty not found.');
-        }
-        $pro->subcounty_id = $subCounty->id;
-        $pro->subcounty_text = $subCounty->name;
-        $district = Location::find($subCounty->parent);
-        if ($district == null) {
-            return $this->error('District not found.');
-        }
-        $pro->district_id = $district->id;
-        $pro->district_text = $district->name;
-
-
-
-
+        $cat = ProductCategory::find($r->category);
+        if($cat == null){
+            return $this->error('Category not found.');
+        } 
+         
+       
         $pro->date_added = Carbon::now();
         $pro->date_updated = Carbon::now();
         $imgs = Image::where([
