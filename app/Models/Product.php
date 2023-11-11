@@ -32,11 +32,12 @@ class Product extends Model
     public function getFeaturePhotoAttribute($value)
     {
 
-        //check if value contains images/ 
-        if (strpos($value, 'images/') !== false) {
+        //check if value contains images/
+        if (str_contains($value, 'images/')) {
             return $value;
         }
         $value = 'images/' . $value;
+        return $value;
     }
 
     public function sync($stripe)
