@@ -402,14 +402,6 @@ class ApiResurceController extends Controller
         $pro->in_stock = 1;
         $pro->rates = 1;
 
-        $pro->subcounty_id = $r->subcounty_id;
-        $pro->category_id = $r->category_id;
-        $pro->village = $r->village;
-        $pro->address = $r->address;
-        $pro->phone_number_1 = $r->phone_number_1;
-        $pro->phone_number_2 = $r->phone_number_2;
-        $pro->email = $r->email;
-        $pro->website = $r->website;
 
         $cat = ProductCategory::find($r->category);
         if($cat == null){
