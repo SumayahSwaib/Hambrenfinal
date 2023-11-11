@@ -74,6 +74,13 @@ php artisan make:migration create_delivery_items_table
 Encore\Admin\Auth\Database\Administrator::class,
 php artisan admin:make FormSr4Controller --model=App\FormSr4
 php artisan admin:make ParticipantController --model=App\\Participant
+php artisan admin:make UserController --model=App\\Models\\User
+php artisan admin:make UserController --model=App\\Models\\User
+
+
+
+
+
 
 php artisan admin:controller --model=App\FormSr4
 php artisan admin:make FormSr4Controller --model=App\FormSr4

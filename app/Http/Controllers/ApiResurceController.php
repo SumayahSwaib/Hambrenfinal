@@ -60,7 +60,7 @@ class ApiResurceController extends Controller
         ) {
             return $this->error('Last name is missing.');
         }
-      
+
         //validate all
         if (
             $request->business_name == null ||
@@ -125,7 +125,7 @@ class ApiResurceController extends Controller
             return $this->error('Business email is missing.');
         }
 
-         
+
 
 
         $msg = "";
@@ -143,7 +143,6 @@ class ApiResurceController extends Controller
         $u->business_email = $request->business_email;
         $u->business_cover_photo = $request->business_cover_photo;
         $u->business_cover_details = $request->business_cover_details;
-        $u->campus_id = $request->campus_id;
         $u->status = 'Pending';
 
         $images = [];

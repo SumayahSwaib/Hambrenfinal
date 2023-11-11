@@ -8,14 +8,14 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 
-class UserController extends AdminController
+class VendorController extends AdminController
 {
     /**
      * Title for current resource.
      *
      * @var string
      */
-    protected $title = 'System Users';
+    protected $title = 'Vendors Registration';
 
     /**
      * Make a grid builder.
@@ -25,7 +25,9 @@ class UserController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new User());
-        $grid->model()->orderBy('id', 'desc');
+        $grid->model([
+            'status' => 'Pending',
+        ])->orderBy('id', 'desc');
         $grid->disableBatchActions();
         $grid->column('id', __('Id'))->sortable();
         $grid->column('first_name', __('First name'))->sortable();
