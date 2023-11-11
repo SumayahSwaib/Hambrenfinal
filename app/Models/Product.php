@@ -28,6 +28,13 @@ class Product extends Model
         });
     }
 
+    //getter for feature_photo
+    public function getFeaturePhotoAttribute($value)
+    {
+
+        return str_contains($value, 'images/') ? $value : $value = 'images/' . $value;
+    }
+
     public function sync($stripe)
     {
         set_time_limit(-1);
