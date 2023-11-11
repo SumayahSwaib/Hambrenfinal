@@ -207,7 +207,7 @@
     "Ssebudde Shihaam Janat",
     "Lukowe Hajara Mazzi",
     "Faris Abdulswabur",
-    "Hiqmah Asha Nakatale",
+    "Hiqmah Asha Hambren",
     "Nassuuna Husnah Nalugwa",
     "Nakyagaba Roshni",
     "Faisal Muhammad",

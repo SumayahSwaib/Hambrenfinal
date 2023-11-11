@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '610596dfc67dfb02a77f46a85c68fbfcedcb896e',
+        'reference' => '15cf32fd2aba7dc43398152114f60e79fa3981fc',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -475,6 +475,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'laravel-admin-ext/grid-lightbox' => array(
+            'pretty_version' => 'v1.0.3',
+            'version' => '1.0.3.0',
+            'reference' => 'f8a247f0d017eb05830cc720fb621401b1bfbc2c',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laravel-admin-ext/grid-lightbox',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'laravel-admin-ext/summernote' => array(
             'pretty_version' => 'v1.0.3',
             'version' => '1.0.3.0',
@@ -496,7 +505,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '610596dfc67dfb02a77f46a85c68fbfcedcb896e',
+            'reference' => '15cf32fd2aba7dc43398152114f60e79fa3981fc',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

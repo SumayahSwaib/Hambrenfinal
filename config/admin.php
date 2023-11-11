@@ -11,7 +11,7 @@ return [
     | login page.
     |
     */
-    'name' => 'Business Listings - Admin', 
+    'name' => 'Hambren - Admin',
 
     /*
     |--------------------------------------------------------------------------
@@ -22,7 +22,7 @@ return [
     | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo' => '<b>Business Listings</b> admin',
+    'logo' => '<b>Hambren</b> admin',
 
     /*
     |--------------------------------------------------------------------------
@@ -34,7 +34,7 @@ return [
     | '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo-mini' => '<b>Business Listings</b>',
+    'logo-mini' => '<b>Hambren</b>',
 
     /*
     |--------------------------------------------------------------------------
@@ -403,12 +403,12 @@ return [
     |
     */
     'extensions' => [
-        
+
         'chartjs' => [
-        
+
             // Set to `false` if you want to disable this extension
             'enable' => true,
-    ],
+        ],
 
 
         'quill' => [
@@ -448,6 +448,11 @@ return [
                 'height' => '200px',
             ]
 
+        ],
+
+        'grid-lightbox' => [
+
+            'enable' => true,
         ],
 
         'summernote' => [

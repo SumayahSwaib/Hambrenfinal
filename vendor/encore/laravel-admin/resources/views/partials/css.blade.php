@@ -4,7 +4,7 @@
 
 <?php
 
-$primt_color = '#4a2c2a';
+$primt_color = '#D26100FF'; 
 ?><style> 
     .sidebar {
         background-color: #FFFFFF;

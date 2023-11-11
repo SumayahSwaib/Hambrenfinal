@@ -179,7 +179,7 @@ class HomeController extends Controller
 
         $u = Auth::user();
         $content
-            ->title('Akatale - Dashboard')
+            ->title('Hambren - Dashboard')
             ->description('Hello ' . $u->name . "!");
         return $content;
 

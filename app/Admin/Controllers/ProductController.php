@@ -60,7 +60,9 @@ class ProductController extends AdminController
         $grid->column('price_1', __('Selling Price'))
             ->sortable()
             ->editable();
-        $grid->column('feature_photo', __('Photo'))->sortable();
+        $grid->picture('feature_photo', __('Photo'))
+            ->lightbox(['width' => 50, 'height' => 50])
+            ->sortable();
         $grid->column('date_updated', __('Date updated'));
         $grid->column('user', __('User'))
             ->display(function ($user) {
