@@ -240,7 +240,7 @@ class ApiResurceController extends Controller
         $vendors = Administrator::where([
             'user_type' => 'Vendor'
         ])->get();
-        return $this->success($vendorss, $message = "Success!", 200);
+        return $this->success($vendors, $message = "Success!", 200);
     }
 
 
