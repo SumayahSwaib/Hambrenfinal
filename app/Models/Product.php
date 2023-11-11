@@ -40,6 +40,19 @@ class Product extends Model
         return $value;
     }
 
+    //getter for price_2
+    public function getPrice2Attribute($value)
+    {
+        if ($value == null || $value == 0 || strlen($value) < 1) {
+            $p1 = ((int)($this->price_1));
+            //10 of p1
+            $discount = $p1 * 0.1;
+            $value = $p1 + $discount;
+        } 
+        return $value;
+    }
+
+
     public function sync($stripe)
     {
         set_time_limit(-1);
