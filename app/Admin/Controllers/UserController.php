@@ -36,14 +36,14 @@ class UserController extends AdminController
             ->label(
                 [
                     'admin' => 'primary',
-                    'vandor' => 'success',
+                    'Vendor' => 'success',
                     'regular' => 'warning',
                 ]
             )
             ->filter(
                 [
                     'admin' => 'Admin',
-                    'vandor' => 'Vandor',
+                    'Vendor' => 'Vendor',
                     'regular' => 'Regular',
                 ]
             )
@@ -179,7 +179,7 @@ class UserController extends AdminController
             ->options(
                 [
                     'admin' => 'Admin',
-                    'vandor' => 'Vandor',
+                    'Vendor' => 'Vendor',
                     'regular' => 'Regular',
                 ]
             )
