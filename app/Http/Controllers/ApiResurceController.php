@@ -131,7 +131,7 @@ class ApiResurceController extends Controller
         $msg = "";
         $u->first_name = $request->first_name;
         $u->last_name = $request->last_name;
-        $u->nin = $request->campus_id;
+        $u->nin = $request->nin;
         $u->business_name = $request->business_name;
         $u->business_license_number = $request->business_license_number;
         $u->business_license_issue_authority = $request->business_license_issue_authority;
@@ -143,7 +143,8 @@ class ApiResurceController extends Controller
         $u->business_email = $request->business_email;
         $u->business_cover_photo = $request->business_cover_photo;
         $u->business_cover_details = $request->business_cover_details;
-        $u->status = 'Pending';
+        $u->vet_service = $request->vet_service;
+        $u->status = '5';
 
         $images = [];
         if (!empty($_FILES)) {
