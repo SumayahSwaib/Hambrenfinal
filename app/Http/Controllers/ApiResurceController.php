@@ -143,6 +143,7 @@ class ApiResurceController extends Controller
         $u->business_email = $request->business_email;
         $u->business_cover_photo = $request->business_cover_photo;
         $u->business_cover_details = $request->business_cover_details;
+        $u->request_status = 'Pending';
         $u->vet_service = $request->vet_service;
         $u->status = '5';
 
