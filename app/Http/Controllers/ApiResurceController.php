@@ -131,7 +131,7 @@ class ApiResurceController extends Controller
         $msg = "";
         $u->first_name = $request->first_name;
         $u->last_name = $request->last_name;
-        $u->nin = $request->nin;
+        $u->nin = $request->campus_id;
         $u->business_name = $request->business_name;
         $u->business_license_number = $request->business_license_number;
         $u->business_license_issue_authority = $request->business_license_issue_authority;

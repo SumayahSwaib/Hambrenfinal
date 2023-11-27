@@ -596,7 +596,7 @@ administrator_id
     }
     public static function sync_products_categories()
     {
-        
+
         $products = Product::where(['category' => null])->get();
         foreach ($products as $key => $pro) {
             $sub_cat = ProductCategory::find($pro->sub_category);
@@ -1122,7 +1122,7 @@ administrator_id
 
         $image = new Zebra_Image();
 
-        $image->auto_handle_exif_orientation = false;
+        $image->auto_handle_exif_orientation = true;
         $image->source_path = "" . $params['source'];
         $image->target_path = "" . $params['target'];
 
@@ -1138,12 +1138,10 @@ administrator_id
 
         $img_size = getimagesize($image->source_path); // returns an array that is filled with info
 
-
-
-
-
-        $image->jpeg_quality = 50;
         $image->jpeg_quality = Utils::get_jpeg_quality(filesize($image->source_path));
+        $image->jpeg_quality = 50;
+        $image->preserve_aspect_ratio = true;
+        $image->enlarge_smaller_images = true;
         if (!$image->resize(0, 0, ZEBRA_IMAGE_CROP_CENTER)) {
             return $image->source_path;
         } else {
