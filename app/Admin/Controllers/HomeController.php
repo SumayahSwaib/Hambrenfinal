@@ -48,8 +48,8 @@ class HomeController extends Controller
         ])->get();
         //last order
         $order = Order::orderBy('id', 'desc')->first();
-        $order->create_payment_link($stripe);
-        dd($order->stripe_url);
+        //$order->create_payment_link($stripe);
+        //dd($order->stripe_url);
         die("done");
         /* 
         $names = [
