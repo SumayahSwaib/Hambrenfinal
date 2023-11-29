@@ -158,12 +158,13 @@ class ApiResurceController extends Controller
         try {
             $u->save();
             $msg = "Submitted successfully.";
-            return $this->success(null, $msg, $code);
+            return $this->success($u, $msg, $code);
         } catch (\Throwable $th) {
             $msg = $th->getMessage();
             $code = 0;
-            return $this->error(null, $msg, $code);
+            return $this->error($msg);
         }
+        return $this->success(null, $msg, $code);
     }
 
 
