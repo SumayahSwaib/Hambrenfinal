@@ -34,6 +34,7 @@ class Order extends Model
             return;
         }
 
+
         $itmes = $this->get_items();
         $line_items = [];
         foreach ($itmes as $key => $item) {
@@ -41,6 +42,9 @@ class Order extends Model
             if ($pro == null) {
                 continue;
             }
+            if ($pro->stripe_price == null || strlen($pro->stripe_price) < 3) {
+                continue;
+            } 
             $line_items[] = [
                 'price' => $pro->stripe_price,
                 'quantity' => $item->qty,
@@ -64,7 +68,7 @@ class Order extends Model
             $this->stripe_id = $resp->id;
             $this->stripe_url = $resp->url;
             $this->stripe_paid = 'No';
-            $this->save();
+            $this->save(); 
         }
     }
     public function get_items()

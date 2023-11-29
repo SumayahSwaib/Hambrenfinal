@@ -48,7 +48,7 @@ class Product extends Model
             //10 of p1
             $discount = $p1 * 0.1;
             $value = $p1 + $discount;
-        } 
+        }
         return $value;
     }
 
@@ -72,7 +72,7 @@ class Product extends Model
             'name' => $this->name,
             'default_price_data' => [
                 'currency' => 'cad',
-                'unit_amount' => $this->price_1,
+                'unit_amount' => $this->price_1*100,
             ],
         ]);
         if ($resp != null) {
