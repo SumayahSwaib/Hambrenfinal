@@ -6,11 +6,9 @@ use Carbon\Carbon;
 use Dflydev\DotAccessData\Util;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Image extends Model
 {
-    use SoftDeletes;
     use HasFactory;
     protected $fillable = [
         'administrator_id',
@@ -18,7 +16,6 @@ class Image extends Model
         'thumbnail',
         'parent_id',
         'size',
-        'deleted_at',
         'type',
         'product_id',
     ];
@@ -29,27 +26,27 @@ class Image extends Model
 
         self::deleting(function ($m) {
 
-           try {
-            $src = Utils::docs_root() . "/storage/images/" . $m->src;
+            try {
+                $src = Utils::docs_root() . "/storage/images/" . $m->src;
 
-            if ($m->thumbnail != null) {
-                if (strlen($m->thumbnail) > 2) {
-                    $thumb = Utils::docs_root() . "/storage/images/" . $m->thumbnail;
+                if ($m->thumbnail != null) {
+                    if (strlen($m->thumbnail) > 2) {
+                        $thumb = Utils::docs_root() . "/storage/images/" . $m->thumbnail;
+                    }
                 }
-            }
-            if (!isset($thumb)) {
-                $thumb =  Utils::docs_root() . "/storage/images/thumb_" . $m->src;
-            }
+                if (!isset($thumb)) {
+                    $thumb =  Utils::docs_root() . "/storage/images/thumb_" . $m->src;
+                }
 
-            if (file_exists($src)) {
-                unlink($src);
+                if (file_exists($src)) {
+                    unlink($src);
+                }
+                if (file_exists($thumb)) {
+                    unlink($thumb);
+                }
+            } catch (\Throwable $th) {
+                //throw $th;
             }
-            if (file_exists($thumb)) {
-                unlink($thumb);
-            }
-           } catch (\Throwable $th) {
-            //throw $th;
-           }
         });
 
         self::created(function ($m) {
@@ -79,13 +76,13 @@ class Image extends Model
     public function create_thumbail()
     {
         set_time_limit(-1);
-
         $src = $this->src;
         $source = Utils::docs_root() . "/storage/images/" . $this->src;
-        if (!file_exists($source)) {
+        if (!file_exists($source)) { 
             $this->delete();
             return;
         }
+
         $target = Utils::docs_root() . "/storage/images/thumb_" . $this->src;
 
         Utils::create_thumbail([
@@ -99,9 +96,10 @@ class Image extends Model
         }
     }
 
-    
-    public function getUpdatedAtTextAttribute(){
+
+    public function getUpdatedAtTextAttribute()
+    {
         return Carbon::parse($this->updated_at)->timestamp;
-    } 
-    protected $appends = ['updated_at_text']; 
+    }
+    protected $appends = ['updated_at_text'];
 }

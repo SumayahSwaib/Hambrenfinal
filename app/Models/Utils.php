@@ -118,47 +118,6 @@ class Utils extends Model
     }
 
 
-    /* 
-/* 
-
-Full texts
-id	
-created_at	
-updated_at	
-association_id	
-group_id	
-name	
-address	
-parish	
-village	
-phone_number	
-email		
-subcounty_id	
-	
-phone_number_2	
-dob	
-sex	
-	 
-	
-caregiver_sex	
-caregiver_phone_number	
-caregiver_age	
-caregiver_relationship	
-photo	
-deleted_at	
-status	
-administrator_id	
-	
-*/
-
-    /* 
-  
-[] => 
-[9] => RELATIONSHIP WITH CAREGIVER
-[] => District
-*/
-
-
     public static function importPwdsProfiles($path)
     {
         $csv = new SplFileObject($path);
@@ -508,6 +467,11 @@ administrator_id
     public static function docs_root()
     {
         $r = $_SERVER['DOCUMENT_ROOT'] . "";
+
+        if (str_contains($r, 'htdocs')) { 
+            $folder = env('APP_FOLDER');
+            return  $folder . "/public";
+        }
 
         if (!str_contains($r, 'home/')) {
             $r = str_replace('/public', "", $r);
@@ -1117,7 +1081,7 @@ administrator_id
 
 
         if (!file_exists($params['source'])) {
-            $img = url('assets/images/cow.jpeg');
+            $img = url('assets/images/logo.png');
             return $img;
         }
 
@@ -1128,6 +1092,11 @@ administrator_id
         $image->source_path = "" . $params['source'];
         $image->target_path = "" . $params['target'];
 
+        $size = filesize($image->source_path) / (1024 * 1024);
+        if ($size < 1) {
+            copy($params['source'], $params['target']);
+            return;
+        }
 
         if (isset($params['quality'])) {
             $image->jpeg_quality = $params['quality'];
@@ -1141,7 +1110,6 @@ administrator_id
         $img_size = getimagesize($image->source_path); // returns an array that is filled with info
 
         $image->jpeg_quality = Utils::get_jpeg_quality(filesize($image->source_path));
-        $image->jpeg_quality = 50;
         $image->preserve_aspect_ratio = true;
         $image->enlarge_smaller_images = true;
         if (!$image->resize(0, 0, ZEBRA_IMAGE_CROP_CENTER)) {
@@ -1154,23 +1122,24 @@ administrator_id
 
     public static function get_jpeg_quality($_size)
     {
-        $size = ($_size / 1000000);
+        $size = ($_size / (1024 * 1024));
+
 
         $qt = 50;
         if ($size > 5) {
-            $qt = 10;
+            $qt = 8;
         } else if ($size > 4) {
-            $qt = 10;
+            $qt = 8;
         } else if ($size > 2) {
-            $qt = 10;
+            $qt = 8;
         } else if ($size > 1) {
-            $qt = 11;
+            $qt = 20;
         } else if ($size > 0.8) {
-            $qt = 11;
+            $qt = 40;
         } else if ($size > .5) {
-            $qt = 12;
+            $qt = 55;
         } else {
-            $qt = 15;
+            $qt = 60;
         }
 
         return $qt;

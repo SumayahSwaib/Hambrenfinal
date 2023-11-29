@@ -7,6 +7,7 @@ use App\Models\Association;
 use App\Models\Candidate;
 use App\Models\Garden;
 use App\Models\Group;
+use App\Models\Image;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use App\Models\Location;
@@ -176,6 +177,28 @@ class HomeController extends Controller
         $p->save();
         die('onde');
  */
+        $img = Image::where([])
+            ->orderBy('id', 'desc')
+            ->first();
+        //$img->create_thumbail(); 
+        $path = env('APP_URL') . "/storage/images/";
+        echo '<img width=500" src="' . $path . $img->src . '" >';
+        echo '<img width=500" src="' . $path . $img->thumbnail . '" ><br>';
+
+        $src_size = filesize(Utils::docs_root() . "/storage/images/" . $img->src);
+        $src_size = $src_size / (1024 * 1024);
+        $src_size = round($src_size, 2);
+        $src_size = $src_size . " MB";
+
+        $thumb_size = filesize(Utils::docs_root() . "/storage/images/" . $img->thumbnail);
+        $thumb_size = $thumb_size / (1024 * 1024);
+        $thumb_size = round($thumb_size, 2);
+        $thumb_size = $thumb_size . " MB";
+
+        echo " MAIN " . $src_size . "<br>";
+        echo " THUMB " . $thumb_size . "<br>";
+
+        die('done');
 
         $u = Auth::user();
         $content
