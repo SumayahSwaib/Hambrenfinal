@@ -256,7 +256,6 @@ class ApiResurceController extends Controller
         $msg = "";
         $u->first_name = $request->first_name;
         $u->last_name = $request->last_name;
-        $u->middle_name = $request->middle_name;
         $u->phone_number = $request->phone_number_1;
         $u->email = $request->email;
         $u->phone_number_2 = $request->phone_number_2;
