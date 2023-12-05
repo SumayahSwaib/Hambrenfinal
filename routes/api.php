@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post("update-profile", [ApiResurceController::class, 'update_profile']);
 Route::post("become-vendor", [ApiResurceController::class, 'become_vendor']);
 Route::post("post-media-upload", [ApiResurceController::class, 'upload_media']);
 Route::post("cancel-order", [ApiResurceController::class, "orders_cancel"]);
