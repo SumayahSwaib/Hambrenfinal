@@ -198,7 +198,7 @@ class ApiResurceController extends Controller
         }
 
         $anotherUser = Administrator::where([
-            'phone_number_1' => $request->phone_number_1
+            'phone_number' => $request->phone_number_1
         ])->first();
         if ($anotherUser != null) {
             if ($anotherUser->id != $u->id) {
