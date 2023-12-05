@@ -254,11 +254,17 @@ class ApiResurceController extends Controller
 
 
         $msg = "";
+        //first letter to upper case
         $u->first_name = $request->first_name;
-        $u->last_name = $request->last_name;
+
+        //change first letter to upper case
+        $u->first_name = ucfirst($u->first_name);
+
+
+        $u->last_name = ucfirst($request->last_name);
         $u->phone_number = $request->phone_number_1;
-        $u->email = $request->email; 
-        $u->address = $request->address;
+        $u->email = $request->email;
+        $u->address = ucfirst($request->address);
 
         $images = [];
         if (!empty($_FILES)) {
