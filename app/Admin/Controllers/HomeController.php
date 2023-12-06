@@ -198,7 +198,7 @@ class HomeController extends Controller
         $p->save();
         die('onde');
  */
-        $img = Image::where([])
+     /*    $img = Image::where([])
             ->orderBy('id', 'desc')
             ->first();
         //$img->create_thumbail(); 
@@ -219,7 +219,7 @@ class HomeController extends Controller
         echo " MAIN " . $src_size . "<br>";
         echo " THUMB " . $thumb_size . "<br>";
 
-        die('done');
+        die('done'); */
 
         $u = Auth::user();
         $content
