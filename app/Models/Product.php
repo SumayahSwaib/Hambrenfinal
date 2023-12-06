@@ -87,9 +87,8 @@ class Product extends Model
         return json_encode($imgs);
     }
 
-    //appends 
+
     protected $appends = ['category_text'];
-    //get category_text
     public function getCategoryTextAttribute()
     {
         $d = ProductCategory::find($this->category);
