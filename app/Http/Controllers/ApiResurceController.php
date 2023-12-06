@@ -143,7 +143,11 @@ class ApiResurceController extends Controller
         $u->business_email = $request->business_email;
         $u->business_cover_photo = $request->business_cover_photo;
         $u->business_cover_details = $request->business_cover_details;
-        $u->status = 'Pending';
+
+
+        if ($u->status != 'Active') {
+            $u->status = 'Pending';
+        }
 
         $images = [];
         if (!empty($_FILES)) {
