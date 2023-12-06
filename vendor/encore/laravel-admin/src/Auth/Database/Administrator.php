@@ -67,7 +67,7 @@ class Administrator extends Model implements AuthenticatableContract, JWTSubject
             $n = $m->first_name . " " . $m->last_name;
             if (strlen(trim($n)) > 1) {
                 $m->name = trim($n);
-            } 
+            }
         });
     }
 
@@ -81,6 +81,10 @@ class Administrator extends Model implements AuthenticatableContract, JWTSubject
      */
     public function getAvatarAttribute($avatar)
     {
+        if ($avatar != null && strlen($avatar) > 5) {
+            return $avatar;
+        }
+        
         if (url()->isValidUrl($avatar)) {
             return $avatar;
         }
