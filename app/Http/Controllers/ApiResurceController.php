@@ -287,6 +287,52 @@ class ApiResurceController extends Controller
         return $this->success(null, $msg, $code);
     }
 
+    public function password_change(Request $request)
+    {
+        $administrator_id = $request->user;
+
+        $u = Administrator::find($administrator_id);
+        if ($u == null) {
+            return $this->error('User not found.');
+        }
+
+        if (
+            $request->password == null ||
+            strlen($request->password) < 2
+        ) {
+            return $this->error('Password is missing.');
+        }
+
+        //check if  current_password 
+        if (
+            $request->current_password == null ||
+            strlen($request->current_password) < 2
+        ) {
+            return $this->error('Current password is missing.');
+        }
+
+        //check if  current_password
+        if (
+            !(password_verify($request->current_password, $u->password))
+        ) {
+            return $this->error('Current password is incorrect.');
+        }
+
+        $u->password = password_hash($request->password, PASSWORD_DEFAULT);
+        $msg = "";
+        $code = 1;
+        try {
+            $u->save();
+            $msg = "Password changed successfully.";
+            return $this->success($u, $msg, $code);
+        } catch (\Throwable $th) {
+            $msg = $th->getMessage();
+            $code = 0;
+            return $this->error($msg);
+        }
+        return $this->success(null, $msg, $code);
+    }
+
 
 
     public function upload_media(Request $request)
