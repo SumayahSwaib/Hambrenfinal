@@ -72,7 +72,7 @@ class Product extends Model
             'name' => $this->name,
             'default_price_data' => [
                 'currency' => 'cad',
-                'unit_amount' => $this->price_1*100,
+                'unit_amount' => $this->price_1 * 100,
             ],
         ]);
         if ($resp != null) {
@@ -85,6 +85,18 @@ class Product extends Model
     {
         $imgs = Image::where('parent_id', $this->id)->orwhere('product_id', $this->id)->get();
         return json_encode($imgs);
+    }
+
+    //appends 
+    protected $appends = ['category_text'];
+    //get category_text
+    public function getCategoryTextAttribute()
+    {
+        $d = ProductCategory::find($this->category);
+        if ($d == null) {
+            return 'Not Category.';
+        }
+        return $d->category;
     }
 
     protected $casts = [
