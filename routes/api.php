@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post("password-change", [ApiResurceController::class, 'password-change']);
+Route::post("password-change", [ApiResurceController::class, 'password_change']);
 Route::post("update-profile", [ApiResurceController::class, 'update_profile']);
 Route::post("become-vendor", [ApiResurceController::class, 'become_vendor']);
 Route::post("post-media-upload", [ApiResurceController::class, 'upload_media']);
