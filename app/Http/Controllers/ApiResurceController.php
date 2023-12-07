@@ -574,7 +574,15 @@ class ApiResurceController extends Controller
         }
 
 
-        $pro = new Product();
+        if (isset($r->is_edit) && $r->is_edit == 'Yes') {
+            $pro = Product::find($r->id);
+            if ($pro == null) {
+                return $this->error('Product not found.');
+            }
+        } else {
+            $pro = new Product();
+        }
+
         $pro->name = $r->name;
         $pro->feature_photo = 'no_image.jpg';
         $pro->description = $r->description;
@@ -591,7 +599,7 @@ class ApiResurceController extends Controller
         $pro->user = $u->id;
         $pro->supplier = $u->id;
         $pro->in_stock = 1;
-        $pro->rates = 1;
+        $pro->rates = '';
 
 
         $cat = ProductCategory::find($r->category);
