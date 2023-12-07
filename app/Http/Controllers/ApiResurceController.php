@@ -574,11 +574,13 @@ class ApiResurceController extends Controller
         }
 
 
+        $isEdit = false;
         if (isset($r->is_edit) && $r->is_edit == 'Yes') {
             $pro = Product::find($r->id);
             if ($pro == null) {
                 return $this->error('Product not found.');
             }
+            $isEdit = true;
         } else {
             $pro = new Product();
         }
@@ -620,6 +622,9 @@ class ApiResurceController extends Controller
             foreach ($imgs as $key => $img) {
                 $img->product_id = $pro->id;
                 $img->save();
+            }
+            if($isEdit){
+                return $this->success(null, $message = "Updated successfully!", 200);
             }
             return $this->success(null, $message = "Submitted successfully!", 200);
         } else {
