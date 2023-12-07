@@ -30,6 +30,7 @@ Route::get("locations", [ApiResurceController::class, "locations"]);
 Route::get("categories", [ApiResurceController::class, "categories"]);
 Route::get('products', [ApiResurceController::class, 'products']);
 Route::post('products-delete', [ApiResurceController::class, 'products_delete']);
+Route::post('images-delete', [ApiResurceController::class, 'images_delete']);
 Route::post('chat-start', [ApiResurceController::class, 'chat_start']);
 Route::post('chat-send', [ApiResurceController::class, 'chat_send']);
 Route::post('chat-mark-as-read', [ApiResurceController::class, 'chat_mark_as_read']);
