@@ -601,7 +601,7 @@ class ApiResurceController extends Controller
         $pro->user = $u->id;
         $pro->supplier = $u->id;
         $pro->in_stock = 1;
-        $pro->rates = '';
+        $pro->rates = 1;
 
 
         $cat = ProductCategory::find($r->category);
