@@ -18,11 +18,11 @@ class EnsureTokenIsValid
      */
     public function handle(Request $request, Closure $next)
     {
-        $headers = getallheaders();
+        //$headers = getallheaders();
 
 /*         return Utils::success($headers);  */
 
-        $user_id = 0;
+  /*       $user_id = 0;
         if($headers !=null){
             if(isset($headers['User-Id'])){
                 $user_id = ((int)($headers['User-Id']));
@@ -37,7 +37,7 @@ class EnsureTokenIsValid
         if ($u == null) {
             return Utils::success('User not found.'); 
         } 
-        $request->user = $u;
+        $request->user = $u; */
         return $next($request);
     }
 }
