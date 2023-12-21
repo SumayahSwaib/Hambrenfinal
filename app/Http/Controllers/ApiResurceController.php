@@ -623,7 +623,7 @@ class ApiResurceController extends Controller
                 $img->product_id = $pro->id;
                 $img->save();
             }
-            if($isEdit){
+            if ($isEdit) {
                 return $this->success(null, $message = "Updated successfully!", 200);
             }
             return $this->success(null, $message = "Submitted successfully!", 200);

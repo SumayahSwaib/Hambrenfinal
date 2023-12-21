@@ -1,4 +1,14 @@
 <?php
+use Illuminate\Support\Facades\Schema;
+
+$tables = Schema::getColumnListing('products');
+
+echo "<pre>";
+print_r(json_encode($tables));
+echo "</pre>";
+die();
+
+dd($tables);
 
 /**
  * Laravel-admin - admin builder based on Laravel.
