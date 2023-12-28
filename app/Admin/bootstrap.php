@@ -1,14 +1,15 @@
 <?php
+
 use Illuminate\Support\Facades\Schema;
 
-$tables = Schema::getColumnListing('products');
+/* $tables = Schema::getColumnListing('products');
 
 echo "<pre>";
 print_r(json_encode($tables));
 echo "</pre>";
 die();
 
-dd($tables);
+dd($tables); */
 
 /**
  * Laravel-admin - admin builder based on Laravel.
@@ -33,7 +34,18 @@ use Encore\Admin\Facades\Admin;
 use Illuminate\Support\Facades\Auth;
 use App\Admin\Extensions\Nav\Shortcut;
 use App\Admin\Extensions\Nav\Dropdown;
+use App\Models\Product;
 use Encore\Admin\Form;
+
+//last product
+/* $last_product = Product::find(898);
+$last_product->name = rand(1,16) . " " . $last_product->name;
+$last_product->save();
+echo $last_product->name. "<br>";
+echo $last_product->price_1;
+
+die();
+ */
 
 Utils::system_boot();
 
@@ -56,7 +68,7 @@ Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
         'Candidate' => 'people/create', 
     ], 'fa-wpforms')->title('Register new')); */
 
-/*     $navbar->left(new Dropdown()); */
+    /*     $navbar->left(new Dropdown()); */
 
     $navbar->right(Shortcut::make([
         'How to register a new candidate' => '',
@@ -66,7 +78,7 @@ Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
 
 
 Form::init(function (Form $form) {
-   // $form->disableEditingCheck();
+    // $form->disableEditingCheck();
     // $form->disableCreatingCheck();
     // $form->disableViewCheck();
     // $form->disableReset();

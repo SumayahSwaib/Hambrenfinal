@@ -14,6 +14,12 @@ class Utils extends Model
     use HasFactory;
 
 
+    public static function get_stripe()
+    {
+        $key = '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';
+        $stripe = new \Stripe\StripeClient($key);
+        return $stripe;
+    }
     public static function sync_orders()
     {
         $key = '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';
@@ -33,6 +39,7 @@ class Utils extends Model
             $order->create_payment_link($stripe);
         }
     }
+    
     public static function sync_products()
     {
 
@@ -468,7 +475,7 @@ class Utils extends Model
     {
         $r = $_SERVER['DOCUMENT_ROOT'] . "";
 
-        if (str_contains($r, 'htdocs')) { 
+        if (str_contains($r, 'htdocs')) {
             $folder = env('APP_FOLDER');
             return  $folder . "/public";
         }

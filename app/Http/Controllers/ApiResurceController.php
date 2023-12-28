@@ -540,16 +540,25 @@ class ApiResurceController extends Controller
         $order->save();
 
 
+        $order_total = 0;
         foreach ($items as $key => $item) {
+            $product = Product::find($item->product_id);
+            if ($product == null) {
+                return $this->error("Product #" . $item->product_id . " not found.");
+            }
             $oi = new OrderedItem();
             $oi->order = $order->id;
             $oi->product = $item->product_id;
             $oi->qty = $item->product_quantity;
-            $oi->amount = $item->product_price_1;
+            $oi->amount = $product->price_1;
             $oi->color = '';
             $oi->size = '';
+            $order_total += ($product->price_1 * $oi->qty);
             $oi->save();
         }
+        $order->order_total = $order_total;
+        $order->amount = $order_total;
+        $order->save();
 
         return $this->success(null, $message = "Submitted successfully!", 200);
     }
@@ -575,12 +584,17 @@ class ApiResurceController extends Controller
 
 
         $isEdit = false;
-        if (isset($r->is_edit) && $r->is_edit == 'Yes') {
+        if (
+            isset($r->is_edit) && $r->is_edit == 'Yes' && $r->id != null
+            && $r->id > 0
+        ) {
             $pro = Product::find($r->id);
             if ($pro == null) {
-                return $this->error('Product not found.');
+                $pro = new Product();
+                $isEdit = false;
+            } else {
+                $isEdit = true;
             }
-            $isEdit = true;
         } else {
             $pro = new Product();
         }
