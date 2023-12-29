@@ -87,6 +87,9 @@ class ApiAuthController extends Controller
             return $this->error('User account not found.');
         }
 
+        if ($u->status == 'Deleted') {
+            return $this->error('User account not found. Contact us for help.');
+        }
 
         JWTAuth::factory()->setTTL(60 * 24 * 30 * 365);
 
@@ -136,6 +139,11 @@ class ApiAuthController extends Controller
         $u = Administrator::where('phone_number', $phone_number)
             ->orWhere('username', $phone_number)->first();
         if ($u != null) {
+
+            if ($u->status == 'Deleted') {
+                return $this->error('Phone number or Email for this account is deleted. Contact us for help.');
+            }
+
             return $this->error('User with same phone number already exists.');
         }
 

@@ -291,6 +291,249 @@ class ApiResurceController extends Controller
         return $this->success(null, $msg, $code);
     }
 
+    public function update_profile(Request $request)
+    {
+        $administrator_id = $request->user;
+
+        $u = Administrator::find($administrator_id);
+        if ($u == null) {
+            return $this->error('User not found.');
+        }
+
+        if (
+            $request->first_name == null ||
+            strlen($request->first_name) < 2
+        ) {
+            return $this->error('First name is missing.');
+        }
+        //validate all
+        if (
+            $request->last_name == null ||
+            strlen($request->last_name) < 2
+        ) {
+            return $this->error('Last name is missing.');
+        }
+
+        if (
+            $request->phone_number_1 == null ||
+            strlen($request->phone_number_1) < 5
+        ) {
+            return $this->error('Phone number is requried.');
+        }
+
+        $anotherUser = Administrator::where([
+            'phone_number' => $request->phone_number_1
+        ])->first();
+        if ($anotherUser != null) {
+            if ($anotherUser->id != $u->id) {
+                return $this->error('Phone number is already taken.');
+            }
+        }
+
+        $anotherUser = Administrator::where([
+            'username' => $request->phone_number_1
+        ])->first();
+        if ($anotherUser != null) {
+            if ($anotherUser->id != $u->id) {
+                return $this->error('Phone number is already taken.');
+            }
+        }
+
+        $anotherUser = Administrator::where([
+            'email' => $request->phone_number_1
+        ])->first();
+        if ($anotherUser != null) {
+            if ($anotherUser->id != $u->id) {
+                return $this->error('Phone number is already taken.');
+            }
+        }
+
+        if (
+            $request->email != null &&
+            strlen($request->email) > 5
+        ) {
+            $anotherUser = Administrator::where([
+                'email' => $request->email
+            ])->first();
+            if ($anotherUser != null) {
+                if ($anotherUser->id != $u->id) {
+                    return $this->error('Email is already taken.');
+                }
+            }
+            //check for username as well
+            $anotherUser = Administrator::where([
+                'username' => $request->email
+            ])->first();
+            if ($anotherUser != null) {
+                if ($anotherUser->id != $u->id) {
+                    return $this->error('Email is already taken.');
+                }
+            }
+            //validate email
+            if (!filter_var($request->email, FILTER_VALIDATE_EMAIL)) {
+                return $this->error('Invalid email address.');
+            }
+        }
+
+
+
+        $msg = "";
+        //first letter to upper case
+        $u->first_name = $request->first_name;
+
+        //change first letter to upper case
+        $u->first_name = ucfirst($u->first_name);
+
+
+        $u->last_name = ucfirst($request->last_name);
+        $u->phone_number = $request->phone_number_1;
+        $u->email = $request->email;
+        $u->address = ucfirst($request->address);
+
+        $images = [];
+        if (!empty($_FILES)) {
+            $images = Utils::upload_images_2($_FILES, false);
+        }
+        if (!empty($images)) {
+            $u->avatar = 'images/' . $images[0];
+        }
+
+        $code = 1;
+        try {
+            $u->save();
+            $msg = "Updated successfully.";
+            return $this->success($u, $msg, $code);
+        } catch (\Throwable $th) {
+            $msg = $th->getMessage();
+            $code = 0;
+            return $this->error($msg);
+        }
+        return $this->success(null, $msg, $code);
+    }
+
+    public function delete_profile(Request $request)
+    {
+        $administrator_id = $request->user;
+
+        $u = Administrator::find($administrator_id);
+        if ($u == null) {
+            return $this->error('User not found.');
+        }
+        $u->status = 'Deleted';
+        $u->save();
+        return $this->success(null, $message = "Deleted successfully!", 1);
+
+        if (
+            $request->first_name == null ||
+            strlen($request->first_name) < 2
+        ) {
+            return $this->error('First name is missing.');
+        }
+        //validate all
+        if (
+            $request->last_name == null ||
+            strlen($request->last_name) < 2
+        ) {
+            return $this->error('Last name is missing.');
+        }
+
+        if (
+            $request->phone_number_1 == null ||
+            strlen($request->phone_number_1) < 5
+        ) {
+            return $this->error('Phone number is requried.');
+        }
+
+        $anotherUser = Administrator::where([
+            'phone_number' => $request->phone_number_1
+        ])->first();
+        if ($anotherUser != null) {
+            if ($anotherUser->id != $u->id) {
+                return $this->error('Phone number is already taken.');
+            }
+        }
+
+        $anotherUser = Administrator::where([
+            'username' => $request->phone_number_1
+        ])->first();
+        if ($anotherUser != null) {
+            if ($anotherUser->id != $u->id) {
+                return $this->error('Phone number is already taken.');
+            }
+        }
+
+        $anotherUser = Administrator::where([
+            'email' => $request->phone_number_1
+        ])->first();
+        if ($anotherUser != null) {
+            if ($anotherUser->id != $u->id) {
+                return $this->error('Phone number is already taken.');
+            }
+        }
+
+        if (
+            $request->email != null &&
+            strlen($request->email) > 5
+        ) {
+            $anotherUser = Administrator::where([
+                'email' => $request->email
+            ])->first();
+            if ($anotherUser != null) {
+                if ($anotherUser->id != $u->id) {
+                    return $this->error('Email is already taken.');
+                }
+            }
+            //check for username as well
+            $anotherUser = Administrator::where([
+                'username' => $request->email
+            ])->first();
+            if ($anotherUser != null) {
+                if ($anotherUser->id != $u->id) {
+                    return $this->error('Email is already taken.');
+                }
+            }
+            //validate email
+            if (!filter_var($request->email, FILTER_VALIDATE_EMAIL)) {
+                return $this->error('Invalid email address.');
+            }
+        }
+
+
+
+        $msg = "";
+        //first letter to upper case
+        $u->first_name = $request->first_name;
+
+        //change first letter to upper case
+        $u->first_name = ucfirst($u->first_name);
+
+
+        $u->last_name = ucfirst($request->last_name);
+        $u->phone_number = $request->phone_number_1;
+        $u->email = $request->email;
+        $u->address = ucfirst($request->address);
+
+        $images = [];
+        if (!empty($_FILES)) {
+            $images = Utils::upload_images_2($_FILES, false);
+        }
+        if (!empty($images)) {
+            $u->avatar = 'images/' . $images[0];
+        }
+
+        $code = 1;
+        try {
+            $u->save();
+            $msg = "Updated successfully.";
+            return $this->success($u, $msg, $code);
+        } catch (\Throwable $th) {
+            $msg = $th->getMessage();
+            $code = 0;
+            return $this->error($msg);
+        }
+        return $this->success(null, $msg, $code);
+    }
+
     public function password_change(Request $request)
     {
         $administrator_id = $request->user;
