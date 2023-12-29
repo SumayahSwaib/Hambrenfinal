@@ -189,7 +189,7 @@ class UserController extends AdminController
                 [
                     'Active' => 'Active',
                     'Pending' => 'Pending',
-                    'Banned' => 'Banned',
+                    'Deleted' => 'Banned',
                 ]
             )
             ->rules('required');
