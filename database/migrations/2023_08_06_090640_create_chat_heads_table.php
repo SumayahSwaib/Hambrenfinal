@@ -14,6 +14,7 @@ class CreateChatHeadsTable extends Migration
      */
     public function up()
     {
+        return;
         Schema::create('chat_heads', function (Blueprint $table) {
             $table->id();
             $table->timestamps();

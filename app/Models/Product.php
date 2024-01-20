@@ -177,6 +177,26 @@ class Product extends Model
         return $d->category;
     }
 
+    //getter for colors from json
+    public function getColorsAttribute($value)
+    {
+        $value = json_decode($value);
+        return $value;
+    }
+
+    //setter for colors to json
+    public function setColorsAttribute($value)
+    {
+        if ($value != null) {
+            if (strlen($value) > 2) {
+                $value = json_encode($value);
+                $this->attributes['colors'] = $value;
+            }
+        }
+    }
+
+    
+
     protected $casts = [
         'summary' => 'json',
     ];

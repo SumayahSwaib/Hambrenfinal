@@ -30,7 +30,6 @@ class ProductController extends AdminController
         $grid->actions(function ($actions) {
             $actions->disableView();
         });
-        $grid->disableCreateButton();
         $grid->disableExport();
 
         $grid->quickSearch('name')->placeholder('Search by name');
@@ -46,7 +45,6 @@ class ProductController extends AdminController
             $filter->between('price_1', 'Select Price');
             $filter->between('created_at', 'Created at')->datetime();
         });
-        $grid->disableBatchActions();
         $grid->model()->orderBy('id', 'desc');
         $grid->column('id', __('Id'))->sortable();
         $grid->column('name', __('Name'))->sortable()
@@ -150,6 +148,68 @@ class ProductController extends AdminController
             ->rules('required');
         $form->decimal('price_1', __('Selling Price'))
             ->rules('required');
+
+        $form->radio('has_colors', __('Has colors?'))
+            ->options([
+                'Yes' => 'Yes',
+                'No' => 'No'
+            ])->when('Yes', function (Form $form) {
+                //list of primary colors
+                $colors = [
+                    'Red' => 'Red',
+                    'Blue' => 'Blue',
+                    'Yellow' => 'Yellow',
+                    'Green' => 'Green',
+                    'Orange' => 'Orange',
+                    'Purple' => 'Purple',
+                    'Brown' => 'Brown',
+                    'Pink' => 'Pink',
+                    'Black' => 'Black',
+                    'White' => 'White',
+                    'Gray' => 'Gray',
+                    'Cyan' => 'Cyan',
+                    'Magenta' => 'Magenta',
+                    'Lime' => 'Lime',
+                    'Teal' => 'Teal',
+                    'Lavender' => 'Lavender',
+                    'Maroon' => 'Maroon',
+                    'Navy' => 'Navy',
+                    'Olive' => 'Olive',
+                    'Silver' => 'Silver',
+                    'Dark' => 'Dark',
+                    'DarkBlue' => 'DarkBlue',
+                    'DarkCyan' => 'DarkCyan',
+                    'DarkGray' => 'DarkGray',
+                    'DarkGreen' => 'DarkGreen',
+                ];
+                $form->tags('colors', 'Select colors')
+                    ->options($colors)
+                    ->rules('required');
+            })->default('No');
+
+        //has_sizes
+        $form->radio('has_sizes', __('Has sizes?'))
+            ->options([
+                'Yes' => 'Yes',
+                'No' => 'No'
+            ])->when('Yes', function (Form $form) {
+                //list of primary colors
+                $sizes = [
+                    'XS' => 'XS',
+                    'S' => 'S',
+                    'M' => 'M',
+                    'L' => 'L',
+                    'XL' => 'XL',
+                    'XXL' => 'XXL',
+                    'XXXL' => 'XXXL',
+                    'XXXXL' => 'XXXXL',
+                    'XXXXXL' => 'XXXXXL',
+                ];
+                $form->tags('sizes', 'Select sizes')
+                    ->options($sizes)
+                    ->rules('required');
+            })->default('No');
+
         $form->quill('description', __('Description'))
             ->rules('required');
 
