@@ -20,7 +20,7 @@ class Utils extends Model
     {
         try {
             Mail::send(
-                'mail-1',
+                'mail',
                 [
                     'body' => view('mail-1', [
                         'body' => $data['body'],
