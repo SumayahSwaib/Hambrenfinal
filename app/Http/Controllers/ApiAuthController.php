@@ -64,7 +64,7 @@ class ApiAuthController extends Controller
                 try {
                     $u->send_password_reset();
                 } catch (\Throwable $th) {
-                    return $this->error('Failed to send password reset email. Please try again.');
+                    return $this->error('Failed to send password reset email because ' . $th->getMessage() . '.' );
                 }
                 return $this->success($u, 'Password reset CODE sent to your email address ' . $u->email . '.');
             }
