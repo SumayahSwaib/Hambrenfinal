@@ -7,11 +7,38 @@ use Carbon\Carbon;
 use Encore\Admin\Facades\Admin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Mail;
 use SplFileObject;
 
 class Utils extends Model
 {
     use HasFactory;
+
+
+    //mail sender
+    public static function mail_sender($data)
+    {
+        try {
+            Mail::send(
+                'mail',
+                [
+                    'body' => view('mail-1', [
+                        'body' => $data['body'],
+                    ]),
+                    'title' => $data['subject']
+                ],
+                function ($m) use ($data) {
+                    $m->to($data['email'], $data['name'])
+                        ->subject($data['subject']);
+                    $m->from('noreply@hambren.com', $data['subject']);
+                }
+            );
+        } catch (\Throwable $th) {
+            $msg = 'failed';
+            throw $th;
+        }
+    }
+
 
 
     public static function get_stripe()
@@ -39,7 +66,7 @@ class Utils extends Model
             $order->create_payment_link($stripe);
         }
     }
-    
+
     public static function sync_products()
     {
 
