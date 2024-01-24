@@ -291,7 +291,7 @@ class ApiResurceController extends Controller
         return $this->success(null, $msg, $code);
     }
 
- 
+
     public function delete_profile(Request $request)
     {
         $administrator_id = $request->user;
@@ -741,6 +741,10 @@ class ApiResurceController extends Controller
         $pro->in_stock = 1;
         $pro->rates = 1;
 
+        $pro->has_sizes = $r->has_sizes;
+        $pro->has_colors = $r->has_colors;
+        $pro->colors = $r->colors;
+        $pro->sizes = $r->sizes;
 
         $cat = ProductCategory::find($r->category);
         if ($cat == null) {
