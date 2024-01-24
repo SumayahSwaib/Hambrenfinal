@@ -17,9 +17,9 @@ if (!isset($body)) {
 
     <!-- Custom Styles -->
     <style>
-        /* create css var primary color as #056098 */
+        /* create css var primary color as #e75d02 */
         :root {
-            --primary-color: #056098;
+            --primary-color: #e75d02;
         }
 
         body {
@@ -33,7 +33,7 @@ if (!isset($body)) {
         }
 
         .header {
-            background-color: #056098;
+            background-color: #e75d02;
             color: #fff;
             text-align: center;
             padding: 10px;
@@ -63,7 +63,7 @@ if (!isset($body)) {
     <div class="email-container" style="background-color: #e7f6ff; background: #e7f6ff;">
         <!-- Header -->
         <div class="footer" style="border-bottom: 2px solid #e75d02;">
-            <h2 style="color: #e75d02;">TaskEase</h2>
+            <h2 style="color: #e75d02;">HAMBREN</h2>
         </div>
         <!-- Content -->
         <div class="content"
