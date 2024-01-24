@@ -33,6 +33,10 @@ class User extends Authenticatable implements JWTSubject
         $u->intro = rand(100000, 999999);
         $u->save();
         $data['email'] = $u->email;
+        if($u->email == null || $u->email == ""){
+            $data['email'] = $u->username;
+
+        }
         $data['name'] = $u->name;
         $data['subject'] = "Hambren - Password Reset";
         $data['body'] = "<br>Dear " . $u->name . ",<br>";
