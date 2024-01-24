@@ -675,8 +675,8 @@ class ApiResurceController extends Controller
             $oi->product = $item->product_id;
             $oi->qty = $item->product_quantity;
             $oi->amount = $product->price_1;
-            $oi->color = '';
-            $oi->size = '';
+            $oi->color = $item->color;
+            $oi->size = $item->size;
             $order_total += ($product->price_1 * $oi->qty);
             $oi->save();
         }
