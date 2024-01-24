@@ -55,6 +55,21 @@ class ApiAuthController extends Controller
             return $this->error('Username is required.');
         }
 
+        if (isset($r->task)) {
+            if ($r->task == 'request_password_reset') {
+                $u = User::where('email', $r->username)->first();
+                if ($u == null) {
+                    return $this->error('User account not found.');
+                }
+                try {
+                    $u->send_password_reset();
+                } catch (\Throwable $th) {
+                    return $this->error('Failed to send password reset email. Please try again.');
+                }
+                return $this->success($u, 'Password reset CODE sent to your email address ' . $u->email . '.');
+            }
+        }
+
         if ($r->password == null) {
             return $this->error('Password is required.');
         }
