@@ -469,6 +469,8 @@ class ApiResurceController extends Controller
             return $this->error('User not found.');
         }
 
+        return $this->error('Hello '.$u->name);
+
         if ($request->task == null) {
             return $this->error('Task is missing.');
         }
