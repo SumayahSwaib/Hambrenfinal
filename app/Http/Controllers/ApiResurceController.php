@@ -461,6 +461,66 @@ class ApiResurceController extends Controller
         return $this->success(null, $msg, $code);
     }
 
+    public function account_verification(Request $request)
+    {
+        $administrator_id = $request->user;
+        $u = User::find($administrator_id);
+        if ($u == null) {
+            return $this->error('User not found.');
+        }
+
+        if ($request->task == null) {
+            return $this->error('Task is missing.');
+        }
+
+        if (
+            $request->email == null ||
+            strlen($request->email) < 2
+        ) {
+            return $this->error('Email is missing.');
+        }
+
+        $other_user = User::where([
+            'email' => $request->email
+        ])->first();
+        if ($other_user->id != $u->id) {
+            return $this->error('Email is already taken.');
+        }
+        $other_user = User::where([
+            'username' => $request->email
+        ])->first();
+        if ($other_user->id != $u->id) {
+            return $this->error('Email is already taken.');
+        }
+
+        if ($request->task == 'request_verification_code') {
+            try {
+                $u->send_verification_code($request->email);
+            } catch (\Throwable $th) {
+                return $this->error('Failed to send verification code because ' . $th->getMessage() . '.');
+            }
+            return $this->success($u, 'Verification code sent to your email address ' . $u->email . '.');
+        } else if ($request->task == 'verify_code') {
+            $code = $request->code;
+            if ($code == null || strlen($code) < 3) {
+                return $this->error('Code is required.');
+            }
+            if ($u->intro != $code) {
+                return $this->error('Invalid code.');
+            }
+            $u->complete_profile = 'Yes';
+            $u->email = $request->email;
+            $u->username = $request->email;
+            try {
+                $u->save();
+            } catch (\Throwable $th) {
+                return $this->error('Failed to verify email because ' . $th->getMessage() . '.');
+            }
+            return $this->success($u, 'Email verified successfully.');
+        }
+        return $this->error('Task not found.');
+    }
+
 
 
     public function upload_media(Request $request)

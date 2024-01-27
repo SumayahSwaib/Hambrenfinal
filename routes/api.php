@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post("account-verification", [ApiResurceController::class, 'account_verification']);
 Route::post("password-change", [ApiResurceController::class, 'password_change']);
 Route::post("update-profile", [ApiResurceController::class, 'update_profile']);
 Route::post("delete-account", [ApiResurceController::class, 'delete_profile']);

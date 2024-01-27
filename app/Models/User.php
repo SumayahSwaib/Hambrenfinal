@@ -53,6 +53,32 @@ class User extends Authenticatable implements JWTSubject
         }
     }
 
+    public function send_verification_code($email)
+    {
+        $u = $this;
+        $u->intro = rand(100000, 999999);
+        $u->save();
+        $data['email'] = $email;
+        if($email == null || $email == ""){
+            throw new \Exception("Email is required.");
+        }
+
+        $data['name'] = $u->name;
+        $data['subject'] = "Hambren - Email Verification";
+        $data['body'] = "<br>Dear " . $u->name . ",<br>";
+        $data['body'] .= "<br>Please use the CODE below to verify your email address.<br><br>";
+        $data['body'] .= "CODE: <b>" . $u->intro . "</b><br>";
+        $data['body'] .= "<br>Thank you.<br><br>";
+        $data['body'] .= "<br><small>This is an automated message, please do not reply.</small><br>";
+        $data['view'] = 'mail-1';
+        $data['data'] = $data['body'];
+        try {
+            Utils::mail_sender($data);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
 
 
     public function campus()
