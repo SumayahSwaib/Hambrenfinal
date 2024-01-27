@@ -469,8 +469,6 @@ class ApiResurceController extends Controller
             return $this->error('User not found.');
         }
 
-        return $this->error('Hello '.$u->name);
-
         if ($request->task == null) {
             return $this->error('Task is missing.');
         }
@@ -485,14 +483,19 @@ class ApiResurceController extends Controller
         $other_user = User::where([
             'email' => $request->email
         ])->first();
-        if ($other_user->id != $u->id) {
-            return $this->error('Email is already taken.');
+
+        if ($other_user != null) {
+            if ($other_user->id != $u->id) {
+                return $this->error('Email is already taken.');
+            }
         }
         $other_user = User::where([
             'username' => $request->email
         ])->first();
-        if ($other_user->id != $u->id) {
-            return $this->error('Email is already taken.');
+        if ($other_user != null) {
+            if ($other_user->id != $u->id) {
+                return $this->error('Email is already taken.');
+            }
         }
 
         if ($request->task == 'request_verification_code') {
