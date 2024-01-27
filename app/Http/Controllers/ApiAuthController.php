@@ -56,7 +56,31 @@ class ApiAuthController extends Controller
         }
 
         if (isset($r->task)) {
-            if ($r->task == 'request_password_reset') {
+            if ($r->task == 'reset_password') {
+                $u = User::where('email', $r->email)->first();
+                if ($u == null) {
+                    return $this->error('User account with email ' . $r->email . ' not found.');
+                }
+
+                $code = $r->code;
+                if ($code == null || strlen($code) < 3) {
+                    return $this->error('Code is required.');
+                }
+                if ($u->intro != $code) {
+                    return $this->error('Invalid code.');
+                }
+                $password = $r->password;
+                if ($password == null || strlen($password) < 3) {
+                    return $this->error('Password is required.');
+                }
+                $u->password = password_hash($password, PASSWORD_DEFAULT);
+                try {
+                    $u->save();
+                } catch (\Throwable $th) {
+                    return $this->error('Failed to reset password because ' . $th->getMessage() . '.');
+                }
+                return $this->success($u, 'Password reset successfully.');
+            } else if ($r->task == 'request_password_reset') {
                 $u = User::where('email', $r->username)->first();
                 if ($u == null) {
                     return $this->error('User account not found.');
@@ -64,10 +88,11 @@ class ApiAuthController extends Controller
                 try {
                     $u->send_password_reset();
                 } catch (\Throwable $th) {
-                    return $this->error('Failed to send password reset email because ' . $th->getMessage() . '.' );
+                    return $this->error('Failed to send password reset email because ' . $th->getMessage() . '.');
                 }
                 return $this->success($u, 'Password reset CODE sent to your email address ' . $u->email . '.');
             }
+            return $this->error('Invalid task.'); 
         }
 
         if ($r->password == null) {
