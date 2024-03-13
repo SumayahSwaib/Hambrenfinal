@@ -21,8 +21,8 @@ Route::match(['get', 'post'], '/pay', function () {
     $order = \App\Models\Order::find($id);
     $customer = $order->customer;
     //dd($customer);
-    $order->amount = 1;
-    $order->save();
+   // $order->amount = 1;
+   // $order->save();
 
     $task = null;
     if (isset($_GET['task'])) {
