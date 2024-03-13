@@ -41,7 +41,8 @@ Route::match(['get', 'post'], '/pay', function () {
         $data['post'] = $_POST;
         $order->order_details = json_encode($data);
         $order->save();
-        die("Payment was canceled.");
+        //return 200 response
+        return response()->json(['status' => 'success', 'message' => 'Payment was updated.']);
     }
 
     $base_link = url('/pay?id=' . $id);
