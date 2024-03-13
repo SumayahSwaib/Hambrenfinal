@@ -30,13 +30,19 @@ Route::match(['get', 'post'], '/pay', function () {
     }
     if ($task == "success") {
         $order->payment_confirmation = 1;
+        $data['get'] = $_GET;
+        $data['post'] = $_POST;
+        $order->stripe_id = json_encode($data);
         $order->save();
-        die("Payment was successful");
+        die("Payment was successful"); 
     } else if ($task == "canceled") {
-        $order->payment_confirmation = 0;
+        $data['get'] = $_GET;
+        $data['post'] = $_POST;
+        $order->stripe_url = json_encode($data);
         $order->save();
-        die("Payment was canceled.");
+        die("Payment was canceled");
     } else if ($task == "update") {
+        $data['task'] = $task;
         $data['get'] = $_GET;
         $data['post'] = $_POST;
         $order->order_details = json_encode($data);
