@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Stripe\Customer;
 
 class Order extends Model
 {
@@ -92,5 +93,11 @@ class Order extends Model
             $items[] = $_item;
         }
         return $items;
+    }
+
+    //belongs to customer
+    public function customer()
+    {
+        return $this->belongsTo(User::class, 'user');
     }
 }

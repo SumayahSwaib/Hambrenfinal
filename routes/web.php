@@ -10,6 +10,46 @@ use Dflydev\DotAccessData\Util;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
+Route::match(['get', 'post'], '/pay', function () {
+    $id = 1;
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+    } else {
+        $order = \App\Models\Order::first();
+        $id = $order->id;
+    }
+    $order = \App\Models\Order::find($id);
+    $customer = $order->customer;
+    //dd($customer);
+    $order->amount = 1;
+    $order->save();
+
+    $task = null;
+    if (isset($_GET['task'])) {
+        $task = $_GET['task'];
+    }
+    if ($task == "success") {
+        $order->payment_confirmation = 1;
+        $order->save();
+        die("Payment was successful");
+    } else if ($task == "canceled") {
+        $order->payment_confirmation = 0;
+        $order->save();
+        die("Payment was canceled.");
+    } else if ($task == "update") {
+        $data['get'] = $_GET;
+        $data['post'] = $_POST;
+        $order->order_details = json_encode($data);
+        $order->save();
+        die("Payment was canceled.");
+    }
+
+    $base_link = url('/pay?id=' . $id);
+    return view('pay', [
+        'order' => $order,
+        'base_link' => $base_link
+    ]);
+});
 Route::get('/process', function () {
 
     //set_time_limit(0);
@@ -68,7 +108,7 @@ Route::get('/process', function () {
                     ]);
                     unlink($source); 
                 } */
-                
+
 
                 if ($target_file_size > $biggest) {
                     $biggest = $target_file_size;
@@ -76,7 +116,7 @@ Route::get('/process', function () {
                 $tot += $target_file_size;
 
 
-                continue; 
+                continue;
                 //echo $i.". ".$item . "<br>";
                 $i++;
                 continue;
