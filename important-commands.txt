@@ -116,7 +116,7 @@ php artisan admin:make InvoiceController --model=App\Models\Invoice
 php artisan admin:make InvoiceItemController --model=App\Models\InvoiceItem
 php artisan admin:make InvoiceItemController --model=App\Models\Quotations
 php artisan admin:make DeliveryController --model=App\Models\Delivery
-php artisan admin:make QuotationItemController --model=App\Models\QuotationItem
+php artisan admin:make DeliveryAddressController --model=App\\Models\\\DeliveryAddress
  
 php artisan make:factory TeacherFactory
 
@@ -168,5 +168,5 @@ php artisan make:model Quotation
 php artisan make:model invoiceItem
 php artisan make:model Delivery
 php artisan make:model DeliveryItem
-php artisan make:model ChatMessage -m
+php artisan make:model DeliveryAddress -m
 
