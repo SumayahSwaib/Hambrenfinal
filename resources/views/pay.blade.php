@@ -53,7 +53,7 @@
                 <input type="hidden" name="name_first" value="{{ $order->customer->first_name }}">
                 <input type="hidden" name="name_last" value="{{ $order->customer->last_name }}">
                 <input type="hidden" name="email_address" value="{{ $order->customer->email }}">
-                <input type="hidden" name="cell_number" value="{{ $order->customer->phone_number }}">
+                {{-- <input type="hidden" name="cell_number" value="{{ $order->customer->phone_number }}"> --}}
                 <input type="hidden" name="m_payment_id" value="{{ $order->id }}">
 
                 <h1>ORDER PAYMENT</h1>
