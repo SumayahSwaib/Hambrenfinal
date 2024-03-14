@@ -33,6 +33,7 @@ class DeliveryAddressController extends AdminController
         $grid->column('latitude', __('Latitude'))->hide();
         $grid->column('longitude', __('Longitude'))->hide();
         $grid->column('shipping_cost', __('Shipping Cost'));
+
         return $grid;
     }
 

@@ -28,6 +28,7 @@ Route::post("orders", [ApiResurceController::class, "orders_submit"]);
 Route::post("product-create", [ApiResurceController::class, "product_create"]);
 Route::get("orders", [ApiResurceController::class, "orders_get"]);
 Route::get("vendors", [ApiResurceController::class, "vendors"]);
+Route::get("delivery-addresses", [ApiResurceController::class, "delivery_addresses"]);
 Route::get("locations", [ApiResurceController::class, "locations"]);
 Route::get("categories", [ApiResurceController::class, "categories"]);
 Route::get('products', [ApiResurceController::class, 'products']);

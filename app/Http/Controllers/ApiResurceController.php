@@ -8,6 +8,7 @@ use App\Models\ChatMessage;
 use App\Models\CounsellingCentre;
 use App\Models\Crop;
 use App\Models\CropProtocol;
+use App\Models\DeliveryAddress;
 use App\Models\Event;
 use App\Models\Garden;
 use App\Models\GardenActivity;
@@ -605,6 +606,13 @@ class ApiResurceController extends Controller
     }
 
 
+    public function delivery_addresses(Request $r)
+    {
+        $vendors = DeliveryAddress::where([])->get();
+        return $this->success($vendors, $message = "Success!", 200);
+    }
+
+
     public function orders_get(Request $r)
     {
 
@@ -714,6 +722,7 @@ class ApiResurceController extends Controller
         $order->mail = $u->email;
         $order->date_created = Carbon::now();
         $order->date_updated = Carbon::now();
+        $delivery_amount = 0;
         if ($delivery != null) {
             try {
                 $order->customer_phone_number_1 = $delivery->phone_number;
@@ -722,6 +731,11 @@ class ApiResurceController extends Controller
                 $order->customer_address = $delivery->current_address;
                 $order->delivery_district = $delivery->current_address;
                 $order->order_details = json_encode($delivery);
+                $order->delivery_method = $delivery->delivery_method;
+                $order->delivery_address_id = $delivery->delivery_address_id;
+                $order->delivery_address_details = $delivery->delivery_address_details;
+                $order->delivery_amount = $delivery->delivery_amount;
+                $delivery_amount = (int)($delivery->delivery_amount);
             } catch (\Throwable $th) {
             }
         }
@@ -745,11 +759,17 @@ class ApiResurceController extends Controller
             $order_total += ($product->price_1 * $oi->qty);
             $oi->save();
         }
-        $order->order_total = $order_total;
-        $order->amount = $order_total;
-        $order->save();
+        $order->payable_amount = $order_total;
 
-        return $this->success(null, $message = "Submitted successfully!", 200);
+        $order_total += $delivery_amount;
+        $order->amount = $order_total;
+        $order->order_total = $order_total;
+
+        $order->save();
+        $order = Order::find($order->id);
+
+
+        return $this->success($order, $message = "Submitted successfully!", 200);
     }
 
 

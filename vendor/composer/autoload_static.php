@@ -649,6 +649,7 @@ class ComposerStaticInitda89eef54c810448a827ed04bb3da82f
         'App\\Admin\\Controllers\\CourseController' => __DIR__ . '/../..' . '/app/Admin/Controllers/CourseController.php',
         'App\\Admin\\Controllers\\CropController' => __DIR__ . '/../..' . '/app/Admin/Controllers/CropController.php',
         'App\\Admin\\Controllers\\CropProtocolController' => __DIR__ . '/../..' . '/app/Admin/Controllers/CropProtocolController.php',
+        'App\\Admin\\Controllers\\DeliveryAddressController' => __DIR__ . '/../..' . '/app/Admin/Controllers/DeliveryAddressController.php',
         'App\\Admin\\Controllers\\DeliveryController' => __DIR__ . '/../..' . '/app/Admin/Controllers/DeliveryController.php',
         'App\\Admin\\Controllers\\DepaturedController' => __DIR__ . '/../..' . '/app/Admin/Controllers/DepaturedController.php',
         'App\\Admin\\Controllers\\DisabilityController' => __DIR__ . '/../..' . '/app/Admin/Controllers/DisabilityController.php',

@@ -25,6 +25,7 @@ return array(
     'App\\Admin\\Controllers\\CourseController' => $baseDir . '/app/Admin/Controllers/CourseController.php',
     'App\\Admin\\Controllers\\CropController' => $baseDir . '/app/Admin/Controllers/CropController.php',
     'App\\Admin\\Controllers\\CropProtocolController' => $baseDir . '/app/Admin/Controllers/CropProtocolController.php',
+    'App\\Admin\\Controllers\\DeliveryAddressController' => $baseDir . '/app/Admin/Controllers/DeliveryAddressController.php',
     'App\\Admin\\Controllers\\DeliveryController' => $baseDir . '/app/Admin/Controllers/DeliveryController.php',
     'App\\Admin\\Controllers\\DepaturedController' => $baseDir . '/app/Admin/Controllers/DepaturedController.php',
     'App\\Admin\\Controllers\\DisabilityController' => $baseDir . '/app/Admin/Controllers/DisabilityController.php',
