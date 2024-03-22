@@ -49,6 +49,7 @@ class Utils extends Model
     }
     public static function sync_orders()
     {
+        return;
         $key = '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';
         $stripe = new \Stripe\StripeClient($key);
 

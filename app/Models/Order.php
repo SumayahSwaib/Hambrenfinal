@@ -15,7 +15,7 @@ class Order extends Model
         parent::boot();
         //created
         self::created(function ($m) {
-            Utils::sync_orders();
+            //Utils::sync_orders();
         });
         self::deleting(function ($m) {
             try {
