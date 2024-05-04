@@ -1627,4 +1627,17 @@ class ApiResurceController extends Controller
             ]);
         }
     }
+
+    //delivery_addresses
+    public function delivery_addresses(Request $r)
+    {
+        return $this->success(
+            DeliveryAddress::where([])
+                ->limit(100)
+                ->orderBy('id', 'desc')
+                ->get(),
+            $message = "Sussesfully",
+            200
+        );
+    }
 }
