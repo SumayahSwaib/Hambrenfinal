@@ -25,9 +25,11 @@ Route::post("become-vendor", [ApiResurceController::class, 'become_vendor']);
 Route::post("post-media-upload", [ApiResurceController::class, 'upload_media']);
 Route::post("cancel-order", [ApiResurceController::class, "orders_cancel"]);
 Route::post("orders", [ApiResurceController::class, "orders_submit"]);
+Route::post("orders-create", [ApiResurceController::class, "orders_create"]);
 Route::post("product-create", [ApiResurceController::class, "product_create"]);
 Route::get("orders", [ApiResurceController::class, "orders_get"]);
 Route::get("vendors", [ApiResurceController::class, "vendors"]);
+Route::get("delivery-addresses", [ApiResurceController::class, "delivery_addresses"]);
 Route::get("locations", [ApiResurceController::class, "locations"]);
 Route::get("categories", [ApiResurceController::class, "categories"]);
 Route::get('products', [ApiResurceController::class, 'products']);
@@ -44,14 +46,6 @@ Route::POST("users/register", [ApiAuthController::class, "register"]);
 Route::get('api/{model}', [ApiResurceController::class, 'index']);
 
 
-/* 
-
-Route::middleware([EnsureTokenIsValid::class])->group(function () {
-    Route::post("orders", [ApiResurceController::class, "orders_submit"]);
-    Route::post("product-create", [ApiResurceController::class, "product_create"]);
-    Route::get("orders", [ApiResurceController::class, "orders_get"]);
-});
- */
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

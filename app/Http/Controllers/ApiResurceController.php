@@ -8,6 +8,7 @@ use App\Models\ChatMessage;
 use App\Models\CounsellingCentre;
 use App\Models\Crop;
 use App\Models\CropProtocol;
+use App\Models\DeliveryAddress;
 use App\Models\Event;
 use App\Models\Garden;
 use App\Models\GardenActivity;
@@ -664,6 +665,114 @@ class ApiResurceController extends Controller
         $data[] = $u;
         return $this->success($data, $message = "Success!", 200);
     }
+
+
+    public function orders_create(Request $r)
+    {
+        $u = auth('api')->user();
+        if ($u == null) {
+            $administrator_id = Utils::get_user_id($r);
+            $u = Administrator::find($administrator_id);
+        }
+
+        $items = [];
+        try {
+            $items = json_decode($r->items);
+        } catch (\Throwable $th) {
+            $items = [];
+        }
+        foreach ($items as $key => $value) {
+            $p = Product::find($value->product_id);
+            if ($p == null) {
+                return $this->error("Product #" . $value->product_id . " not found.");
+            }
+        }
+
+        if ($u == null) {
+            return $this->error('User not found.');
+        }
+
+        $delivery = null;
+        try {
+            $delivery = json_decode($r->delivery);
+        } catch (\Throwable $th) {
+            $delivery = null;
+        }
+
+        if ($delivery == null) {
+            return $this->error('Delivery information is missing.');
+        }
+        if ($delivery->customer_phone_number_1 == null) {
+            return $this->error('Phone number is missing.');
+        }
+
+        $order = new Order();
+        $order->user = $u->id;
+        $order->order_state = 0;
+        $order->temporary_id = 0;
+        $order->amount = 0;
+        $order->order_total = 0;
+        $order->payment_confirmation = '';
+        $order->description = '';
+        $order->mail = $u->email;
+        $delivery_amount = 0;
+        if ($delivery != null) {
+            try {
+
+                $order->order_details = json_encode($delivery);
+
+                $del_loc = DeliveryAddress::find($delivery->delivery_district);
+                if ($del_loc == null) {
+                    return $this->error('Delivery address not found.');
+                }
+
+                $delivery_amount = (int)($del_loc->shipping_cost);
+
+                $order->date_created = $delivery->date_created;
+                $order->date_updated = $delivery->date_updated;
+                $order->mail = $delivery->mail;
+                $order->delivery_district = $delivery->delivery_district;
+                $order->description = $delivery->description;
+                $order->customer_name = $delivery->customer_name;
+                $order->customer_phone_number_1 = $delivery->customer_phone_number_1;
+                $order->customer_phone_number_2 = $delivery->customer_phone_number_2;
+                $order->customer_address = $delivery->customer_address;
+            } catch (\Throwable $th) {
+            }
+        }
+
+        $order->save();
+
+
+        $order_total = 0;
+        foreach ($items as $key => $item) {
+            $product = Product::find($item->product_id);
+            if ($product == null) {
+                return $this->error("Product #" . $item->product_id . " not found.");
+            }
+            $oi = new OrderedItem();
+            $oi->order = $order->id;
+            $oi->product = $item->product_id;
+            $oi->qty = $item->product_quantity;
+            $oi->amount = $product->price_1;
+            $oi->color = $item->color;
+            $oi->size = $item->size;
+            $order_total += ($product->price_1 * $oi->qty);
+            $oi->save();
+        }
+        $order->amount = $order_total + $delivery_amount;
+        $order->order_total = $order->amount;
+
+
+        $order->save();
+        $order = Order::find($order->id);
+
+
+        return $this->success($order, $message = "Submitted successfully!", 200);
+    }
+
+
+
     public function orders_submit(Request $r)
     {
         $u = auth('api')->user();
