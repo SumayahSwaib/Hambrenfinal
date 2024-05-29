@@ -71,6 +71,7 @@ class Image extends Model
 
         $source = Utils::docs_root() . "/storage/images/" . $src;
         if (!file_exists($source)) {
+            return $src; 
             return 'logo.png';
         }
         return $src;
