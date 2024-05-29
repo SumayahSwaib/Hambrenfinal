@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Models\Product;
 use Encore\Admin\Controllers\AdminController;
+use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
@@ -215,6 +216,7 @@ class ProductController extends AdminController
 
         $form->image('feature_photo', __('Feature photo'))
             ->rules('required');
+
         $cats = \App\Models\ProductCategory::all();
         $form->select('category', __('Category'))
             ->options(
@@ -224,7 +226,17 @@ class ProductController extends AdminController
         /* $form->url('url', __('Url')); 
                 $form->decimal('rates', __('Rates'));
         */
-        $form->keyValue('summary', __('Data'));
+        /* $form->keyValue('summary', __('Data')); */
+        //has many images
+
+
+        $form->hasMany('pics', 'Images', function (Form\NestedForm $form) {
+            $u = Admin::user();
+            $form->hidden('administrator_id', 'Administrator')->default($u->id);
+            $form->hidden('is_processed', 'Administrator')->default('No');
+            $form->image('src', 'Image')
+                ->rules('required');
+        });
 
 
 

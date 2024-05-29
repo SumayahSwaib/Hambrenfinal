@@ -18,7 +18,15 @@ class Image extends Model
         'size',
         'type',
         'product_id',
+        'note',
+        'parent_endpoint',
     ];
+    /* 
+    								
+	
+	
+	 
+    */
 
     public static function boot()
     {
@@ -50,7 +58,11 @@ class Image extends Model
         });
 
         self::created(function ($m) {
-            $m->create_thumbail();
+            try {
+                $m->create_thumbail();
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
         });
     }
 
@@ -75,10 +87,11 @@ class Image extends Model
 
     public function create_thumbail()
     {
+        return ;
         set_time_limit(-1);
         $src = $this->src;
         $source = Utils::docs_root() . "/storage/images/" . $this->src;
-        if (!file_exists($source)) { 
+        if (!file_exists($source)) {
             $this->delete();
             return;
         }
@@ -102,4 +115,11 @@ class Image extends Model
         return Carbon::parse($this->updated_at)->timestamp;
     }
     protected $appends = ['updated_at_text'];
+
+
+    //has many images
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 }

@@ -70,7 +70,7 @@ class Utils extends Model
 
     public static function sync_products()
     {
-
+        return;
         $stripe = new \Stripe\StripeClient(env('STRIPE_KEY'));
         $products = Product::where([
             'stripe_price' => null

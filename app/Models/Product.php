@@ -21,16 +21,16 @@ class Product extends Model
         //updating
         self::updating(function ($m) {
             //old price_1
-            $old_price_1 = $m->getOriginal('price_1');
-            $new_price_1 = $m->price_1;
-            if ($old_price_1 != ($new_price_1)) {
+            /* $old_price_1 = $m->getOriginal('price_1');
+            $new_price_1 = $m->price_1; */
+            /* if ($old_price_1 != ($new_price_1)) {
                 try {
                     $stripe_price = $m->update_stripe_price($new_price_1);
                     $m->stripe_price = $stripe_price;
                 } catch (\Throwable $th) {
                     throw $th->getMessage();
                 }
-            }
+            } */
             return $m;
         });
         //updated
@@ -77,7 +77,7 @@ class Product extends Model
 
     public function update_stripe_price($new_price)
     {
-
+        return $this->price_1;
         $new_price = null;
         $stripe = Utils::get_stripe();
         set_time_limit(-1);
@@ -120,6 +120,7 @@ class Product extends Model
 
     public function sync($stripe)
     {
+        return;
         $stripe = Utils::get_stripe();
         set_time_limit(-1);
         $original_images = json_decode($this->rates);
@@ -195,9 +196,16 @@ class Product extends Model
         }
     }
 
-    
+
 
     protected $casts = [
         'summary' => 'json',
     ];
+
+
+    //has many images
+    public function pics()
+    {
+        return $this->hasMany(Image::class, 'product_id');
+    }
 }
