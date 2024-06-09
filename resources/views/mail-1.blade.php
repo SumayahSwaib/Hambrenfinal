@@ -63,7 +63,7 @@ if (!isset($body)) {
     <div class="email-container" style="background-color: #e7f6ff; background: #e7f6ff;">
         <!-- Header -->
         <div class="footer" style="border-bottom: 2px solid #e75d02;">
-            <h2 style="color: #e75d02;">HAMBREN</h2>
+            <h2 style="color: #e75d02;">{{ env('APP_NAME') }}</h2>
         </div>
         <!-- Content -->
         <div class="content"
@@ -72,9 +72,9 @@ if (!isset($body)) {
         font-size: 16px;
         ">
             {!! $body !!}</div>
-        <a href="http://hambren.com/">
+        <a href="https://afriinventions.com/">
             <div class="header small">
-                <h2>HAMBREN</h2>
+                <h2>{{ env('APP_NAME') }}</h2>
             </div>
         </a>
     </div>
