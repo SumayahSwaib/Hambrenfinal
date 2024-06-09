@@ -33,12 +33,11 @@ class User extends Authenticatable implements JWTSubject
         $u->intro = rand(100000, 999999);
         $u->save();
         $data['email'] = $u->email;
-        if($u->email == null || $u->email == ""){
+        if ($u->email == null || $u->email == "") {
             $data['email'] = $u->username;
-
         }
         $data['name'] = $u->name;
-        $data['subject'] = "Hambren - Password Reset";
+        $data['subject'] = env('APP_NAME') . " - Password Reset";
         $data['body'] = "<br>Dear " . $u->name . ",<br>";
         $data['body'] .= "<br>Please use the code below to reset your password.<br><br>";
         $data['body'] .= "CODE: <b>" . $u->intro . "</b><br>";
@@ -59,12 +58,12 @@ class User extends Authenticatable implements JWTSubject
         $u->intro = rand(100000, 999999);
         $u->save();
         $data['email'] = $email;
-        if($email == null || $email == ""){
+        if ($email == null || $email == "") {
             throw new \Exception("Email is required.");
         }
 
         $data['name'] = $u->name;
-        $data['subject'] = "Hambren - Email Verification";
+        $data['subject'] = env('APP_NAME') . " - Email Verification";
         $data['body'] = "<br>Dear " . $u->name . ",<br>";
         $data['body'] .= "<br>Please use the CODE below to verify your email address.<br><br>";
         $data['body'] .= "CODE: <b>" . $u->intro . "</b><br>";
