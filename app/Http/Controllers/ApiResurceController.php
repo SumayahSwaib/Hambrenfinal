@@ -620,9 +620,11 @@ class ApiResurceController extends Controller
         }
         $orders = [];
 
-        foreach (Order::where([
-            'user' => $u->id
-        ])->get() as $order) {
+        foreach (
+            Order::where([
+                'user' => $u->id
+            ])->get() as $order
+        ) {
             $items = $order->get_items();
             $order->items = json_encode($items);
             $orders[] = $order;
@@ -703,7 +705,7 @@ class ApiResurceController extends Controller
             return $this->error('Delivery information is missing.');
         }
         if ($delivery->customer_phone_number_1 == null) {
-            return $this->error('Phone number is missing.');
+            $delivery->customer_phone_number_1 = $u->phone_number;
         }
 
         $order = new Order();
@@ -722,21 +724,21 @@ class ApiResurceController extends Controller
                 $order->order_details = json_encode($delivery);
 
                 $del_loc = DeliveryAddress::find($delivery->delivery_district);
-                if ($del_loc == null) {
-                    return $this->error('Delivery address not found.');
+                if ($del_loc != null) {
+
+
+                    $delivery_amount = (int)($del_loc->shipping_cost);
+
+                    $order->date_created = $delivery->date_created;
+                    $order->date_updated = $delivery->date_updated;
+                    $order->mail = $delivery->mail;
+                    $order->delivery_district = $delivery->delivery_district;
+                    $order->description = $delivery->description;
+                    $order->customer_name = $delivery->customer_name;
+                    $order->customer_phone_number_1 = $delivery->customer_phone_number_1;
+                    $order->customer_phone_number_2 = $delivery->customer_phone_number_2;
+                    $order->customer_address = $delivery->customer_address;
                 }
-
-                $delivery_amount = (int)($del_loc->shipping_cost);
-
-                $order->date_created = $delivery->date_created;
-                $order->date_updated = $delivery->date_updated;
-                $order->mail = $delivery->mail;
-                $order->delivery_district = $delivery->delivery_district;
-                $order->description = $delivery->description;
-                $order->customer_name = $delivery->customer_name;
-                $order->customer_phone_number_1 = $delivery->customer_phone_number_1;
-                $order->customer_phone_number_2 = $delivery->customer_phone_number_2;
-                $order->customer_address = $delivery->customer_address;
             } catch (\Throwable $th) {
             }
         }
@@ -1223,9 +1225,11 @@ class ApiResurceController extends Controller
     public function categories()
     {
         $cats = [];
-        foreach (ProductCategory::where([])
-            ->orderby('id', 'desc')
-            ->get() as $key => $cat) {
+        foreach (
+            ProductCategory::where([])
+                ->orderby('id', 'desc')
+                ->get() as $key => $cat
+        ) {
             $cat->parent_text = $cat->category_text;
             $cats[] = $cat;
         }
