@@ -606,6 +606,23 @@ class ApiResurceController extends Controller
     }
 
 
+    public function order(Request $r)
+    {
+
+        $order = Order::find($r->id);
+        if ($order == null) {
+            return $this->error('Order not found.');
+        }
+
+        if ($order->stripe_url == null || strlen($order->stripe_url) < 8) {
+            $order->create_payment_link();
+            $order->save();
+        }
+
+        return $this->success($order, $message = "Success!", 200);
+    }
+
+
     public function orders_get(Request $r)
     {
 
