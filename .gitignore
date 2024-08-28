@@ -2,5 +2,6 @@
 .DS_Store
 /temp
 /public/temp
-.env 
+.env
+.env_1
 
