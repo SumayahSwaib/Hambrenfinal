@@ -29,8 +29,9 @@ class Order extends Model
         });
     }
 
-    public function create_payment_link($stripe)
+    public function create_payment_link()
     {
+        $stripe = env('STRIPE_KEY');
         if (($this->stripe_id != null) && (strlen($this->stripe_id) > 0)) {
             return;
         }
@@ -45,15 +46,22 @@ class Order extends Model
             }
             if ($pro->stripe_price == null || strlen($pro->stripe_price) < 3) {
                 continue;
-            } 
+            }
             $line_items[] = [
                 'price' => $pro->stripe_price,
                 'quantity' => $item->qty,
             ];
         }
-
+        if (count($line_items) < 1) {
+            $this->delete();
+            throw new \Exception("No items to create payment link");
+            return;
+        }
         $isSuccess = false;
         $resp = "";
+        $stripe = new \Stripe\StripeClient(
+            env('STRIPE_KEY')
+        );
         try {
             $resp = $stripe->paymentLinks->create([
                 'currency' => 'cad',
@@ -69,15 +77,17 @@ class Order extends Model
             $this->stripe_id = $resp->id;
             $this->stripe_url = $resp->url;
             $this->stripe_paid = 'No';
-            $this->save(); 
+            $this->save();
         }
     }
     public function get_items()
     {
         $items = [];
-        foreach (OrderedItem::where([
-            'order' => $this->id
-        ])->get() as $_item) {
+        foreach (
+            OrderedItem::where([
+                'order' => $this->id
+            ])->get() as $_item
+        ) {
             $pro = Product::find($_item->product);
             if ($pro == null) {
                 continue;

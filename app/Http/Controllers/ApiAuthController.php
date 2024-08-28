@@ -91,8 +91,8 @@ class ApiAuthController extends Controller
                     return $this->error('Failed to send password reset email because ' . $th->getMessage() . '.');
                 }
                 return $this->success($u, 'Password reset CODE sent to your email address ' . $u->email . '.');
-            } 
-            return $this->error('Invalid task.'); 
+            }
+            return $this->error('Invalid task.');
         }
 
         if ($r->password == null) {
@@ -153,16 +153,17 @@ class ApiAuthController extends Controller
 
     public function register(Request $r)
     {
-        if ($r->phone_number == null) {
-            return $this->error('Phone number is required.');
+        if ($r->email == null) {
+            return $this->error('Email address is required.');
         }
 
-        $phone_number = Utils::prepare_phone_number(trim($r->phone_number));
-
-
-        if (!Utils::phone_number_is_valid($phone_number)) {
-            return $this->error('Invalid phone number. ' . $phone_number);
+        //check if is valid email address
+        if (!filter_var($r->email, FILTER_VALIDATE_EMAIL)) {
+            return $this->error('Invalid email address. ' . $r->email);
+        } else {
+            $email = $r->email;
         }
+
 
         if ($r->password == null) {
             return $this->error('Password is required.');
@@ -176,8 +177,9 @@ class ApiAuthController extends Controller
 
 
 
-        $u = Administrator::where('phone_number', $phone_number)
-            ->orWhere('username', $phone_number)->first();
+        $u = Administrator::where('email', $email)
+            ->orWhere('username', $email)->first();
+
         if ($u != null) {
 
             if ($u->status == 'Deleted') {
@@ -203,11 +205,9 @@ class ApiAuthController extends Controller
             $user->first_name = $name;
         }
 
-        $user->phone_number = $phone_number;
-        $user->username = $phone_number;
-        $user->reg_number = $phone_number;
-        $user->country = $phone_number;
-        $user->occupation = $phone_number;
+        $user->username = $email;
+        $user->email = $email;
+        $user->reg_number = $email;
         $user->profile_photo_large = '';
         $user->location_lat = '';
         $user->location_long = '';
@@ -219,6 +219,9 @@ class ApiAuthController extends Controller
         $user->cv = '';
         $user->language = '';
         $user->about = '';
+        $user->country = '';
+        $user->occupation = '';
+        $user->phone_number = '';
         $user->address = '';
         $user->name = $name;
         $user->password = password_hash(trim($r->password), PASSWORD_DEFAULT);
@@ -233,7 +236,7 @@ class ApiAuthController extends Controller
         Config::set('jwt.ttl', 60 * 24 * 30 * 365);
 
         $token = auth('api')->attempt([
-            'username' => $phone_number,
+            'email' => $email,
             'password' => trim($r->password),
         ]);
 
