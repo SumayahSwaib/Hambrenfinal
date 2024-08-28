@@ -15,7 +15,11 @@ class Order extends Model
         parent::boot();
         //created
         self::created(function ($m) {
-            Utils::sync_orders();
+            try {
+                $m->create_payment_link();
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
         });
         self::deleting(function ($m) {
             try {

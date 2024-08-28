@@ -877,7 +877,13 @@ class ApiResurceController extends Controller
         $order->amount = $order_total;
         $order->save();
 
-        return $this->success(null, $message = "Submitted successfully!", 200);
+        if ($order->stripe_url == null || strlen($order->stripe_url) < 6) {
+            $order->create_payment_link();
+            $order->save();
+        }
+        $order = Order::find($order->id);
+
+        return $this->success($order, $message = "Submitted successfully!", 200);
     }
 
 
