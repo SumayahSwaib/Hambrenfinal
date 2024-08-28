@@ -47,10 +47,10 @@ class HomeController extends Controller
             'stripe_id' => null
         ])->get(); */
         //last order
-        $order = Order::orderBy('id', 'desc')->first();
+        /* $order = Order::orderBy('id', 'desc')->first();
         $order->create_payment_link();
         dd($order->stripe_url);
-        dd($order);
+        dd($order); */
 
         /* 
         $names = [
