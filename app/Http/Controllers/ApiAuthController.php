@@ -183,10 +183,10 @@ class ApiAuthController extends Controller
         if ($u != null) {
 
             if ($u->status == 'Deleted') {
-                return $this->error('Phone number or Email for this account is deleted. Contact us for help.');
+                return $this->error('Email for this account is deleted. Contact us for help.');
             }
 
-            return $this->error('User with same phone number already exists.');
+            return $this->error('User with same Email address already exists.');
         }
 
         $user = new Administrator();
