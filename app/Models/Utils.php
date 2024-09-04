@@ -43,13 +43,13 @@ class Utils extends Model
 
     public static function get_stripe()
     {
-        $key = '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';
+        $key = env('STRIPE_KEY');
         $stripe = new \Stripe\StripeClient($key);
         return $stripe;
     }
     public static function sync_orders()
     {
-        $key = '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';
+        $key = env('STRIPE_KEY');
         $stripe = new \Stripe\StripeClient($key);
 
         $roders = \App\Models\Order::where([
