@@ -127,9 +127,9 @@ class AuthController extends Controller
 
 
         $u = Administrator::where([
-            'email' => $_POST['email']
+            'email' => $_POST['username']
         ])->orwhere([
-            'username' => $_POST['email']
+            'username' => $_POST['username']
         ])->first();
 
 
