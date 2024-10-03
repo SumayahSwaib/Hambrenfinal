@@ -35,6 +35,8 @@ class ProductController extends AdminController
 
         $grid->quickSearch('name')->placeholder('Search by name');
 
+        
+
         $grid->filter(function ($filter) {
             $filter->disableIdFilter();
             $filter->like('name', 'Name');
@@ -47,6 +49,11 @@ class ProductController extends AdminController
             $filter->between('created_at', 'Created at')->datetime();
         });
         $grid->model()->orderBy('id', 'desc');
+
+        $grid->column('feature_photo', __('Photo'))
+        ->lightbox(['width' => 50, 'height' => 50])
+        ->sortable(); 
+         
         $grid->column('id', __('Id'))->sortable();
         $grid->column('name', __('Name'))->sortable()
             ->editable();
@@ -59,9 +66,7 @@ class ProductController extends AdminController
         $grid->column('price_1', __('Selling Price'))
             ->sortable()
             ->editable();
-        $grid->column('feature_photo', __('Photo'))
-            ->lightbox(['width' => 50, 'height' => 50])
-            ->sortable(); 
+    
         $grid->column('date_updated', __('Date updated'));
         $grid->column('user', __('User'))
             ->display(function ($user) {
