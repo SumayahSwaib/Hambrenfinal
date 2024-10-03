@@ -20,7 +20,6 @@ class Product extends Model
 
         //updating
         self::updating(function ($m) {
-            return $m;
             //old price_1
             $old_price_1 = $m->getOriginal('price_1');
             $new_price_1 = $m->price_1;
