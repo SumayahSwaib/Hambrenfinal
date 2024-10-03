@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Models\Product;
+use App\Models\User;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -137,9 +138,6 @@ class ProductController extends AdminController
         $form = new Form(new Product());
 
 
-        if ($form->isCreating()) {
-            $form->hidden('user', __('Product provider'))->default(Auth::user()->id)->readOnly()->rules('required');
-        }
 
         $form->text('name', __('Name'))
             ->rules('required');
@@ -224,7 +222,16 @@ class ProductController extends AdminController
         /* $form->url('url', __('Url')); 
                 $form->decimal('rates', __('Rates'));
         */
-        $form->keyValue('summary', __('Data'));
+        // $form->keyValue('summary', __('Data'));
+
+        $vendors = User::where([
+            'user_type' => 'Vendor',
+            'status' => 'Active'
+        ])->get()->pluck('name', 'id');
+
+        $form->select('user', __('Supplier'))
+            ->options($vendors)
+            ->rules('required');
 
 
 
