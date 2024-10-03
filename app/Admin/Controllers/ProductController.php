@@ -51,7 +51,7 @@ class ProductController extends AdminController
         $grid->model()->orderBy('id', 'desc');
 
         $grid->column('feature_photo', __('Photo'))
-        ->lightbox(['width' => 50, 'height' => 50])
+        ->image('', 50, 50)
         ->sortable(); 
          
         $grid->column('id', __('Id'))->sortable();
