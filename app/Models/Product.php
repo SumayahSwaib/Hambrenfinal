@@ -31,16 +31,6 @@ class Product extends Model
                     throw $th->getMessage();
                 }
             }
-            $old_price_1 = $m->getOriginal('price_2');
-            $new_price_1 = $m->price_2;
-            if ($old_price_1 != ($new_price_1)) {
-                try {
-                    $stripe_price = $m->update_stripe_price($new_price_1);
-                    $m->stripe_price = $stripe_price;
-                } catch (\Throwable $th) {
-                    throw $th->getMessage();
-                }
-            }
             return $m;
         });
         //updated
@@ -97,10 +87,7 @@ class Product extends Model
                 'unit_amount' => $this->price_1 * 100,
                 'product' => $this->stripe_id,
             ]);
-            echo "success";
-            dd($new_price);
         } catch (\Throwable $th) {
-            die("failed because " . $th->getMessage());
             throw $th->getMessage();
         }
         if ($new_price == null) {
