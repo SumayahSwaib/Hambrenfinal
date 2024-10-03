@@ -8,7 +8,16 @@ use App\Models\Gen;
 use App\Models\Utils;
 use Dflydev\DotAccessData\Util;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+
+Route::get('migrate', function () {
+    //do run laravel migration command
+    // Artisan::call('migrate');
+    Artisan::call('migrate', ['--force' => true]);
+    //returning the output
+    return Artisan::output();
+});
 
 Route::match(['get', 'post'], '/pay', function () {
     $id = 1;
