@@ -31,6 +31,16 @@ class Product extends Model
                     throw $th->getMessage();
                 }
             }
+            $new_price_1 = $m->price_1;
+            $old_price_1 = $m->getOriginal('price_1');
+            if ($old_price_1 != ($new_price_1)) {
+                try {
+                    $stripe_price = $m->update_stripe_price($new_price_1);
+                    $m->stripe_price = $stripe_price;
+                } catch (\Throwable $th) {
+                    throw $th->getMessage();
+                }
+            }
             return $m;
         });
         //updated
@@ -122,18 +132,8 @@ class Product extends Model
     {
         $stripe = Utils::get_stripe();
         set_time_limit(-1);
-        $original_images = json_decode($this->rates);
         $imgs = [];
-        $i = 0;
-        if (is_array($original_images))
-            foreach ($original_images as $key => $v) {
-                $imgs[] = 'https://app.hambren.com/storage/images/' . $v->src;
-                if ($i > 5) {
-                    break;
-                }
-                $i++;
-            }
-
+        $imgs[] = 'https://app.hambren.com/storage/' . $this->feature_photo;
         if ($this->stripe_price != null && $this->stripe_id != null && $this->stripe_price != '' && strlen($this->stripe_id) > 5) {
             try {
                 $resp = $stripe->products->update(
@@ -206,7 +206,7 @@ class Product extends Model
         $resp = str_replace(']', '', $resp);
         $resp = str_replace('"', '', $resp);
         return $resp;
-    } 
+    }
 
     //setter for sizes
     public function setSizesAttribute($value)
@@ -217,7 +217,7 @@ class Product extends Model
                 $this->attributes['sizes'] = $value;
             }
         }
-    } 
+    }
 
 
 
