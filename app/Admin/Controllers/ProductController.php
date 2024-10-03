@@ -144,9 +144,9 @@ class ProductController extends AdminController
         $form->text('name', __('Name'))
             ->rules('required');
 
-        $form->decimal('price_2', __('Original Price'))
+        $form->text('price_2', __('Original Price'))
             ->rules('required');
-        $form->decimal('price_1', __('Selling Price'))
+        $form->text('price_1', __('Selling Price'))
             ->rules('required');
 
         $form->radio('has_colors', __('Has colors?'))

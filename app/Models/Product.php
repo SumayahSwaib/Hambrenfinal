@@ -20,6 +20,7 @@ class Product extends Model
 
         //updating
         self::updating(function ($m) {
+            return $m;
             //old price_1
             $old_price_1 = $m->getOriginal('price_1');
             $new_price_1 = $m->price_1;
@@ -180,8 +181,11 @@ class Product extends Model
     //getter for colors from json
     public function getColorsAttribute($value)
     {
-        $value = json_decode($value);
-        return $value;
+        $resp = str_replace('\"', '"', $value);
+        $resp = str_replace('[', '', $resp);
+        $resp = str_replace(']', '', $resp);
+        $resp = str_replace('"', '', $resp);
+        return $resp;
     }
 
     //setter for colors to json
@@ -195,7 +199,28 @@ class Product extends Model
         }
     }
 
-    
+    //getter for sizes
+    public function getSizesAttribute($value)
+    {
+        $resp = str_replace('\"', '"', $value);
+        $resp = str_replace('[', '', $resp);
+        $resp = str_replace(']', '', $resp);
+        $resp = str_replace('"', '', $resp);
+        return $resp;
+    } 
+
+    //setter for sizes
+    public function setSizesAttribute($value)
+    {
+        if ($value != null) {
+            if (strlen($value) > 2) {
+                $value = json_encode($value);
+                $this->attributes['sizes'] = $value;
+            }
+        }
+    } 
+
+
 
     protected $casts = [
         'summary' => 'json',
