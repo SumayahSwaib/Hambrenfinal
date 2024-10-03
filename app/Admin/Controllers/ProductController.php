@@ -229,9 +229,11 @@ class ProductController extends AdminController
             'status' => 'Active'
         ])->get()->pluck('name', 'id');
 
+        $u = Auth::user();
         $form->select('user', __('Supplier'))
             ->options($vendors)
-            ->rules('required');
+            ->rules('required')
+            ->default($u->id);
 
 
 
