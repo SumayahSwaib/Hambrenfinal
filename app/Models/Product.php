@@ -97,7 +97,10 @@ class Product extends Model
                 'unit_amount' => $this->price_1 * 100,
                 'product' => $this->stripe_id,
             ]);
+            echo "success";
+            dd($new_price);
         } catch (\Throwable $th) {
+            die("failed because " . $th->getMessage());
             throw $th->getMessage();
         }
         if ($new_price == null) {

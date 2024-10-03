@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
+Route::get('test', function () {
+    $lastProduct = \App\Models\Product::latest()->first();
+    $lastProduct->price_1 = 80;
+    $lastProduct->price_2 = 70;
+    $lastProduct->save();
+    die("done");
+});
 Route::get('migrate', function () {
     //do run laravel migration command
     // Artisan::call('migrate');
