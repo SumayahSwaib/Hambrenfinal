@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\Image;
 use App\Models\Product;
 use App\Models\User;
 use Encore\Admin\Controllers\AdminController;
@@ -140,6 +141,8 @@ class ProductController extends AdminController
      */
     protected function form()
     {
+        $last = Image::where([])->get()->last();
+        $last->create_thumbail();
         $form = new Form(new Product());
 
 
@@ -241,7 +244,7 @@ class ProductController extends AdminController
         $form->hasMany('images', 'Images', function (Form\NestedForm $form) {
             $u = Auth::user();
             $form->image('src', 'Image')->uniqueName();
-            $form->text('administrator_id')->value($u->id);
+            $form->hidden('administrator_id')->value($u->id);
         });
 
 

@@ -86,18 +86,29 @@ class Image extends Model
     {
         set_time_limit(-1);
         $src = $this->src;
-        $source = Utils::docs_root() . "/storage/images/" . $this->src;
+        $last_seg = '';
+        $segs = explode('/', $src);
+        if (count($segs) > 0) {
+            $last_seg = last($segs);
+        } else {
+            $last_seg = $src;
+        }
+
+        $source = Utils::docs_root() . "/storage/images/" .  $last_seg;
         if (!file_exists($source)) {
             $this->delete();
             return;
         }
 
-        $target = Utils::docs_root() . "/storage/images/thumb_" . $this->src;
 
+
+        $target = Utils::docs_root() . "/storage/images/thumb_" . $last_seg;
+ 
         Utils::create_thumbail([
             'source' => $source,
             'target' => $target
         ]);
+ 
 
         if (file_exists($target)) {
             $this->thumbnail = "thumb_" . $this->src;
