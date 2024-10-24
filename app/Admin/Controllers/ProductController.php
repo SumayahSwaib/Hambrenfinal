@@ -35,7 +35,7 @@ class ProductController extends AdminController
 
         $grid->quickSearch('name')->placeholder('Search by name');
 
-        
+
 
         $grid->filter(function ($filter) {
             $filter->disableIdFilter();
@@ -51,9 +51,9 @@ class ProductController extends AdminController
         $grid->model()->orderBy('id', 'desc');
 
         $grid->column('feature_photo', __('Photo'))
-        ->image('', 50, 50)
-        ->sortable(); 
-         
+            ->image('', 50, 50)
+            ->sortable();
+
         $grid->column('id', __('Id'))->sortable();
         $grid->column('name', __('Name'))->sortable()
             ->editable();
@@ -66,7 +66,7 @@ class ProductController extends AdminController
         $grid->column('price_1', __('Selling Price'))
             ->sortable()
             ->editable();
-    
+
         $grid->column('date_updated', __('Date updated'));
         $grid->column('user', __('User'))
             ->display(function ($user) {
@@ -229,7 +229,7 @@ class ProductController extends AdminController
         */
         // $form->keyValue('summary', __('Data'));
 
-        $vendors = User::where([ 
+        $vendors = User::where([
             'status' => 'Active'
         ])->get()->pluck('name', 'id');
 
@@ -239,11 +239,11 @@ class ProductController extends AdminController
 
         //has many images
         $form->hasMany('images', 'Images', function (Form\NestedForm $form) {
+            $u = Auth::user();
             $form->image('src', 'Image')
                 ->rules('required');
-            $form->text('size', 'Size');
-            $form->text('type', 'Type');
-        }); 
+            $form->text('administrator_id')->value($u->id);
+        });
 
 
         return $form;
