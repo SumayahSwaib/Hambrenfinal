@@ -229,16 +229,13 @@ class ProductController extends AdminController
         */
         // $form->keyValue('summary', __('Data'));
 
-        $vendors = User::where([
-            'user_type' => 'Vendor',
+        $vendors = User::where([ 
             'status' => 'Active'
         ])->get()->pluck('name', 'id');
 
         $u = Auth::user();
         $form->select('user', __('Supplier'))
-            ->options($vendors)
-            ->rules('required')
-            ->default($u->id);
+            ->rules('required');
 
         //has many images
         $form->hasMany('images', 'Images', function (Form\NestedForm $form) {
