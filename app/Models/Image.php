@@ -57,7 +57,16 @@ class Image extends Model
     public function getSrcAttribute($src)
     {
 
-        $source = Utils::docs_root() . "/storage/images/" . $src;
+        //
+        $last_seg = '';
+        $segs = explode('/', $src);
+        if (count($segs) > 0) {
+            $last_seg = last($segs);
+        } else {
+            $last_seg = $src;
+        }
+
+        $source = Utils::docs_root() . "/storage/images/" . $last_seg;
         if (!file_exists($source)) {
             return 'logo.png';
         }
@@ -78,7 +87,7 @@ class Image extends Model
         set_time_limit(-1);
         $src = $this->src;
         $source = Utils::docs_root() . "/storage/images/" . $this->src;
-        if (!file_exists($source)) { 
+        if (!file_exists($source)) {
             $this->delete();
             return;
         }
