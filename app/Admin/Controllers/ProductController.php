@@ -235,7 +235,7 @@ class ProductController extends AdminController
 
         $u = Auth::user();
         $form->select('user', __('Supplier'))
-            ->rules('required');
+        ->options($vendors);
 
         //has many images
         $form->hasMany('images', 'Images', function (Form\NestedForm $form) {
