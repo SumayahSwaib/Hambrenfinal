@@ -240,8 +240,7 @@ class ProductController extends AdminController
         //has many images
         $form->hasMany('images', 'Images', function (Form\NestedForm $form) {
             $u = Auth::user();
-            $form->image('src', 'Image')
-                ->rules('required');
+            $form->image('src', 'Image');
             $form->text('administrator_id')->value($u->id);
         });
 
