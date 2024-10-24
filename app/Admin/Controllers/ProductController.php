@@ -240,6 +240,13 @@ class ProductController extends AdminController
             ->rules('required')
             ->default($u->id);
 
+        //has many images
+        $form->hasMany('images', 'Images', function (Form\NestedForm $form) {
+            $form->image('src', 'Image')
+                ->rules('required');
+            $form->text('size', 'Size');
+            $form->text('type', 'Type');
+        }); 
 
 
         return $form;

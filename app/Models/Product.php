@@ -219,6 +219,11 @@ class Product extends Model
         }
     }
 
+    //has many Image
+    public function images()
+    {
+        return $this->hasMany(Image::class, 'product_id', 'id');
+    }
 
 
     protected $casts = [
